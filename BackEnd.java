@@ -1,5 +1,7 @@
 import java.sql.*;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 public class BackEnd {
     Connection dbconn = null;
     public BackEnd() {
@@ -44,23 +46,23 @@ public class BackEnd {
         System.out.println("Connected to Oracle database!");
     }
 
-    public String query1(String customerName) {
-        return "";
+    public ResultSet query1(String customerName) {
+        return null;
     }
 
-    public String query2(String date) {
-        return "";
+    public ResultSet query2(String date) {
+        return null;
     }
 
-    public String query3(String weekDate) {
-        return "";
+    public ResultSet query3(String weekDate) {
+        return null;
     }
 
-    public String query4(String dateStart, String dateEnd) {
-        return "";
+    public ResultSet query4(String dateStart, String dateEnd) {
+        return null;
     }
 
-    public String query5(String TBD) {
-        return "";
+    public ResultSet query5(String TBD) {
+        return null;
     }
 }
