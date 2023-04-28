@@ -242,8 +242,9 @@ public class BackEnd {
         return false;
     }
 
-    public boolean addShift(String TBD) {
+    public boolean addShift(String EmployeeID, String StartTime, String EndTime, String WeekStartDate) {
         //returns true if successfully added
+        String query = "INSERT INTO Shift (EmployeeID, StartTime, EndTime, WeekStartDate) VALUES (" + EmployeeID + ", " + StartTime + ", " + EndTime + ", " + WeekStartDate + ")";
         return false;
     }
 
