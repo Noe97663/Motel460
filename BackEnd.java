@@ -200,9 +200,9 @@ public class BackEnd {
         return false;
     }
 
-    public boolean addClubMember(int guestID) {
+    public boolean addClubMember(int guestID, int points) {
         //insert into ClubMember table, guestID, and point = 0
-        String query = "INSERT INTO ClubMember (GuestID, Points) VALUES (" + guestID + ", 0)";
+        String query = "INSERT INTO ClubMember (GuestID, Points) VALUES (" + guestID + ", " + points + ")";
         //returns true if successfully added
         try {
             stmt.executeUpdate(query);
@@ -371,6 +371,28 @@ public class BackEnd {
         } catch (SQLException e) {
             System.err.println("*** SQLException:  "
                     + "Could not add Room.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
+        return false;
+    }
+
+    public boolean updateRoom(int roomID, String type) {
+        //primary key is roomID
+        String setStatement = "SET ";
+        if (type != null) {
+            setStatement += "Type = '" + type + "', ";
+        }
+        String query = "UPDATE Room " + setStatement.substring(0, setStatement.length() - 2) + " WHERE RoomID = " + roomID;
+        //returns true if successfully updated
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not update Room.");
             System.err.println("\tMessage:   " + e.getMessage());
             System.err.println("\tSQLState:  " + e.getSQLState());
             System.err.println("\tErrorCode: " + e.getErrorCode());
