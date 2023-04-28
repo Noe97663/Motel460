@@ -34,7 +34,9 @@ public class FrontEnd {
         } else if (field == 3){ // ClubMembers
             System.out.println("Guest ID: ");
             int guestid = scn.nextInt();
-            backEnd.addClubMember(guestid);
+            System.out.println("Point: ");
+            int point = scn.nextInt();
+            backEnd.addClubMember(guestid, point);
         } else if (field == 4){ // Booking 
             System.out.println("Date from in this form: DD-MON-YY ");
             String dateF = scn.nextLine();
@@ -233,8 +235,8 @@ public class FrontEnd {
             int quesNum = scn.nextInt();  // Read user input
             if (quesNum == 1){
                 System.out.println("Enter the name of the customer: ");
-                String name = scn.nextLine();
-                ans = backEnd.query1(name);
+                int bID = scn.nextInt();
+                ans = backEnd.query1(bID);
                 // print data...
                 if (ans != null) {
                     System.out.println("\nThe results of the query are:\n");
@@ -248,7 +250,7 @@ public class FrontEnd {
                         // Use next() to advance cursor through the result
                         // tuples and print their attribute values
                     while (ans.next()) {
-                        System.out.println(ans.getDate("dates") + "\t" + ans.getFloat("dif") + "\t        " + ans.getFloat("maxtemp"));
+                        System.out.println(ans.getDate("dates") + "\t"); // TBD
                     }
                 } 
             } else if (quesNum == 2){
