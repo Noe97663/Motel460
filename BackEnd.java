@@ -1,7 +1,5 @@
 import java.sql.*;
 
-import javax.naming.spi.DirStateFactory.Result;
-
 public class BackEnd {
     Connection dbconn = null;
     public BackEnd() {
@@ -46,7 +44,7 @@ public class BackEnd {
         System.out.println("Connected to Oracle database!");
     }
 
-    public ResultSet query1(String customerName) {
+    public ResultSet query1(String guestName) {
         return null;
     }
 
@@ -64,5 +62,120 @@ public class BackEnd {
 
     public ResultSet query5(String TBD) {
         return null;
+    }
+
+    public boolean addGuest(String firstName, String lastName, boolean isStudent, String creditCardCompany) {
+        //returns true if successfully added
+        return false;
+    }
+
+    public boolean updateGuest(int guestID, String firstName, String lastName, boolean isStudent, String creditCardCompany) {
+        //returns true if successfully updated
+        return false;
+    }
+
+    public boolean deleteGuest(int guestID) {
+        //returns true if successfully deleted
+        return false;
+    }
+
+    public boolean addRating(int guestID, int amenityID, int rating, String date) {
+        //returns true if successfully added
+        return false;
+    }
+
+    public boolean updateRating(int guestID, int amenityID, int rating, String date) {
+        //returns true if successfully updated
+        return false;
+    }
+
+    public boolean deleteRating(int guestID, int amenityID, String date) {
+        //returns true if successfully deleted
+        return false;
+    }
+
+    public boolean addClubMember(int guestID) {
+        //returns true if successfully added
+        return false;
+    }
+
+    public boolean updateClubMember(int guestID, int points) {
+        //returns true if successfully updated
+        return false;
+    }
+
+    public boolean removeClubMember(int guestID) {
+        //returns true if successfully removed
+        return false;
+    }
+
+    public boolean addBooking(int guestID, String startDate, String endDate, String roomID) {
+        //returns true if successfully added
+        return false;
+    }
+
+    public boolean updateBooking(int bookingID, String startDate, String endDate, String roomID) {
+        //returns true if successfully updated
+        return false;
+    }
+
+    public boolean removeBooking(int bookingID) {
+        //returns true if successfully removed
+        return false;
+    }
+
+    public boolean addTransaction(int bookingID, int amenityID, int extraCharge, String date, boolean isPaid, int tip) {
+        //returns true if successfully added
+        return false;
+    }
+
+    public boolean addRoom(String roomID, String type) {
+        //returns true if successfully added
+        return false;
+    }
+
+    public boolean addEmployee(String firstName, String lastName, String position) {
+        //returns true if successfully added
+        return false;
+    }
+
+    public boolean updateEmployee(int employeeID, String position, String FirstName, String LastName) {
+        //returns true if successfully updated
+        return false;
+    }
+
+    public boolean addShift(String TBD) {
+        //returns true if successfully added
+        return false;
+    }
+
+    public boolean updateShift(String TBD) {
+        //returns true if successfully updated
+        return false;
+    }
+
+    public boolean deleteShift(String TBD) {
+        //returns true if successfully deleted
+        return false;
+    }
+
+    public boolean deleteEmployee(int employeeID) {
+        //returns true if successfully deleted
+        return false;
+    }
+
+    public boolean addAmenity(String name, int price) {
+        //returns true if successfully added
+        return false;
+    }
+    
+    public boolean updateAmnity(int amenityID, String name, int price) {
+        //returns true if successfully updated
+        return false;
+    }
+
+    public boolean deleteAmenity(int amenityID) {
+        //returns true if successfully deleted
+        return false;
     }
 }
