@@ -481,10 +481,10 @@ public class BackEnd {
         //returns true if successfully updated
         String setStatement = "SET ";
         if (StartTime != null) {
-            setStatement += "StartTime = '" + StartTime + "', ";
+            setStatement += "StartTime = " + StartTime + ", ";
         }
         if (EndTime != null) {
-            setStatement += "FirstName = '" + EndTime + "', ";
+            setStatement += "EndTime = " + EndTime + ", ";
         }
         String query = "UPDATE Shift " + setStatement.substring(0, setStatement.length() - 2) + " WHERE EmployeeID = " + EmployeeID + "AND WeekStartDate = " + WeekStartDate;
         try {
