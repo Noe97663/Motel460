@@ -7,7 +7,7 @@ public class FrontEnd {
     public static void insertData(BackEnd backEnd, Scanner scn){
         System.out.println("Inserting data on:");
         System.out.println("1. Guest  2. Rating  3.ClubMembers 4.Booking  5. Transaction  6. Room \n" 
-                            + "7. Employee  8.Shift  9. Amenity ");
+                            + "7. Employee  8.Shift  9. Amenity 10 Room Classification");
         int field = scn.nextInt();
         if (field == 1){ // Guest
             System.out.println("Is student?: (0/ 1) ");
@@ -89,6 +89,16 @@ public class FrontEnd {
             System.out.println("Price:  ");
             int price  = scn.nextInt();
             backEnd.addAmenity(name, price);
+        } else if (field == 10){
+            System.out.println("Type: (Single, Suite, DeluxeSuite) ");
+            String type = scn.nextLine();
+            System.out.println("Price: ");
+            String price = scn.nextLine();
+            System.out.println("Beds");
+            String Beds = scn.nextLine();
+            System.out.println("Baths");
+            String baths = scn.nextLine();
+            // backEnd.add
         }
        
     }
