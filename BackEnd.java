@@ -461,17 +461,61 @@ public class BackEnd {
 
     public boolean addShift(String EmployeeID, String StartTime, String EndTime, String WeekStartDate) {
         //returns true if successfully added
+        WeekStartDate += "TO_DATE(" + WeekStartDate + ", 'YYYY-MM-DD')";
         String query = "INSERT INTO Shift (EmployeeID, StartTime, EndTime, WeekStartDate) VALUES (" + EmployeeID + ", " + StartTime + ", " + EndTime + ", " + WeekStartDate + ")";
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not add Shift.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
-    public boolean updateShift(String TBD) {
+    public boolean updateShift(String EmployeeID, String StartTime, String EndTime, String WeekStartDate) {
         //returns true if successfully updated
+        String setStatement = "SET ";
+        if (StartTime != null) {
+            setStatement += "StartTime = '" + StartTime + "', ";
+        }
+        if (EndTime != null) {
+            setStatement += "FirstName = '" + EndTime + "', ";
+        }
+        String query = "UPDATE Shift " + setStatement.substring(0, setStatement.length() - 2) + " WHERE EmployeeID = " + EmployeeID + "AND WeekStartDate = " + WeekStartDate;
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not update Shift.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
-    public boolean deleteShift(String TBD) {
+    public boolean deleteShift(String EmployeeID, String WeekStartDate) {
         //returns true if successfully deleted
+        String query = "DELETE FROM Shift WHERE EmployeeID = " + EmployeeID + "AND WeekStartDate = " + WeekStartDate;
+        //returns true if successfully deleted
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not delete Shift.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
