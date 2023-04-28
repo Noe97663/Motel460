@@ -500,6 +500,7 @@ public class BackEnd {
             setStatement += "Price = " + price + ", ";
         }
         //returns true if successfully updated
+        String query = "UPDATE Amenity " + setStatement.substring(0, setStatement.length() - 2) + " WHERE AmenityID = " + amenityID;
         try {
             stmt.executeUpdate(query);
             return true;
