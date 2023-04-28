@@ -2,6 +2,7 @@ import java.sql.*;
 
 public class BackEnd {
     Connection dbconn = null;
+    Statement stmt = null;
     public BackEnd() {
         final String oracleURL =   // Magic lectura -> aloe access spell
                     "jdbc:oracle:thin:@aloe.cs.arizona.edu:1521:oracle";
@@ -29,6 +30,7 @@ public class BackEnd {
         try {
                 dbconn = DriverManager.getConnection
                                (oracleURL,username,password);
+                stmt = dbconn.createStatement();
 
         } catch (SQLException e) {
 
@@ -44,7 +46,24 @@ public class BackEnd {
         System.out.println("Connected to Oracle database!");
     }
 
-    public ResultSet query1(String guestName) {
+    /*---------------------------------------------------------------------
+    |  Method query1
+    |
+    |  Purpose:  This query returns the ResultSet containing the total bill
+    |            for a bookingID. This is the price of the room plus the
+    |            costs of any unpaid amenities plus tip.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: The ResultSet is returned.
+    |
+    |  Parameters:
+    |      bookingID -- the bookingID for the bill.
+    |
+    |  Returns:  ResultSet containing the total bill for a bookingID.
+    *-------------------------------------------------------------------*/
+    public ResultSet query1(int bookingID) {
+        
         return null;
     }
 
@@ -89,13 +108,35 @@ public class BackEnd {
             setStatement += "CreditCardCompany = " + "'" + creditCardCompany + "'" + ", ";
         }
         String query = "UPDATE Guest " + setStatement.substring(0, setStatement.length() - 2) + " WHERE GuestID = " + guestID;
-        //returns true if successfully updated
+
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not update Guest.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
     public boolean deleteGuest(int guestID) {
         String query = "DELETE FROM Guest WHERE GuestID = " + guestID;
         //returns true if successfully deleted
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not delete Guest.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
@@ -105,6 +146,17 @@ public class BackEnd {
         String query = "INSERT INTO Rating (GuestID, AmenityID, Rating, Date) VALUES (" 
             + guestID + ", " + amenityID + ", " + rating + ", " + "TO_DATE(" + date + ", 'YYYY-MM-DD'))";
         //returns true if successfully added
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not add Rating.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
@@ -116,6 +168,17 @@ public class BackEnd {
             + " WHERE GuestID = " + guestID + " AND AmenityID = " 
             + amenityID + " AND Date = TO_DATE(" + date + ", 'YYYY-MM-DD')";
         //returns true if successfully updated
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not update Rating.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
@@ -123,6 +186,17 @@ public class BackEnd {
         String query = "DELETE FROM Rating WHERE GuestID = " + guestID + " AND AmenityID = " 
             + amenityID + " AND Date = TO_DATE(" + date + ", 'YYYY-MM-DD')";
         //returns true if successfully deleted
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not delete Rating.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
@@ -130,18 +204,51 @@ public class BackEnd {
         //insert into ClubMember table, guestID, and point = 0
         String query = "INSERT INTO ClubMember (GuestID, Points) VALUES (" + guestID + ", 0)";
         //returns true if successfully added
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not add ClubMember.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
     public boolean updateClubMember(int guestID, int points) {
         String query = "UPDATE ClubMember SET Points = " + points + " WHERE GuestID = " + guestID;
         //returns true if successfully updated
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not update ClubMember.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
     public boolean removeClubMember(int guestID) {
         String query = "DELETE FROM ClubMember WHERE GuestID = " + guestID;
         //returns true if successfully removed
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not remove ClubMember.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
@@ -149,6 +256,17 @@ public class BackEnd {
         String query = "Insert into Booking (GuestID, StartDate, EndDate, RoomID) VALUES (" 
             + guestID + ", TO_DATE(" + startDate + ", 'YYYY-MM-DD'), TO_DATE(" + endDate + ", 'YYYY-MM-DD'), " + roomID + ")";
         //returns true if successfully added
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not add Booking.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
@@ -166,12 +284,34 @@ public class BackEnd {
         }
         String query = "UPDATE Booking " + setStatement.substring(0, setStatement.length() - 2) + " WHERE BookingID = " + bookingID;
         //returns true if successfully updated
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not update Booking.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
     public boolean removeBooking(int bookingID) {
         String query = "DELETE FROM Booking WHERE BookingID = " + bookingID;
         //returns true if successfully removed
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not remove Booking.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
@@ -179,6 +319,17 @@ public class BackEnd {
         String query = "INSERT INTO Transaction (BookingID, AmenityID, ExtraCharge, IsPaid, Tip) VALUES (" 
             + bookingID + ", " + amenityID + ", " + extraCharge + ", " + isPaid + ", " + tip + ")";
         //returns true if successfully added
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not add Transaction.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
@@ -199,24 +350,68 @@ public class BackEnd {
         }
         String query = "UPDATE Transaction " + setStatement.substring(0, setStatement.length() - 2) + " WHERE BookingID = " + bookingID + " AND TransactionID = " + transactionID;
         //returns true if successfully updated
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not update Transaction.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
     public boolean addRoom(int roomID, String type) {
         String query = "INSERT INTO Room (RoomID, Type) VALUES (" + roomID + ", '" + type + "')";
         //returns true if successfully added
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not add Room.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
     public boolean deleteRoom(int roomID) {
         String query = "DELETE FROM Room WHERE RoomID = " + roomID;
         //returns true if successfully deleted
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not delete Room.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
     public boolean addEmployee(String firstName, String lastName, String position) {
         String query = "INSERT INTO Employee (FirstName, LastName, Position) VALUES ('" + firstName + "', '" + lastName + "', '" + position + "')";
         //returns true if successfully added
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not add Employee.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
@@ -233,12 +428,34 @@ public class BackEnd {
         }
         String query = "UPDATE Employee " + setStatement.substring(0, setStatement.length() - 2) + " WHERE EmployeeID = " + employeeID;
         //returns true if successfully updated
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not update Employee.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
     public boolean deleteEmployee(int employeeID) {
         String query = "DELETE FROM Employee WHERE EmployeeID = " + employeeID;
         //returns true if successfully deleted
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not delete Employee.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
@@ -261,6 +478,17 @@ public class BackEnd {
     public boolean addAmenity(String name, int price) {
         String query = "INSERT INTO Amenity (Name, Price) VALUES (" + name + ", " + price + ")";
         //returns true if successfully added
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not add Amenity.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
     
@@ -273,12 +501,35 @@ public class BackEnd {
             setStatement += "Price = " + price + ", ";
         }
         //returns true if successfully updated
+        String query = "UPDATE Amenity " + setStatement.substring(0, setStatement.length() - 2) + " WHERE AmenityID = " + amenityID;
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not update Amenity.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 
     public boolean deleteAmenity(int amenityID) {
         String query = "DELETE FROM Amenity WHERE AmenityID = " + amenityID;
         //returns true if successfully deleted
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not delete Amenity.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 }
