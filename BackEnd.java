@@ -1,6 +1,7 @@
 import java.sql.*;
 
 public class BackEnd {
+    Connection dbconn = null;
     public BackEnd() {
         final String oracleURL =   // Magic lectura -> aloe access spell
                     "jdbc:oracle:thin:@aloe.cs.arizona.edu:1521:oracle";
@@ -24,14 +25,10 @@ public class BackEnd {
             
                 // make and return a database connection to the user's
                 // Oracle database
-        
-        Connection dbconn = null;
-        Statement stmt = null;
 
         try {
                 dbconn = DriverManager.getConnection
                                (oracleURL,username,password);
-                stmt = dbconn.createStatement();
 
         } catch (SQLException e) {
 
@@ -45,5 +42,25 @@ public class BackEnd {
         }
 
         System.out.println("Connected to Oracle database!");
+    }
+
+    public String query1(String customerName) {
+        return "";
+    }
+
+    public String query2(String date) {
+        return "";
+    }
+
+    public String query3(String weekDate) {
+        return "";
+    }
+
+    public String query4(String dateStart, String dateEnd) {
+        return "";
+    }
+
+    public String query5(String TBD) {
+        return "";
     }
 }
