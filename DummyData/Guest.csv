@@ -1,0 +1,25 @@
+GuestID,FirstName,LastName,StudentStatus,CreditCardCompany
+0,John,Doe,1,Visa
+1,Jane,Doe,0,Mastercard
+2,Bob,Smith,1,American Express
+3,Alice,Johnson,0,Discover
+4,Emily,Williams,1,Visa
+5,Michael,Brown,0,Mastercard
+6,Sarah,Taylor,1,American Express
+7,David,Anderson,0,Discover
+8,Olivia,Jones,1,Visa
+9,James,Garcia,0,Mastercard
+10,Elizabeth,Martinez,1,American Express
+11,William,Rodriguez,0,Discover
+12,Sophia,Davis,1,Visa
+13,Joseph,Wilson,0,Mastercard
+14,Isabella,Perez,1,American Express
+15,Robert,Taylor,0,Discover
+16,Mia,Hernandez,1,Visa
+17,John,Lee,0,Mastercard
+18,Ava,Gonzalez,1,American Express
+19,Richard,Harris,0,Discover
+20,charlotte,Lewis,1,VISA
+21,Mary,Walker,0,mastercard 
+22,Alice,Hall,1,American Express 
+23,Peter,Yang,0 ,Discover

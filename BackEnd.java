@@ -200,9 +200,9 @@ public class BackEnd {
         return false;
     }
 
-    public boolean addClubMember(int guestID) {
+    public boolean addClubMember(int guestID, int points) {
         //insert into ClubMember table, guestID, and point = 0
-        String query = "INSERT INTO ClubMember (GuestID, Points) VALUES (" + guestID + ", 0)";
+        String query = "INSERT INTO ClubMember (GuestID, Points) VALUES (" + guestID + ", " + points + ")";
         //returns true if successfully added
         try {
             stmt.executeUpdate(query);
