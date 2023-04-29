@@ -63,7 +63,7 @@ public class BackEnd {
     |  Returns:  ResultSet containing the total bill for a bookingID.
     *-------------------------------------------------------------------*/
     public ResultSet query1(int bookingID) {
-        
+        String query1 = "SELECT SUM(Price) FROM Products ";
         return null;
     }
 
@@ -200,9 +200,9 @@ public class BackEnd {
         return false;
     }
 
-    public boolean addClubMember(int guestID) {
+    public boolean addClubMember(int guestID, int points) {
         //insert into ClubMember table, guestID, and point = 0
-        String query = "INSERT INTO ClubMember (GuestID, Points) VALUES (" + guestID + ", 0)";
+        String query = "INSERT INTO ClubMember (GuestID, Points) VALUES (" + guestID + ", " + points + ")";
         //returns true if successfully added
         try {
             stmt.executeUpdate(query);
@@ -315,9 +315,9 @@ public class BackEnd {
         return false;
     }
 
-    public boolean addTransaction(int bookingID, int amenityID, int extraCharge, int isPaid, int tip) {
-        String query = "INSERT INTO Transaction (BookingID, AmenityID, ExtraCharge, IsPaid, Tip) VALUES (" 
-            + bookingID + ", " + amenityID + ", " + extraCharge + ", " + isPaid + ", " + tip + ")";
+    public boolean addTransaction(int bookingID, int amenityID, int extraCharge, int tip) {
+        String query = "INSERT INTO Transaction (BookingID, AmenityID, ExtraCharge, Tip) VALUES (" 
+            + bookingID + ", " + amenityID + ", " + extraCharge + ", " + tip + ")";
         //returns true if successfully added
         try {
             stmt.executeUpdate(query);
@@ -333,7 +333,7 @@ public class BackEnd {
         return false;
     }
 
-    public boolean updateTransaction(int bookingID, int transactionID, int amenityID, int extraCharge, int isPaid, int tip) {
+    public boolean updateTransaction(int bookingID, int transactionID, int amenityID, int extraCharge, int tip) {
         //primary key is bookingID and transactionID
         String setStatement = "SET ";
         if (amenityID != -1) {
@@ -341,9 +341,6 @@ public class BackEnd {
         }
         if (extraCharge != -1) {
             setStatement += "ExtraCharge = " + extraCharge + ", ";
-        }
-        if (isPaid != -1) {
-            setStatement += "IsPaid = " + isPaid + ", ";
         }
         if (tip != -1) {
             setStatement += "Tip = " + tip + ", ";
@@ -374,6 +371,28 @@ public class BackEnd {
         } catch (SQLException e) {
             System.err.println("*** SQLException:  "
                     + "Could not add Room.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
+        return false;
+    }
+
+    public boolean updateRoom(int roomID, String type) {
+        //primary key is roomID
+        String setStatement = "SET ";
+        if (type != null) {
+            setStatement += "Type = '" + type + "', ";
+        }
+        String query = "UPDATE Room " + setStatement.substring(0, setStatement.length() - 2) + " WHERE RoomID = " + roomID;
+        //returns true if successfully updated
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not update Room.");
             System.err.println("\tMessage:   " + e.getMessage());
             System.err.println("\tSQLState:  " + e.getSQLState());
             System.err.println("\tErrorCode: " + e.getErrorCode());
@@ -481,10 +500,10 @@ public class BackEnd {
         //returns true if successfully updated
         String setStatement = "SET ";
         if (StartTime != null) {
-            setStatement += "StartTime = '" + StartTime + "', ";
+            setStatement += "StartTime = " + StartTime + ", ";
         }
         if (EndTime != null) {
-            setStatement += "FirstName = '" + EndTime + "', ";
+            setStatement += "EndTime = " + EndTime + ", ";
         }
         String query = "UPDATE Shift " + setStatement.substring(0, setStatement.length() - 2) + " WHERE EmployeeID = " + EmployeeID + "AND WeekStartDate = " + WeekStartDate;
         try {
@@ -570,6 +589,69 @@ public class BackEnd {
         } catch (SQLException e) {
             System.err.println("*** SQLException:  "
                     + "Could not delete Amenity.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
+        return false;
+    }
+
+    public boolean addRoomClassification(String Type, String Price, String Beds, String Baths) {
+        //returns true if successfully added
+        
+        String query = "INSERT INTO RoomClassification (Type, Price, Beds, Baths) VALUES ('" + Type + "'', " + Price + ", " + Beds + ", " + Baths + ")";
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not add RoomClassification.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
+        return false;
+    }
+
+    public boolean updateRoomClassification(String Type, String Price, String Beds, String Baths) {
+        //returns true if successfully updated
+        String setStatement = "SET ";
+        if (Price != null) {
+            setStatement += "Price = " + Price + ", ";
+        }
+        if (Beds != null) {
+            setStatement += "Beds = " + Beds + ", ";
+        }
+        if (Baths != null) {
+            setStatement += "Baths = " + Baths + ", ";
+        }
+        String query = "UPDATE RoomClassification " + setStatement.substring(0, setStatement.length() - 2) + " WHERE Type = '" + Type+"'";
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not update RoomClassification.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
+        return false;
+    }
+
+    public boolean deleteRoomClassification(String Type, String Price, String Beds, String Baths) {
+        //returns true if successfully deleted
+        String query = "DELETE FROM RoomClassification WHERE Type = '" + Type+"'";
+        //returns true if successfully deleted
+        try {
+            stmt.executeUpdate(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not delete RoomClassification.");
             System.err.println("\tMessage:   " + e.getMessage());
             System.err.println("\tSQLState:  " + e.getSQLState());
             System.err.println("\tErrorCode: " + e.getErrorCode());
