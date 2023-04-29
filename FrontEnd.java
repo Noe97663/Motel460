@@ -7,7 +7,7 @@ public class FrontEnd {
 
     public static void insertData(BackEnd backEnd, Scanner scn){
         System.out.println("Inserting data on:");
-        System.out.println("1. Guest  2. Rating  3.ClubMembers 4.Booking  5. Transaction  6. Room \n" 
+        System.out.println("1. Guest  2. Rating  3.ClubMember 4.Booking  5. Transaction  6. Room \n" 
                             + "7. Employee  8.Shift  9. Amenity ");
         int field = scn.nextInt();
         if (field == 1){ // Guest
@@ -29,7 +29,7 @@ public class FrontEnd {
             String date = scn.nextLine();
             System.out.println("Rating (1-5)");
             int rating = scn.nextInt(); // error check 
-        } else if (field == 3){ // ClubMembers
+        } else if (field == 3){ // ClubMember
             System.out.println("Guest ID: ");
             int guestid = scn.nextInt();
         } else if (field == 4){ // Booking 
@@ -82,7 +82,7 @@ public class FrontEnd {
 
     public static void updatData(BackEnd backEnd, Scanner scn){
         System.out.println("Updating data on:");
-        System.out.println("1. Guest  2. Rating  3.ClubMembers 4.Booking\n" 
+        System.out.println("1. Guest  2. Rating  3.ClubMember 4.Booking\n" 
                             + "5. Employee  6.Shift  7. Amenity ");
         int field = scn.nextInt();
         if (field == 1){ // Guest
@@ -106,7 +106,7 @@ public class FrontEnd {
             String date = scn.nextLine();
             System.out.println("Rating (1-5)");
             int rating = scn.nextInt(); // error check 
-        } else if (field == 3){ // ClubMembers
+        } else if (field == 3){ // ClubMember
             System.out.println("Guest ID: ");
             int guestid = scn.nextInt();
             System.out.println("points: ");
@@ -148,7 +148,7 @@ public class FrontEnd {
 
     public static void deleteData(BackEnd backEnd, Scanner scn){
         System.out.println("Deleting data on:");
-        System.out.println("1. Guest  2. Rating  3.ClubMembers  4.Booking \n" 
+        System.out.println("1. Guest  2. Rating  3.ClubMember  4.Booking \n" 
                             + "5. Employee  6.Shift  7. Amenity ");
         int field = scn.nextInt();
         if (field == 1){ // Guest
@@ -162,7 +162,7 @@ public class FrontEnd {
             int aID = scn.nextInt();
             System.out.println("Date in this form: YYYY-MM-DD");
             String date = scn.nextLine();
-        } else if (field == 3){ // ClubMembers
+        } else if (field == 3){ // ClubMember
             System.out.println("Guest ID: ");
             int guestid = scn.nextInt();
         } else if (field == 4){ // Booking 
