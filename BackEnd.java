@@ -126,6 +126,8 @@ public class BackEnd {
     public boolean deleteGuest(int guestID) {
         String query = "DELETE FROM Guest WHERE GuestID = " + guestID;
         //returns true if successfully deleted
+
+        // need to remove the guest info from all related tables
         try {
             stmt.executeUpdate(query);
             return true;
