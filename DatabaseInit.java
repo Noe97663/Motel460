@@ -91,21 +91,6 @@ public class DatabaseInit {
         Statement stmt = null;
         ResultSet answer = null;
 
-        //dropping Guest table
-        try {
-            String query = "drop table HUYLE.GUEST";
-            stmt = dbConn.createStatement();
-            answer = stmt.executeQuery(query);
-            if (answer != null) {
-                System.out.println("\nDropped table HUYLE.GUEST.\n");
-            }
-            stmt.close();
-        } 
-        //dropping table failed.
-        catch (SQLException e) {
-            System.err.println("Table HUYLE.GUEST cannot be dropped"
-            + " as it does not exist.");
-        }
 
         //dropping Rating table
         try {
@@ -137,20 +122,7 @@ public class DatabaseInit {
             + " as it does not exist.");
         }
 
-        //dropping Booking table
-        try {
-            String query = "drop table HUYLE.BOOKING";
-            stmt = dbConn.createStatement();
-            answer = stmt.executeQuery(query);
-            if (answer != null) {
-                System.out.println("\nDropped table HUYLE.BOOKING.\n");
-            }
-        } 
-        //dropping table failed.
-        catch (SQLException e) {
-            System.err.println("Table HUYLE.BOOKING cannot be dropped"
-            + " as it does not exist.");
-        }
+        
 
         //dropping Transaction table
         try {
@@ -167,20 +139,7 @@ public class DatabaseInit {
             + " as it does not exist.");
         }
 
-        //dropping Room table
-        try {
-            String query = "drop table HUYLE.ROOM";
-            stmt = dbConn.createStatement();
-            answer = stmt.executeQuery(query);
-            if (answer != null) {
-                System.out.println("\nDropped table HUYLE.ROOM.\n");
-            }
-        } 
-        //dropping table failed.
-        catch (SQLException e) {
-            System.err.println("Table HUYLE.ROOM cannot be dropped"
-            + " as it does not exist.");
-        }
+        
 
 
         //dropping RoomClassification table
@@ -240,6 +199,52 @@ public class DatabaseInit {
         //dropping table failed.
         catch (SQLException e) {
             System.err.println("Table HUYLE.AMENITY cannot be dropped"
+            + " as it does not exist.");
+        }
+
+        //dropping Booking table
+        try {
+            String query = "drop table HUYLE.BOOKING";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nDropped table HUYLE.BOOKING.\n");
+            }
+        } 
+        //dropping table failed.
+        catch (SQLException e) {
+            System.err.println("Table HUYLE.BOOKING cannot be dropped"
+            + " as it does not exist.");
+        }
+
+        //dropping Room table
+        try {
+            String query = "drop table HUYLE.ROOM";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nDropped table HUYLE.ROOM.\n");
+            }
+        } 
+        //dropping table failed.
+        catch (SQLException e) {
+            System.err.println("Table HUYLE.ROOM cannot be dropped"
+            + " as it does not exist.");
+        }
+
+        //dropping Guest table
+        try {
+            String query = "drop table HUYLE.GUEST";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nDropped table HUYLE.GUEST.\n");
+            }
+            stmt.close();
+        } 
+        //dropping table failed.
+        catch (SQLException e) {
+            System.err.println("Table HUYLE.GUEST cannot be dropped"
             + " as it does not exist.");
         }
 
