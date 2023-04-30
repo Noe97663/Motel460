@@ -1,5 +1,4 @@
 import java.sql.*;
-import java.io.*;
 
 public class DatabaseInit {
     /*---------------------------------------------------------------------
@@ -157,6 +156,21 @@ public class DatabaseInit {
             + " as it does not exist.");
         }
 
+        //dropping Shift table
+        try {
+            String query = "drop table HUYLE.SHIFT";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nDropped table HUYLE.SHIFT.\n");
+            }
+        } 
+        //dropping table failed.
+        catch (SQLException e) {
+            System.err.println("Table HUYLE.SHIFT cannot be dropped"
+            + " as it does not exist.");
+        }
+
         //dropping Employee table
         try {
             String query = "drop table HUYLE.EMPLOYEE";
@@ -172,20 +186,6 @@ public class DatabaseInit {
             + " as it does not exist.");
         }
 
-        //dropping Shift table
-        try {
-            String query = "drop table HUYLE.SHIFT";
-            stmt = dbConn.createStatement();
-            answer = stmt.executeQuery(query);
-            if (answer != null) {
-                System.out.println("\nDropped table HUYLE.SHIFT.\n");
-            }
-        } 
-        //dropping table failed.
-        catch (SQLException e) {
-            System.err.println("Table HUYLE.SHIFT cannot be dropped"
-            + " as it does not exist.");
-        }
 
         //dropping Amenity table
         try {
@@ -445,6 +445,7 @@ public class DatabaseInit {
             query = "create table "+ tableName +
             " (EMPLOYEEID INT NOT NULL,"+ " STARTIME INT NOT NULL,"+
             "ENDTIME INT NOT NULL,"+ " WEEKSTARTDATE DATE NOT NULL,"+
+            " FOREIGN KEY (EMPLOYEEID) REFERENCES HUYLE.EMPLOYEE(EMPLOYEEID),"+
             " PRIMARY KEY (EMPLOYEEID,WEEKSTARTDATE))";
             stmt = dbConn.createStatement();
             answer = stmt.executeQuery(query);
