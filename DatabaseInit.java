@@ -99,6 +99,7 @@ public class DatabaseInit {
             if (answer != null) {
                 System.out.println("\nDropped table HUYLE.GUEST.\n");
             }
+            stmt.close();
         } 
         //dropping table failed.
         catch (SQLException e) {
@@ -273,14 +274,29 @@ public class DatabaseInit {
         Statement stmt = null;
         ResultSet answer = null;
         String tableName = "HUYLE.GUEST";
-        System.out.println("\nCreating table " + tableName);
         
         try {
             //creating table guest
             String query = "create table "+tableName +
-            " (GUESTID INT AUTO_INCREMENT,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
-            "CREDITCARDCOMPANY VARCHAR(10),"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
+            " (GUESTID INT NOT NULL,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
+            " CREDITCARDCOMPANY VARCHAR(10),"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
             " LASTNAME VARCHAR(10) NOT NULL,"+" PRIMARY KEY (GUESTID))";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nCreated the table "+tableName+".\n");
+            }
+
+            //granting select permissions to all users
+            query = "grant select on "+tableName+" to public";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+
+            //creating table amenity
+            tableName = "HUYLE.AMENITY";
+            query = "create table "+ tableName +
+            " (AMENITYID INT NOT NULL,"+ " NAME VARCHAR(10) NOT NULL,"+
+            "PRICE INT,"+" PRIMARY KEY (AMENITYID))";
             stmt = dbConn.createStatement();
             answer = stmt.executeQuery(query);
             if (answer != null) {
@@ -314,43 +330,8 @@ public class DatabaseInit {
             //creating table CLUBMEMBER
             tableName = "HUYLE.CLUBMEMBER";
             query = "create table "+ tableName +
-            " (GUESTID INT AUTO_INCREMENT,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
-            "CREDITCARDCOMPANY VARCHAR(10),"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
-            " LASTNAME VARCHAR(10) NOT NULL,"+" PRIMARY KEY (GUESTID))";
-            stmt = dbConn.createStatement();
-            answer = stmt.executeQuery(query);
-            if (answer != null) {
-                System.out.println("\nCreated the table "+tableName+".\n");
-            }
-
-            //granting select permissions to all users
-            query = "grant select on "+tableName+" to public";
-            stmt = dbConn.createStatement();
-            answer = stmt.executeQuery(query);
-
-            //creating table booking
-            tableName = "HUYLE.BOOKING";
-            query = "create table "+ tableName +
-            " (GUESTID INT AUTO_INCREMENT,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
-            "CREDITCARDCOMPANY VARCHAR(10),"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
-            " LASTNAME VARCHAR(10) NOT NULL,"+" PRIMARY KEY (GUESTID))";
-            stmt = dbConn.createStatement();
-            answer = stmt.executeQuery(query);
-            if (answer != null) {
-                System.out.println("\nCreated the table "+tableName+".\n");
-            }
-
-            //granting select permissions to all users
-            query = "grant select on "+tableName+" to public";
-            stmt = dbConn.createStatement();
-            answer = stmt.executeQuery(query);
-
-            //creating table transaction
-            tableName = "HUYLE.TRANSACTION";
-            query = "create table "+ tableName +
-            " (GUESTID INT AUTO_INCREMENT,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
-            "CREDITCARDCOMPANY VARCHAR(10),"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
-            " LASTNAME VARCHAR(10) NOT NULL,"+" PRIMARY KEY (GUESTID))";
+            " (GUESTID INT NOT NULL,"+ " POINTS INT NOT NULL,"+
+            " FOREIGN KEY (GUESTID) REFERENCES HUYLE.GUEST(GUESTID))";
             stmt = dbConn.createStatement();
             answer = stmt.executeQuery(query);
             if (answer != null) {
@@ -365,9 +346,8 @@ public class DatabaseInit {
             //creating table room
             tableName = "HUYLE.ROOM";
             query = "create table "+ tableName +
-            " (GUESTID INT AUTO_INCREMENT,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
-            "CREDITCARDCOMPANY VARCHAR(10),"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
-            " LASTNAME VARCHAR(10) NOT NULL,"+" PRIMARY KEY (GUESTID))";
+            " (ROOMID INT NOT NULL,"+
+            " TYPE VARCHAR(10) NOT NULL,"+" PRIMARY KEY (ROOMID))";
             stmt = dbConn.createStatement();
             answer = stmt.executeQuery(query);
             if (answer != null) {
@@ -378,13 +358,54 @@ public class DatabaseInit {
             query = "grant select on "+tableName+" to public";
             stmt = dbConn.createStatement();
             answer = stmt.executeQuery(query);
+
+            //creating table booking
+            tableName = "HUYLE.BOOKING";
+            query = "create table "+ tableName +
+            " (BOOKINGID INT NOT NULL,"+ " STARTDATE DATE NOT NULL,"+
+            "ENDDATE DATE NOT NULL,"+ " ROOMID INT NOT NULL,"+
+            " GUESTID INT NOT NULL,"+
+            " FOREIGN KEY (GUESTID) REFERENCES HUYLE.GUEST(GUESTID),"+
+            " FOREIGN KEY (ROOMID) REFERENCES HUYLE.ROOM(ROOMID),"+
+            " PRIMARY KEY (BOOKINGID))";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nCreated the table "+tableName+".\n");
+            }
+
+            //granting select permissions to all users
+            query = "grant select on "+tableName+" to public";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+
+            //creating table transaction
+            tableName = "HUYLE.TRANSACTION";
+            query = "create table "+ tableName +
+            " (TRANSACTIONNO INT NOT NULL,"+ " BOOKINGID INT NOT NULL,"+
+            " AMENITYID INT NOT NULL,"+ " EXTRACHARGE INT,"+
+            " TIPS INT,"+
+            " FOREIGN KEY (BOOKINGID) REFERENCES HUYLE.BOOKING(BOOKINGID),"+
+            " FOREIGN KEY (AMENITYID) REFERENCES HUYLE.AMENITY(AMENITYID),"+
+            " PRIMARY KEY (TRANSACTIONNO))";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nCreated the table "+tableName+".\n");
+            }
+
+            //granting select permissions to all users
+            query = "grant select on "+tableName+" to public";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+
 
             //creating table roomclassification
             tableName = "HUYLE.ROOMCLASSIFICATION";
             query = "create table "+ tableName +
-            " (GUESTID INT AUTO_INCREMENT,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
-            "CREDITCARDCOMPANY VARCHAR(10),"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
-            " LASTNAME VARCHAR(10) NOT NULL,"+" PRIMARY KEY (GUESTID))";
+            " (TYPE VARCHAR(10) NOT NULL,"+ " PRICE INT NOT NULL,"+
+            "BEDS INT NOT NULL,"+ " BATHS INT NOT NULL,"+
+            " PRIMARY KEY (TYPE))";
             stmt = dbConn.createStatement();
             answer = stmt.executeQuery(query);
             if (answer != null) {
@@ -399,9 +420,9 @@ public class DatabaseInit {
             //creating table employee
             tableName = "HUYLE.EMPLOYEE";
             query = "create table "+ tableName +
-            " (GUESTID INT AUTO_INCREMENT,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
-            "CREDITCARDCOMPANY VARCHAR(10),"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
-            " LASTNAME VARCHAR(10) NOT NULL,"+" PRIMARY KEY (GUESTID))";
+            " (EMPLOYEEID INT NOT NULL,"+ " POSITION VARCHAR(20) NOT NULL,"+
+             " FIRSTNAME VARCHAR(20) NOT NULL,"+" LASTNAME VARCHAR(20) NOT NULL,"+
+             " PRIMARY KEY (EMPLOYEEID))";
             stmt = dbConn.createStatement();
             answer = stmt.executeQuery(query);
             if (answer != null) {
@@ -413,29 +434,13 @@ public class DatabaseInit {
             stmt = dbConn.createStatement();
             answer = stmt.executeQuery(query);
 
-            //creating table employee
-            tableName = "HUYLE.EMPLOYEE";
-            query = "create table "+ tableName +
-            " (GUESTID INT AUTO_INCREMENT,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
-            "CREDITCARDCOMPANY VARCHAR(10),"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
-            " LASTNAME VARCHAR(10) NOT NULL,"+" PRIMARY KEY (GUESTID))";
-            stmt = dbConn.createStatement();
-            answer = stmt.executeQuery(query);
-            if (answer != null) {
-                System.out.println("\nCreated the table "+tableName+".\n");
-            }
-
-            //granting select permissions to all users
-            query = "grant select on "+tableName+" to public";
-            stmt = dbConn.createStatement();
-            answer = stmt.executeQuery(query);
 
             //creating table shift
             tableName = "HUYLE.SHIFT";
             query = "create table "+ tableName +
-            " (GUESTID INT AUTO_INCREMENT,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
-            "CREDITCARDCOMPANY VARCHAR(10),"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
-            " LASTNAME VARCHAR(10) NOT NULL,"+" PRIMARY KEY (GUESTID))";
+            " (EMPLOYEEID INT NOT NULL,"+ " STARTIME INT NOT NULL,"+
+            "ENDTIME INT NOT NULL,"+ " WEEKSTARTDATE DATE NOT NULL,"+
+            " PRIMARY KEY (EMPLOYEEID,WEEKSTARTDATE))";
             stmt = dbConn.createStatement();
             answer = stmt.executeQuery(query);
             if (answer != null) {
@@ -447,22 +452,7 @@ public class DatabaseInit {
             stmt = dbConn.createStatement();
             answer = stmt.executeQuery(query);
 
-            //creating table amenity
-            tableName = "HUYLE.AMENITY";
-            query = "create table "+ tableName +
-            " (GUESTID INT AUTO_INCREMENT,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
-            "CREDITCARDCOMPANY VARCHAR(10),"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
-            " LASTNAME VARCHAR(10) NOT NULL,"+" PRIMARY KEY (GUESTID))";
-            stmt = dbConn.createStatement();
-            answer = stmt.executeQuery(query);
-            if (answer != null) {
-                System.out.println("\nCreated the table "+tableName+".\n");
-            }
-
-            //granting select permissions to all users
-            query = "grant select on "+tableName+" to public";
-            stmt = dbConn.createStatement();
-            answer = stmt.executeQuery(query);
+            
 
             stmt.close();
 
@@ -485,7 +475,6 @@ public class DatabaseInit {
         Connection dbConn = establishConnection(args);
         dropTables(dbConn);
         createTables(dbConn);
-        System.out.println("asdf");
 
     }   
 }
