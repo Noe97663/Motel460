@@ -1,18 +1,22 @@
 import java.io.*;
-
+// To compile and execute this program on lectura:
+// -Add the Oracle JDBC driver to your CLASSPATH environment variable:
+//     export CLASSPATH=/usr/lib/oracle/19.8/client64/lib/ojdbc8.jar:${CLASSPATH}
+//  -Compile java files
+//  -Run file
 public class DatabasePopulate {
     public static void main(String[] args) {
         BackEnd be = new BackEnd();
-        populateGuest("Guest.txt",be);
-        populateRating("Rating.txt",be);
-        populateClubMember("ClubMember.txt",be);
-        populateBooking("Booking.txt",be);
-        populateTransaction("Transaction.txt",be);
-        populateRoom("Room.txt",be);
-        populateRoomClassification("RoomClassification.txt",be);
-        populateEmployee("Employee.txt",be);
-        populateShift("Shift.txt",be);
-        populateAmenity("Amenity.txt",be);
+        populateGuest("Guest.csv",be);
+        populateRating("Rating.csv",be);
+        populateClubMember("Clubmember.csv",be);
+        populateBooking("Booking.csv",be);
+        populateTransaction("Transaction.csv",be);
+        populateRoom("Room.csv",be);
+        populateRoomClassification("RoomClassification.csv",be);
+        populateEmployee("Employee.csv",be);
+        populateShift("Shift.csv",be);
+        populateAmenity("Amenity.csv",be);
 
     }
 

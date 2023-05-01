@@ -1,5 +1,9 @@
 import java.sql.*;
-
+// To compile and execute this program on lectura:
+// -Add the Oracle JDBC driver to your CLASSPATH environment variable:
+//     export CLASSPATH=/usr/lib/oracle/19.8/client64/lib/ojdbc8.jar:${CLASSPATH}
+//  -Compile java files
+//  -Run file
 public class DatabaseInit {
     /*---------------------------------------------------------------------
     |  Method: establishConnection(String cmdLineArgs[])
