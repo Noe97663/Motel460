@@ -85,10 +85,37 @@ public class BackEnd {
 
     public boolean addGuest(String firstName, String lastName, String isStudent, String creditCardCompany) {
         assert isStudent == "0" || isStudent == "1" || isStudent == null;
+        //auto increment implementation
+        String prequery = "SELECT MAX(GUESTID) FROM GUEST";
+        int guestID = 0;
+        try{
+            ResultSet answer = stmt.executeQuery(prequery);
+            guestID = answer.getInt("MAX(GUESTID)");
+        }
+        catch (SQLException e) {
+        System.err.println("*** SQLException:  "
+                + "Could not calculate guestID.");
+        System.err.println("\tMessage:   " + e.getMessage());
+        System.err.println("\tSQLState:  " + e.getSQLState());
+        System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
+        guestID+=1;
+        
         //put single quote around String
-        String query = "INSERT INTO Guest (FirstName, LastName, StudentStatus, CreditCardCompany) VALUES (" 
+        String query = "INSERT INTO Guest (GuestID,FirstName, LastName, StudentStatus, CreditCardCompany) VALUES ("+guestID+","
             + "'" + firstName + "'" + ", " + "'" + lastName + "'" + ", " + isStudent + ", " + "'" + creditCardCompany + "'" + ")";
-
+        //returns true if successfully added
+        try {
+            stmt.execute(query);
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not add Rating.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return false;
     }
 

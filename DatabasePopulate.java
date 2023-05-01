@@ -111,7 +111,7 @@ public class DatabasePopulate {
             String line = null;  // content of one line/record of the CSV file
             reader.readLine();
             // one line in this file will be of the form:
-            // GuestID,AmenityID,Rating,RatingDate
+            // GuestID,Points
             while((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
                 System.out.println("adding: "+values[0]+ values[1]);
@@ -167,9 +167,9 @@ public class DatabasePopulate {
             // GuestID,AmenityID,Rating,RatingDate
             while((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
-                System.out.println("adding: "+values[0]+ values[1]+ values[2]+ values[3]);
+                System.out.println("adding: "+values[0]+ values[1]+ values[3]+ values[2]);
                 boolean success = be.addRating(Integer.parseInt(values[0]),
-                Integer.parseInt(values[1]), Integer.parseInt(values[2]), values[3]);
+                Integer.parseInt(values[1]), Integer.parseInt(values[3]), values[2]);
                 if(!success){
                     System.out.println("adding "+line+" failed");
                 }
@@ -217,11 +217,11 @@ public class DatabasePopulate {
             String line = null;  // content of one line/record of the CSV file
             reader.readLine();
             // one line in this file will be of the form:
-            // FirstName,LastName,StudentStatus,CreditCardCompany
+            // GuestID,FirstName,LastName,StudentStatus,CreditCardCompany
             while((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
-                System.out.println("adding: "+values[0]+ values[1]+ values[2]+ values[3]);
-                boolean success = be.addGuest(values[0], values[1], values[2], values[3]);
+                System.out.println("adding: "+values[1]+ values[2]+ values[3]+ values[4]);
+                boolean success = be.addGuest(values[1], values[2], values[3], values[4]);
                 if(!success){
                     System.out.println("adding "+line+" failed");
                 }
