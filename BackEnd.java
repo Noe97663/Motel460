@@ -282,8 +282,23 @@ public class BackEnd {
     }
 
     public boolean addBooking(int guestID, String startDate, String endDate, int roomID) {
-        String query = "Insert into Booking (GuestID, StartDate, EndDate, RoomID) VALUES (" 
-            + guestID + ", TO_DATE(" + startDate + ", 'YYYY-MM-DD'), TO_DATE(" + endDate + ", 'YYYY-MM-DD'), " + roomID + ")";
+        //auto increment implementation
+        String prequery = "SELECT MAX(bookingID) FROM BOOKING";
+        int bookingID = 0;
+        try{
+            ResultSet answer = stmt.executeQuery(prequery);
+            bookingID = answer.getInt("MAX(bookingID)");
+        }
+        catch (SQLException e) {
+        System.err.println("*** SQLException:  "
+                + "Could not calculate bookingID.");
+        System.err.println("\tMessage:   " + e.getMessage());
+        System.err.println("\tSQLState:  " + e.getSQLState());
+        System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
+        bookingID+=1;
+        String query = "Insert into Booking (BookingID, GuestID, StartDate, EndDate, RoomID) VALUES (" 
+            + guestID + ", TO_DATE(" + bookingID + "," + startDate + ", 'YYYY-MM-DD'), TO_DATE(" + endDate + ", 'YYYY-MM-DD'), " + roomID + ")";
         //returns true if successfully added
         try {
             stmt.executeUpdate(query);
@@ -345,8 +360,25 @@ public class BackEnd {
     }
 
     public boolean addTransaction(int bookingID, int amenityID, int extraCharge, int tip) {
-        String query = "INSERT INTO Transaction (BookingID, AmenityID, ExtraCharge, Tip) VALUES (" 
-            + bookingID + ", " + amenityID + ", " + extraCharge + ", " + tip + ")";
+
+        //auto increment implementation
+        String prequery = "SELECT MAX(transactionNO) FROM TRANSACTION";
+        int transactionNO = 0;
+        try{
+            ResultSet answer = stmt.executeQuery(prequery);
+            transactionNO = answer.getInt("MAX(transactionNO)");
+        }
+        catch (SQLException e) {
+        System.err.println("*** SQLException:  "
+                + "Could not calculate transactionNO.");
+        System.err.println("\tMessage:   " + e.getMessage());
+        System.err.println("\tSQLState:  " + e.getSQLState());
+        System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
+        transactionNO+=1;
+
+        String query = "INSERT INTO Transaction (transactionNO, BookingID, AmenityID, ExtraCharge, Tip) VALUES (" 
+            + transactionNO + "," + bookingID + ", " + amenityID + ", " + extraCharge + ", " + tip + ")";
         //returns true if successfully added
         try {
             stmt.executeUpdate(query);
@@ -447,7 +479,24 @@ public class BackEnd {
     }
 
     public boolean addEmployee(String firstName, String lastName, String position) {
-        String query = "INSERT INTO Employee (FirstName, LastName, Position) VALUES ('" + firstName + "', '" + lastName + "', '" + position + "')";
+
+        //auto increment implementation
+        String prequery = "SELECT MAX(employeeID) FROM EMPLOYEE";
+        int employeeID = 0;
+        try{
+            ResultSet answer = stmt.executeQuery(prequery);
+            employeeID = answer.getInt("MAX(employeeID)");
+        }
+        catch (SQLException e) {
+        System.err.println("*** SQLException:  "
+                + "Could not calculate employeeID.");
+        System.err.println("\tMessage:   " + e.getMessage());
+        System.err.println("\tSQLState:  " + e.getSQLState());
+        System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
+        employeeID+=1;
+
+        String query = "INSERT INTO Employee (EmployeeID, FirstName, LastName, Position) VALUES (" + employeeID + "'" + firstName + "', '" + lastName + "', '" + position + "')";
         //returns true if successfully added
         try {
             stmt.executeUpdate(query);
@@ -568,8 +617,24 @@ public class BackEnd {
     }
 
     public boolean addAmenity(String name, int price) {
-        String query = "INSERT INTO Amenity (Name, Price) VALUES (" + name + ", " + price + ")";
+        
+         //auto increment implementation
+         String prequery = "SELECT MAX(amenityID) FROM EMPLOYEE";
+         int amenityID = 0;
+         try{
+             ResultSet answer = stmt.executeQuery(prequery);
+             amenityID = answer.getInt("MAX(amenityID)");
+         }
+         catch (SQLException e) {
+         System.err.println("*** SQLException:  "
+                 + "Could not calculate amenityID.");
+         System.err.println("\tMessage:   " + e.getMessage());
+         System.err.println("\tSQLState:  " + e.getSQLState());
+         System.err.println("\tErrorCode: " + e.getErrorCode());
+         }
+         amenityID+=1;
         //returns true if successfully added
+        String query = "INSERT INTO Amenity (amenityID, Name, Price) VALUES ("+ amenityID + ", " + name + ", " + price + ")";
         try {
             stmt.executeUpdate(query);
             return true;
