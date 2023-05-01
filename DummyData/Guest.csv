@@ -1,25 +1,25 @@
 GuestID,FirstName,LastName,StudentStatus,CreditCardCompany
-0,John,Doe,1,Visa
-1,Jane,Doe,0,Mastercard
-2,Bob,Smith,1,American Express
-3,Alice,Johnson,0,Discover
-4,Emily,Williams,1,Visa
-5,Michael,Brown,0,Mastercard
-6,Sarah,Taylor,1,American Express
-7,David,Anderson,0,Discover
-8,Olivia,Jones,1,Visa
-9,James,Garcia,0,Mastercard
-10,Elizabeth,Martinez,1,American Express
-11,William,Rodriguez,0,Discover
-12,Sophia,Davis,1,Visa
-13,Joseph,Wilson,0,Mastercard
-14,Isabella,Perez,1,American Express
-15,Robert,Taylor,0,Discover
-16,Mia,Hernandez,1,Visa
-17,John,Lee,0,Mastercard
-18,Ava,Gonzalez,1,American Express
-19,Richard,Harris,0,Discover
-20,charlotte,Lewis,1,VISA
-21,Mary,Walker,0,mastercard 
-22,Alice,Hall,1,American Express 
-23,Peter,Yang,0 ,Discover
+1,John,Doe,1,Visa
+2,Jane,Doe,0,Mastercard
+3,Bob,Smith,1,American Express
+4,Alice,Johnson,0,Discover
+5,Emily,Williams,1,Visa
+6,Michael,Brown,0,Mastercard
+7,Sarah,Taylor,1,American Express
+8,David,Anderson,0,Discover
+9,Olivia,Jones,1,Visa
+10,James,Garcia,0,Mastercard
+11,Elizabeth,Martinez,1,American Express
+12,William,Rodriguez,0,Discover
+13,Sophia,Davis,1,Visa
+14,Joseph,Wilson,0,Mastercard
+15,Isabella,Perez,1,American Express
+16,Robert,Taylor,0,Discover
+17,Mia,Hernandez,1,Visa
+18,John,Lee,0,Mastercard
+19,Ava,Gonzalez,1,American Express
+20,Richard,Harris,0,Discover
+21,charlotte,Lewis,1,VISA
+22,Mary,Walker,0,mastercard 
+23,Alice,Hall,1,American Express 
+24,Peter,Yang,0 ,Discover
