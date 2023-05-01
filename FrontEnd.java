@@ -290,8 +290,8 @@ public class FrontEnd {
             } else{
                 System.out.println("---------- Please enter only 1/2/3/4/5/6/7/8 or -1 to exit ----------");
             }
-        // execute  
-        
+        // execute
+
         }      
 
     }
