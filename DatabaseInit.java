@@ -287,9 +287,9 @@ public class DatabaseInit {
         try {
             //creating table guest
             String query = "create table "+tableName +
-            " (GUESTID INT NOT NULL,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
-            " CREDITCARDCOMPANY VARCHAR(10),"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
-            " LASTNAME VARCHAR(10) NOT NULL,"+" PRIMARY KEY (GUESTID))";
+            " (GUESTID INT NOT NULL,"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
+            " LASTNAME VARCHAR(10) NOT NULL,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
+            " CREDITCARDCOMPANY VARCHAR(10),"+" PRIMARY KEY (GUESTID))";
             stmt = dbConn.createStatement();
             answer = stmt.executeQuery(query);
             if (answer != null) {
