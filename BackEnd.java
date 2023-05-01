@@ -126,6 +126,8 @@ public class BackEnd {
     public boolean deleteGuest(int guestID) {
         String query = "DELETE FROM Guest WHERE GuestID = " + guestID;
         //returns true if successfully deleted
+
+        // need to remove the guest info from all related tables
         try {
             stmt.executeUpdate(query);
             return true;
@@ -143,7 +145,7 @@ public class BackEnd {
     public boolean addRating(int guestID, int amenityID, int rating, String date) {
         //date is in YYYY-MM-DD format
         //convert to oracle date format
-        String query = "INSERT INTO Rating (GuestID, AmenityID, Rating, Date) VALUES (" 
+        String query = "INSERT INTO Rating (GuestID, AmenityID, Rating, RatingDate) VALUES (" 
             + guestID + ", " + amenityID + ", " + rating + ", " + "TO_DATE(" + date + ", 'YYYY-MM-DD'))";
         //returns true if successfully added
         try {
@@ -166,7 +168,7 @@ public class BackEnd {
         //update only rating
         String query = "UPDATE Rating SET Rating = " + rating 
             + " WHERE GuestID = " + guestID + " AND AmenityID = " 
-            + amenityID + " AND Date = TO_DATE(" + date + ", 'YYYY-MM-DD')";
+            + amenityID + " AND RatingDate = TO_DATE(" + date + ", 'YYYY-MM-DD')";
         //returns true if successfully updated
         try {
             stmt.executeUpdate(query);
@@ -184,7 +186,7 @@ public class BackEnd {
 
     public boolean deleteRating(int guestID, int amenityID, String date) {
         String query = "DELETE FROM Rating WHERE GuestID = " + guestID + " AND AmenityID = " 
-            + amenityID + " AND Date = TO_DATE(" + date + ", 'YYYY-MM-DD')";
+            + amenityID + " AND RatingDate = TO_DATE(" + date + ", 'YYYY-MM-DD')";
         //returns true if successfully deleted
         try {
             stmt.executeUpdate(query);

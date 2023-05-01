@@ -103,7 +103,7 @@ public class FrontEnd {
 
     public static void updatData(BackEnd backEnd, Scanner scn){
         System.out.println("Updating data on:");
-        System.out.println("1. Guest  2. Rating  3.ClubMembers 4.Booking\n" 
+        System.out.println("1. Guest  2. Rating  3.ClubMember 4.Booking\n" 
                             + "5. Employee  6.Shift  7. Amenity ");
         int field = scn.nextInt();
         if (field == 1){ // Guest
@@ -177,7 +177,7 @@ public class FrontEnd {
 
     public static void deleteData(BackEnd backEnd, Scanner scn){
         System.out.println("Deleting data on:");
-        System.out.println("1. Guest  2. Rating  3.ClubMembers  4.Booking \n" 
+        System.out.println("1. Guest  2. Rating  3.ClubMember  4.Booking \n" 
                             + "5. Employee  6.Shift  7. Amenity ");
         int field = scn.nextInt();
         if (field == 1){ // Guest

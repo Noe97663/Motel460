@@ -36,7 +36,7 @@ public class DatabaseInit {
         }
         System.out.print("Using username-password combo of: ");
         System.out.print(username+"-"+password);
-        System.out.println(" to access oracle database.");
+        System.out.println(" to access oracle database.\n");
  
  
         // load the (Oracle) JDBC driver by initializing its base
@@ -90,20 +90,6 @@ public class DatabaseInit {
         Statement stmt = null;
         ResultSet answer = null;
 
-        //dropping Guest table
-        try {
-            String query = "drop table HUYLE.GUEST";
-            stmt = dbConn.createStatement();
-            answer = stmt.executeQuery(query);
-            if (answer != null) {
-                System.out.println("\nDropped table HUYLE.GUEST.\n");
-            }
-        } 
-        //dropping table failed.
-        catch (SQLException e) {
-            System.err.println("Table HUYLE.GUEST cannot be dropped"
-            + " as it does not exist.");
-        }
 
         //dropping Rating table
         try {
@@ -135,20 +121,7 @@ public class DatabaseInit {
             + " as it does not exist.");
         }
 
-        //dropping Booking table
-        try {
-            String query = "drop table HUYLE.BOOKING";
-            stmt = dbConn.createStatement();
-            answer = stmt.executeQuery(query);
-            if (answer != null) {
-                System.out.println("\nDropped table HUYLE.BOOKING.\n");
-            }
-        } 
-        //dropping table failed.
-        catch (SQLException e) {
-            System.err.println("Table HUYLE.BOOKING cannot be dropped"
-            + " as it does not exist.");
-        }
+        
 
         //dropping Transaction table
         try {
@@ -165,20 +138,7 @@ public class DatabaseInit {
             + " as it does not exist.");
         }
 
-        //dropping Room table
-        try {
-            String query = "drop table HUYLE.ROOM";
-            stmt = dbConn.createStatement();
-            answer = stmt.executeQuery(query);
-            if (answer != null) {
-                System.out.println("\nDropped table HUYLE.ROOM.\n");
-            }
-        } 
-        //dropping table failed.
-        catch (SQLException e) {
-            System.err.println("Table HUYLE.ROOM cannot be dropped"
-            + " as it does not exist.");
-        }
+        
 
 
         //dropping RoomClassification table
@@ -193,21 +153,6 @@ public class DatabaseInit {
         //dropping table failed.
         catch (SQLException e) {
             System.err.println("Table HUYLE.ROOMCLASSIFICATION cannot be dropped"
-            + " as it does not exist.");
-        }
-
-        //dropping Employee table
-        try {
-            String query = "drop table HUYLE.EMPLOYEE";
-            stmt = dbConn.createStatement();
-            answer = stmt.executeQuery(query);
-            if (answer != null) {
-                System.out.println("\nDropped table HUYLE.EMPLOYEE.\n");
-            }
-        } 
-        //dropping table failed.
-        catch (SQLException e) {
-            System.err.println("Table HUYLE.EMPLOYEE cannot be dropped"
             + " as it does not exist.");
         }
 
@@ -226,6 +171,22 @@ public class DatabaseInit {
             + " as it does not exist.");
         }
 
+        //dropping Employee table
+        try {
+            String query = "drop table HUYLE.EMPLOYEE";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nDropped table HUYLE.EMPLOYEE.\n");
+            }
+        } 
+        //dropping table failed.
+        catch (SQLException e) {
+            System.err.println("Table HUYLE.EMPLOYEE cannot be dropped"
+            + " as it does not exist.");
+        }
+
+
         //dropping Amenity table
         try {
             String query = "drop table HUYLE.AMENITY";
@@ -241,6 +202,52 @@ public class DatabaseInit {
             + " as it does not exist.");
         }
 
+        //dropping Booking table
+        try {
+            String query = "drop table HUYLE.BOOKING";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nDropped table HUYLE.BOOKING.\n");
+            }
+        } 
+        //dropping table failed.
+        catch (SQLException e) {
+            System.err.println("Table HUYLE.BOOKING cannot be dropped"
+            + " as it does not exist.");
+        }
+
+        //dropping Room table
+        try {
+            String query = "drop table HUYLE.ROOM";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nDropped table HUYLE.ROOM.\n");
+            }
+        } 
+        //dropping table failed.
+        catch (SQLException e) {
+            System.err.println("Table HUYLE.ROOM cannot be dropped"
+            + " as it does not exist.");
+        }
+
+        //dropping Guest table
+        try {
+            String query = "drop table HUYLE.GUEST";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nDropped table HUYLE.GUEST.\n");
+            }
+            stmt.close();
+        } 
+        //dropping table failed.
+        catch (SQLException e) {
+            System.err.println("Table HUYLE.GUEST cannot be dropped"
+            + " as it does not exist.");
+        }
+
         
 
         //closing Statement object
@@ -253,13 +260,227 @@ public class DatabaseInit {
         
     }  // dropTables()
 
-    
+    /*---------------------------------------------------------------------
+    |  Method: createTables(Connection dbConn)
+    |
+    |  Purpose:        Creates the guest table.
+    |
+    |  Pre-condition:  A valid connection has been established to the oracle 
+    |                  database through the dbConn object.
+    |
+    |  Post-condition: The required tables have been created in the database.
+    |
+    |  Parameters:
+    |      dbConn - A Connection object used to drop tables in the database.
+    |
+    |  Returns:   None. Creates relevant tables in the oracle database.
+    *-------------------------------------------------------------------*/
+    public static void createTables(Connection dbConn){
+        Statement stmt = null;
+        ResultSet answer = null;
+        String tableName = "HUYLE.GUEST";
+        
+        try {
+            //creating table guest
+            String query = "create table "+tableName +
+            " (GUESTID INT NOT NULL,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
+            " CREDITCARDCOMPANY VARCHAR(10),"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
+            " LASTNAME VARCHAR(10) NOT NULL,"+" PRIMARY KEY (GUESTID))";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nCreated the table "+tableName+".\n");
+            }
+
+            //granting select permissions to all users
+            query = "grant select on "+tableName+" to public";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+
+            //creating table amenity
+            tableName = "HUYLE.AMENITY";
+            query = "create table "+ tableName +
+            " (AMENITYID INT NOT NULL,"+ " NAME VARCHAR(10) NOT NULL,"+
+            "PRICE INT,"+" PRIMARY KEY (AMENITYID))";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nCreated the table "+tableName+".\n");
+            }
+
+            //granting select permissions to all users
+            query = "grant select on "+tableName+" to public";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+
+            //creating table rating
+            tableName = "HUYLE.RATING";
+            query = "create table "+ tableName +
+            " (GUESTID INT,"+ " AMENITYID INT,"+
+            "RATINGDATE DATE,"+ " RATING INT NOT NULL,"+
+            " PRIMARY KEY (GUESTID,AMENITYID,RATINGDATE),"+
+            " FOREIGN KEY (GUESTID) REFERENCES HUYLE.GUEST(GUESTID),"+
+            "FOREIGN KEY (AMENITYID) REFERENCES HUYLE.AMENITY(AMENITYID))";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nCreated the table "+tableName+".\n");
+            }
+
+            //granting select permissions to all users
+            query = "grant select on "+tableName+" to public";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+
+            //creating table CLUBMEMBER
+            tableName = "HUYLE.CLUBMEMBER";
+            query = "create table "+ tableName +
+            " (GUESTID INT NOT NULL,"+ " POINTS INT NOT NULL,"+
+            " FOREIGN KEY (GUESTID) REFERENCES HUYLE.GUEST(GUESTID))";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nCreated the table "+tableName+".\n");
+            }
+
+            //granting select permissions to all users
+            query = "grant select on "+tableName+" to public";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+
+            //creating table room
+            tableName = "HUYLE.ROOM";
+            query = "create table "+ tableName +
+            " (ROOMID INT NOT NULL,"+
+            " TYPE VARCHAR(10) NOT NULL,"+" PRIMARY KEY (ROOMID))";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nCreated the table "+tableName+".\n");
+            }
+
+            //granting select permissions to all users
+            query = "grant select on "+tableName+" to public";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+
+            //creating table booking
+            tableName = "HUYLE.BOOKING";
+            query = "create table "+ tableName +
+            " (BOOKINGID INT NOT NULL,"+ " STARTDATE DATE NOT NULL,"+
+            "ENDDATE DATE NOT NULL,"+ " ROOMID INT NOT NULL,"+
+            " GUESTID INT NOT NULL,"+
+            " FOREIGN KEY (GUESTID) REFERENCES HUYLE.GUEST(GUESTID),"+
+            " FOREIGN KEY (ROOMID) REFERENCES HUYLE.ROOM(ROOMID),"+
+            " PRIMARY KEY (BOOKINGID))";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nCreated the table "+tableName+".\n");
+            }
+
+            //granting select permissions to all users
+            query = "grant select on "+tableName+" to public";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+
+            //creating table transaction
+            tableName = "HUYLE.TRANSACTION";
+            query = "create table "+ tableName +
+            " (TRANSACTIONNO INT NOT NULL,"+ " BOOKINGID INT NOT NULL,"+
+            " AMENITYID INT NOT NULL,"+ " EXTRACHARGE INT,"+
+            " TIPS INT,"+
+            " FOREIGN KEY (BOOKINGID) REFERENCES HUYLE.BOOKING(BOOKINGID),"+
+            " FOREIGN KEY (AMENITYID) REFERENCES HUYLE.AMENITY(AMENITYID),"+
+            " PRIMARY KEY (TRANSACTIONNO))";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nCreated the table "+tableName+".\n");
+            }
+
+            //granting select permissions to all users
+            query = "grant select on "+tableName+" to public";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+
+
+            //creating table roomclassification
+            tableName = "HUYLE.ROOMCLASSIFICATION";
+            query = "create table "+ tableName +
+            " (TYPE VARCHAR(10) NOT NULL,"+ " PRICE INT NOT NULL,"+
+            "BEDS INT NOT NULL,"+ " BATHS INT NOT NULL,"+
+            " PRIMARY KEY (TYPE))";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nCreated the table "+tableName+".\n");
+            }
+
+            //granting select permissions to all users
+            query = "grant select on "+tableName+" to public";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+
+            //creating table employee
+            tableName = "HUYLE.EMPLOYEE";
+            query = "create table "+ tableName +
+            " (EMPLOYEEID INT NOT NULL,"+ " POSITION VARCHAR(20) NOT NULL,"+
+             " FIRSTNAME VARCHAR(20) NOT NULL,"+" LASTNAME VARCHAR(20) NOT NULL,"+
+             " PRIMARY KEY (EMPLOYEEID))";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nCreated the table "+tableName+".\n");
+            }
+
+            //granting select permissions to all users
+            query = "grant select on "+tableName+" to public";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+
+
+            //creating table shift
+            tableName = "HUYLE.SHIFT";
+            query = "create table "+ tableName +
+            " (EMPLOYEEID INT NOT NULL,"+ " STARTIME INT NOT NULL,"+
+            "ENDTIME INT NOT NULL,"+ " WEEKSTARTDATE DATE NOT NULL,"+
+            " FOREIGN KEY (EMPLOYEEID) REFERENCES HUYLE.EMPLOYEE(EMPLOYEEID),"+
+            " PRIMARY KEY (EMPLOYEEID,WEEKSTARTDATE))";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+            if (answer != null) {
+                System.out.println("\nCreated the table "+tableName+".\n");
+            }
+
+            //granting select permissions to all users
+            query = "grant select on "+tableName+" to public";
+            stmt = dbConn.createStatement();
+            answer = stmt.executeQuery(query);
+
+            
+
+            stmt.close();
+
+        } 
+        catch (SQLException e) {
+            System.err.println("Error while creating tables.");
+        }
+        try{
+            stmt.close();
+        }
+        catch(SQLException e){
+            System.out.println("Error while closing Statement.");
+        }
+
+    }  // createTables()
+
 
     public static void main(String[] args) {
         
         Connection dbConn = establishConnection(args);
         dropTables(dbConn);
-        System.out.println("asdf");
+        createTables(dbConn);
 
     }   
 }
