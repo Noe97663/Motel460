@@ -54,11 +54,9 @@ public class FrontEnd {
             int aID = scn.nextInt();
             System.out.println("Extra charges: ");
             int charges = scn.nextInt();
-            System.out.println("Paid?: (0/ 1) ");
-            int bool = scn.nextInt();
             System.out.println("Tips: ");
             int tips = scn.nextInt();
-            backEnd.addTransaction(bID, aID, charges, bool, tips);
+            backEnd.addTransaction(bID, aID, charges, tips);
         } else if (field == 6){ // Room
             System.out.println("Room Type: (Single/ Suite/ DeluxeSuite) ");
             String rt = scn.nextLine();
