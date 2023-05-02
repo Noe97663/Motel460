@@ -208,7 +208,7 @@ public class DatabasePopulate {
             while((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
                 System.out.println("adding: "+values[0]+ values[1]+ values[2]+ values[3]);
-                boolean success = be.addRoomClassification(values[1],values[2],values[3],values[4]);
+                boolean success = be.addRoomClassification(values[0],values[1],values[2],values[3]);
                 if(!success){
                     System.out.println("adding "+line+" failed");
                 }
@@ -261,7 +261,7 @@ public class DatabasePopulate {
             while((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
                 System.out.println("adding: "+values[0]+ values[1]);
-                boolean success = be.addRoom(Integer.parseInt(values[0]),values[2]);
+                boolean success = be.addRoom(Integer.parseInt(values[0]),values[1]);
                 if(!success){
                     System.out.println("adding "+line+" failed");
                 }
@@ -367,9 +367,9 @@ public class DatabasePopulate {
             // guestID,Start,End,roomID
             while((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
-                System.out.println("adding: "+values[0]+ values[1]+ values[2]+ values[3]);
-                boolean success = be.addBooking(Integer.parseInt(values[0]),
-                values[1], values[2], Integer.parseInt(values[3]));
+                System.out.println("adding: "+values[1]+ values[2]+ values[3]+ values[4]);
+                boolean success = be.addBooking(Integer.parseInt(values[1]),
+                values[2], values[3], Integer.parseInt(values[4]));
                 if(!success){
                     System.out.println("adding "+line+" failed");
                 }

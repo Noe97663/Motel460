@@ -356,7 +356,7 @@ public class DatabaseInit {
             tableName = "HUYLE.ROOM";
             query = "create table "+ tableName +
             " (ROOMID INT NOT NULL,"+
-            " TYPE VARCHAR(10) NOT NULL,"+" PRIMARY KEY (ROOMID))";
+            " TYPE VARCHAR(20) NOT NULL,"+" PRIMARY KEY (ROOMID))";
             stmt = dbConn.createStatement();
             answer = stmt.executeQuery(query);
             if (answer != null) {
@@ -412,7 +412,7 @@ public class DatabaseInit {
             //creating table roomclassification
             tableName = "HUYLE.ROOMCLASSIFICATION";
             query = "create table "+ tableName +
-            " (TYPE VARCHAR(10) NOT NULL,"+ " PRICE INT NOT NULL,"+
+            " (TYPE VARCHAR(20) NOT NULL,"+ " PRICE INT NOT NULL,"+
             "BEDS INT NOT NULL,"+ " BATHS INT NOT NULL,"+
             " PRIMARY KEY (TYPE))";
             stmt = dbConn.createStatement();
