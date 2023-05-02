@@ -289,7 +289,7 @@ public class DatabaseInit {
             String query = "create table "+tableName +
             " (GUESTID INT NOT NULL,"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
             " LASTNAME VARCHAR(10) NOT NULL,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
-            " CREDITCARDCOMPANY VARCHAR(10),"+" PRIMARY KEY (GUESTID))";
+            " CREDITCARDCOMPANY VARCHAR(20),"+" PRIMARY KEY (GUESTID))";
             stmt = dbConn.createStatement();
             answer = stmt.executeQuery(query);
             if (answer != null) {

@@ -180,8 +180,9 @@ public class BackEnd {
         //date is in YYYY-MM-DD format
         //convert to oracle date format
         String query = "INSERT INTO Rating (GuestID, AmenityID, Rating, RatingDate) VALUES (" 
-            + guestID + ", " + amenityID + ", " + rating + ", " + "TO_DATE(" + date + ", 'YYYY-MM-DD'))";
+            + guestID + ", " + amenityID + ", " + rating + ", " + "TO_DATE('" + date + "', 'YYYY-MM-DD'))";
         //returns true if successfully added
+        System.out.println(query);
         try {
             stmt.executeUpdate(query);
             return true;

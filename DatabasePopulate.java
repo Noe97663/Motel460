@@ -8,19 +8,21 @@ public class DatabasePopulate {
     public static void main(String[] args) {
         BackEnd be = new BackEnd();
         populateGuest("Guest.csv",be);
+        populateAmenity("Amenity.csv",be);
         populateRating("Rating.csv",be);
-        populateClubMember("Clubmember.csv",be);
+        populateClubMember("ClubMember.csv",be);
+        populateRoom("Room.csv",be);
         populateBooking("Booking.csv",be);
         populateTransaction("Transaction.csv",be);
-        populateRoom("Room.csv",be);
         populateRoomClassification("RoomClassification.csv",be);
         populateEmployee("Employee.csv",be);
         populateShift("Shift.csv",be);
-        populateAmenity("Amenity.csv",be);
+        
 
     }
 
     private static void populateAmenity(String CSVFile, BackEnd be) {
+        System.out.println("populating Amenity table");
         // Read CSV file
         File fileRef = null;                     // provides exists() method
         BufferedReader reader = null;            // provides buffered text I/O
@@ -125,6 +127,7 @@ public class DatabasePopulate {
     }
 
     private static void populateEmployee(String CSVFile, BackEnd be) {
+        System.out.println("populating Employee table");
         // Read CSV file
         File fileRef = null;                     // provides exists() method
         BufferedReader reader = null;            // provides buffered text I/O
@@ -177,6 +180,7 @@ public class DatabasePopulate {
     }
 
     private static void populateRoomClassification(String CSVFile, BackEnd be) {
+        System.out.println("populating RoomClassification table");
         // Read CSV file
         File fileRef = null;                     // provides exists() method
         BufferedReader reader = null;            // provides buffered text I/O
@@ -229,6 +233,7 @@ public class DatabasePopulate {
     }
 
     private static void populateRoom(String CSVFile, BackEnd be) {
+        System.out.println("populating Room table");
         // Read CSV file
         File fileRef = null;                     // provides exists() method
         BufferedReader reader = null;            // provides buffered text I/O
@@ -281,6 +286,7 @@ public class DatabasePopulate {
     }
 
     private static void populateTransaction(String CSVFile, BackEnd be) {
+        System.out.println("populating Transaction table");
         // Read CSV file
         File fileRef = null;                     // provides exists() method
         BufferedReader reader = null;            // provides buffered text I/O
@@ -334,6 +340,7 @@ public class DatabasePopulate {
     }
 
     private static void populateBooking(String CSVFile, BackEnd be) {
+        System.out.println("populating Booking table");
         // Read CSV file
         File fileRef = null;                     // provides exists() method
         BufferedReader reader = null;            // provides buffered text I/O
@@ -387,6 +394,7 @@ public class DatabasePopulate {
     }
 
     private static void populateClubMember(String CSVFile, BackEnd be) {
+        System.out.println("populating ClubMember table");
         // Read CSV file
         File fileRef = null;                     // provides exists() method
         BufferedReader reader = null;            // provides buffered text I/O
@@ -440,6 +448,7 @@ public class DatabasePopulate {
     }
 
     private static void populateRating(String CSVFile, BackEnd be) {
+        System.out.println("populating Rating table");
         // Read CSV file
         File fileRef = null;                     // provides exists() method
         BufferedReader reader = null;            // provides buffered text I/O
@@ -463,7 +472,7 @@ public class DatabasePopulate {
             String line = null;  // content of one line/record of the CSV file
             reader.readLine();
             // one line in this file will be of the form:
-            // GuestID,AmenityID,Rating,RatingDate
+            // GuestID,AmenityID,RatingDate,Rating
             while((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
                 System.out.println("adding: "+values[0]+ values[1]+ values[3]+ values[2]);
@@ -493,6 +502,7 @@ public class DatabasePopulate {
     }
 
     public static void populateGuest(String CSVFile, BackEnd be) {
+        System.out.println("populating Guest table");
         // Read CSV file
         File fileRef = null;                     // provides exists() method
         BufferedReader reader = null;            // provides buffered text I/O
