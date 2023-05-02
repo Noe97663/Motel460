@@ -49,21 +49,63 @@ public class BackEnd {
     /*---------------------------------------------------------------------
     |  Method query1
     |
-    |  Purpose:  This query returns the ResultSet containing the total bill
+    |  Purpose:  This query returns the integer containing the total bill
     |            for a bookingID. This is the price of the room plus the
     |            costs of any unpaid amenities plus tip.
     |
     |  Pre-condition:  Connection to the database has been established.
     |
-    |  Post-condition: The ResultSet is returned.
+    |  Post-condition: The price is returned.
     |
     |  Parameters:
     |      bookingID -- the bookingID for the bill.
     |
-    |  Returns:  ResultSet containing the total bill for a bookingID.
+    |  Returns:  int containing the total bill for a bookingID.
     *-------------------------------------------------------------------*/
-    public ResultSet query1(int bookingID) {
-        return null;
+    public double query1(int bookingID) {
+        double sum = 0.0;
+        String RoomTypeQuery = "SELECT Type from room where roomID = (SELECT RoomID FROM Booking where bookingID = "+ bookingID +")";
+        String roomType = "";
+        try{
+            ResultSet answer = stmt.executeQuery(RoomTypeQuery);
+            roomType = answer.getString("Type");
+        }
+        catch (SQLException e) {
+        System.err.println("*** SQLException:  "
+                + "Could not fetch type.");
+        System.err.println("\tMessage:   " + e.getMessage());
+        System.err.println("\tSQLState:  " + e.getSQLState());
+        System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
+        String roomPriceQuery = "Select roomPrice from RoomClassification where type = " + roomType;
+        String allTransactionsQuery = "SELECT TransactionNo, Price, ExtraCharge, Tips from Transaction, Amenity where " +
+                                        "bookingID = " + bookingID +" and "+
+                                        "Transaction.AmenityID = Amenity.AmenityID";
+        try {
+            ResultSet TransactionAnswer = stmt.executeQuery(allTransactionsQuery);
+            if (TransactionAnswer != null) {
+                while (TransactionAnswer.next()) {
+                    sum += TransactionAnswer.getInt("Price");
+                    sum += TransactionAnswer.getInt("ExtraCharge");
+                    sum += TransactionAnswer.getInt("Tips");                
+                }
+            }
+            ResultSet RoomPriceAnswer = stmt.executeQuery(allTransactionsQuery);
+            if (RoomPriceAnswer != null) {
+                while (RoomPriceAnswer.next()) {
+                    sum += RoomPriceAnswer.getInt("roomPrice");               
+                }
+            }
+        }
+        catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not calculate sum.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+            }
+        return sum;
+    
     }
 
     public ResultSet query2(String date) {
