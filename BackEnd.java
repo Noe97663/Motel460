@@ -63,7 +63,6 @@ public class BackEnd {
     |  Returns:  ResultSet containing the total bill for a bookingID.
     *-------------------------------------------------------------------*/
     public ResultSet query1(int bookingID) {
-        String query1 = "SELECT SUM(Price) FROM Products ";
         return null;
     }
 
