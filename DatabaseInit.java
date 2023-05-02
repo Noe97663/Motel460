@@ -1,5 +1,9 @@
 import java.sql.*;
-
+// To compile and execute this program on lectura:
+// -Add the Oracle JDBC driver to your CLASSPATH environment variable:
+//     export CLASSPATH=/usr/lib/oracle/19.8/client64/lib/ojdbc8.jar:${CLASSPATH}
+//  -Compile java files
+//  -Run file
 public class DatabaseInit {
     /*---------------------------------------------------------------------
     |  Method: establishConnection(String cmdLineArgs[])
@@ -283,9 +287,9 @@ public class DatabaseInit {
         try {
             //creating table guest
             String query = "create table "+tableName +
-            " (GUESTID INT NOT NULL,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
-            " CREDITCARDCOMPANY VARCHAR(10),"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
-            " LASTNAME VARCHAR(10) NOT NULL,"+" PRIMARY KEY (GUESTID))";
+            " (GUESTID INT NOT NULL,"+ " FIRSTNAME VARCHAR(10) NOT NULL,"+
+            " LASTNAME VARCHAR(10) NOT NULL,"+ " STUDENTSTATUS VARCHAR(1) NOT NULL,"+
+            " CREDITCARDCOMPANY VARCHAR(20),"+" PRIMARY KEY (GUESTID))";
             stmt = dbConn.createStatement();
             answer = stmt.executeQuery(query);
             if (answer != null) {
@@ -352,7 +356,7 @@ public class DatabaseInit {
             tableName = "HUYLE.ROOM";
             query = "create table "+ tableName +
             " (ROOMID INT NOT NULL,"+
-            " TYPE VARCHAR(10) NOT NULL,"+" PRIMARY KEY (ROOMID))";
+            " TYPE VARCHAR(20) NOT NULL,"+" PRIMARY KEY (ROOMID))";
             stmt = dbConn.createStatement();
             answer = stmt.executeQuery(query);
             if (answer != null) {
@@ -408,7 +412,7 @@ public class DatabaseInit {
             //creating table roomclassification
             tableName = "HUYLE.ROOMCLASSIFICATION";
             query = "create table "+ tableName +
-            " (TYPE VARCHAR(10) NOT NULL,"+ " PRICE INT NOT NULL,"+
+            " (TYPE VARCHAR(20) NOT NULL,"+ " PRICE INT NOT NULL,"+
             "BEDS INT NOT NULL,"+ " BATHS INT NOT NULL,"+
             " PRIMARY KEY (TYPE))";
             stmt = dbConn.createStatement();

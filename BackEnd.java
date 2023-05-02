@@ -3,6 +3,11 @@ import java.sql.*;
 public class BackEnd {
     Connection dbconn = null;
     Statement stmt = null;
+    public static void main(String args[]){
+        BackEnd be = new BackEnd();
+        be.addGuest("Gavin", "Pogson", "1", null);
+        be.addGuest("Noel", "Pogson", "1", null);
+    }
     public BackEnd() {
         final String oracleURL =   // Magic lectura -> aloe access spell
                     "jdbc:oracle:thin:@aloe.cs.arizona.edu:1521:oracle";
@@ -131,7 +136,9 @@ public class BackEnd {
         int guestID = 0;
         try{
             ResultSet answer = stmt.executeQuery(prequery);
-            guestID = answer.getInt("MAX(GUESTID)");
+            while (answer.next()) {
+                guestID = answer.getInt("MAX(GUESTID)");
+            }
         }
         catch (SQLException e) {
         System.err.println("*** SQLException:  "
@@ -214,8 +221,9 @@ public class BackEnd {
         //date is in YYYY-MM-DD format
         //convert to oracle date format
         String query = "INSERT INTO Rating (GuestID, AmenityID, Rating, RatingDate) VALUES (" 
-            + guestID + ", " + amenityID + ", " + rating + ", " + "TO_DATE(" + date + ", 'YYYY-MM-DD'))";
+            + guestID + ", " + amenityID + ", " + rating + ", " + "TO_DATE('" + date + "', 'YYYY-MM-DD'))";
         //returns true if successfully added
+        System.out.println(query);
         try {
             stmt.executeUpdate(query);
             return true;
@@ -328,7 +336,9 @@ public class BackEnd {
         int bookingID = 0;
         try{
             ResultSet answer = stmt.executeQuery(prequery);
-            bookingID = answer.getInt("MAX(bookingID)");
+            while (answer.next()) {
+                bookingID = answer.getInt("MAX(bookingID)");
+            }
         }
         catch (SQLException e) {
         System.err.println("*** SQLException:  "
@@ -338,8 +348,9 @@ public class BackEnd {
         System.err.println("\tErrorCode: " + e.getErrorCode());
         }
         bookingID+=1;
-        String query = "Insert into Booking (BookingID, GuestID, StartDate, EndDate, RoomID) VALUES (" 
-            + guestID + ", TO_DATE(" + bookingID + "," + startDate + ", 'YYYY-MM-DD'), TO_DATE(" + endDate + ", 'YYYY-MM-DD'), " + roomID + ")";
+        String query = "Insert into Booking (BookingID, GuestID, StartDate, EndDate, RoomID) VALUES (" + bookingID + ", " 
+            + guestID + ", TO_DATE('" + startDate + "'', 'YYYY-MM-DD'), TO_DATE('" + endDate + "'', 'YYYY-MM-DD'), " + roomID + ")";
+        System.out.println(query);
         //returns true if successfully added
         try {
             stmt.executeUpdate(query);
@@ -359,10 +370,10 @@ public class BackEnd {
         //if roomID is -1, then don't update roomID
         String setStatement = "SET ";
         if (startDate != null) {
-            setStatement += "StartDate = TO_DATE(" + startDate + ", 'YYYY-MM-DD'), ";
+            setStatement += "StartDate = TO_DATE('" + startDate + "'', 'YYYY-MM-DD'), ";
         }
         if (endDate != null) {
-            setStatement += "EndDate = TO_DATE(" + endDate + ", 'YYYY-MM-DD'), ";
+            setStatement += "EndDate = TO_DATE('" + endDate + "'', 'YYYY-MM-DD'), ";
         }
         if (roomID != -1) {
             setStatement += "RoomID = " + roomID + ", ";
@@ -407,7 +418,9 @@ public class BackEnd {
         int transactionNO = 0;
         try{
             ResultSet answer = stmt.executeQuery(prequery);
-            transactionNO = answer.getInt("MAX(transactionNO)");
+            while (answer.next()) {
+                transactionNO = answer.getInt("MAX(transactionNO)");
+            }
         }
         catch (SQLException e) {
         System.err.println("*** SQLException:  "
@@ -418,7 +431,7 @@ public class BackEnd {
         }
         transactionNO+=1;
 
-        String query = "INSERT INTO Transaction (transactionNO, BookingID, AmenityID, ExtraCharge, Tip) VALUES (" 
+        String query = "INSERT INTO Transaction (transactionNO, BookingID, AmenityID, ExtraCharge, Tips) VALUES (" 
             + transactionNO + "," + bookingID + ", " + amenityID + ", " + extraCharge + ", " + tip + ")";
         //returns true if successfully added
         try {
@@ -526,7 +539,9 @@ public class BackEnd {
         int employeeID = 0;
         try{
             ResultSet answer = stmt.executeQuery(prequery);
-            employeeID = answer.getInt("MAX(employeeID)");
+            while (answer.next()) {
+                employeeID = answer.getInt("MAX(employeeID)");
+            }
         }
         catch (SQLException e) {
         System.err.println("*** SQLException:  "
@@ -537,7 +552,7 @@ public class BackEnd {
         }
         employeeID+=1;
 
-        String query = "INSERT INTO Employee (EmployeeID, FirstName, LastName, Position) VALUES (" + employeeID + "'" + firstName + "', '" + lastName + "', '" + position + "')";
+        String query = "INSERT INTO Employee (EmployeeID, FirstName, LastName, Position) VALUES (" + employeeID + ",'" + firstName + "', '" + lastName + "', '" + position + "')";
         //returns true if successfully added
         try {
             stmt.executeUpdate(query);
@@ -664,7 +679,9 @@ public class BackEnd {
          int amenityID = 0;
          try{
              ResultSet answer = stmt.executeQuery(prequery);
-             amenityID = answer.getInt("MAX(amenityID)");
+             while (answer.next()) {
+                amenityID = answer.getInt("MAX(amenityID)");
+             }
          }
          catch (SQLException e) {
          System.err.println("*** SQLException:  "
@@ -734,7 +751,7 @@ public class BackEnd {
     public boolean addRoomClassification(String Type, String Price, String Beds, String Baths) {
         //returns true if successfully added
         
-        String query = "INSERT INTO RoomClassification (Type, Price, Beds, Baths) VALUES ('" + Type + "'', " + Price + ", " + Beds + ", " + Baths + ")";
+        String query = "INSERT INTO RoomClassification (Type, Price, Beds, Baths) VALUES ('" + Type + "', " + Price + ", " + Beds + ", " + Baths + ")";
         try {
             stmt.executeUpdate(query);
             return true;
