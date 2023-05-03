@@ -114,7 +114,10 @@ public class BackEnd {
     }
 
     public ResultSet query2(String date) {
-        String query = "select * from huyle.booking where enddate < to_date('2023-05-15','YYYY-MM-DD');"; // sample, not final
+        String query = "select guest.firstname, guest.lastname, guest.studentstatus, booking.roomid" 
+                    +  "from huyle.booking, huyle.guest " 
+                    +  "where enddate > to_date('" + date + "','YYYY-MM-DD') and startdate < to_date('" + date + "','YYYY-MM-DD'') and booking.guestid = guest.guestid"
+                    +  "order by booking.roomid"; // sample, not final missing group by studentstatus
         return null;
     }
 
