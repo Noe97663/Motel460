@@ -117,7 +117,7 @@ public class BackEnd {
         String query = "select guest.firstname, guest.lastname, guest.studentstatus, booking.roomid" 
                     +  "from huyle.booking, huyle.guest " 
                     +  "where enddate > to_date('" + date + "','YYYY-MM-DD') and startdate < to_date('" + date + "','YYYY-MM-DD'') and booking.guestid = guest.guestid"
-                    +  "order by booking.roomid"; // sample, not final missing group by studentstatus
+                    +  "group by firstname, lastname, studentstatus, roomid order by roomid";
         return null;
     }
 
