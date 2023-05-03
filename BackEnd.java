@@ -114,6 +114,7 @@ public class BackEnd {
     }
 
     public ResultSet query2(String date) {
+        String query = "select * from huyle.booking where enddate < to_date('2023-05-15','YYYY-MM-DD');"; // sample, not final
         return null;
     }
 
