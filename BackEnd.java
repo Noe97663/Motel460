@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 public class BackEnd {
     Connection dbconn = null;
@@ -83,24 +84,42 @@ public class BackEnd {
                     sum += TransactionAnswer.getInt("Tips");                
                 }
             }
-            /*
             // ----- GETTING ROOM TYPES 
             String RoomTypeQuery = "SELECT Type from room where roomID = (SELECT RoomID FROM Booking where bookingID = "+ bookingID +")";
-            String roomType = "";
+            ArrayList<String> roomType = new ArrayList<>();
             ResultSet roomTypeAnswer = stmt.executeQuery(RoomTypeQuery);
             if (roomTypeAnswer != null) {
                 while (roomTypeAnswer.next()) {
                     // ----- GET EACH TYPE
-                    roomType = roomTypeAnswer.getString("Type");     
-                    String roomPriceQuery = "Select Price from RoomClassification where type = '" + roomType + "'";
-                    ResultSet roomPriceAnswer = stmt.executeQuery(roomPriceQuery);
-                    // ----- ADD EACH (ROOM PRICE X NUM DAYS)
-                    if (roomPriceAnswer != null) {
-                        sum += roomPriceAnswer.getInt("Price"); // * numDays          
-                    }
+                    roomType.add(roomTypeAnswer.getString("Type"));     
                 }
             }
-            */
+            // ---- GET DATES FOR THE STAY
+            String roomDates = "Select StartDate, EndDate from Booking where BookingID = " + bookingID;
+            ResultSet roomDatesAnswer = stmt.executeQuery(roomDates);
+            String[] StartDate;
+            String[] EndDate;
+            int numDays = 0;
+            if (roomDatesAnswer != null) {
+                StartDate = roomDatesAnswer.getString("StartDate").split("-");         
+                EndDate = roomDatesAnswer.getString("EndDate").split("-");         
+                // ---- GET NUM DAYS FOR THE STAY FROM THE DATES
+                if(Integer.parseInt(StartDate[1]) == Integer.parseInt(EndDate[1])){
+                    // --- DATES IN THE SAME MONTH
+                    numDays = Integer.parseInt(EndDate[2]) - Integer.parseInt(StartDate[2]);
+                }
+                else{
+                    // --- DATES NOT IN SAME MONTH
+                    int[] months = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+                    numDays = (Integer.parseInt(EndDate[2])+ months[Integer.parseInt(EndDate[1])+1]) - Integer.parseInt(StartDate[2]);
+                }
+            }
+            String roomPriceQuery = "Select Price from RoomClassification where type = '" + roomType + "'";
+            ResultSet roomPriceAnswer = stmt.executeQuery(roomPriceQuery);
+             // ----- ADD EACH (ROOM PRICE X NUM DAYS)
+            if (roomPriceAnswer != null) {
+                sum += roomPriceAnswer.getInt("Price") * numDays;     
+            }
         }
         catch (SQLException e) {
             System.err.println("*** SQLException:  "
