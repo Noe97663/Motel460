@@ -485,6 +485,11 @@ public class DatabaseInit {
         Connection dbConn = establishConnection(args);
         dropTables(dbConn);
         createTables(dbConn);
+        try {
+            dbConn.close();
+        } catch (SQLException e) {
+            System.out.println("Closing the connection failed.");
+        }
 
     }   
 }
