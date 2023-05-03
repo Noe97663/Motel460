@@ -83,6 +83,7 @@ public class BackEnd {
                     sum += TransactionAnswer.getInt("Tips");                
                 }
             }
+            /*
             // ----- GETTING ROOM TYPES 
             String RoomTypeQuery = "SELECT Type from room where roomID = (SELECT RoomID FROM Booking where bookingID = "+ bookingID +")";
             String roomType = "";
@@ -91,17 +92,15 @@ public class BackEnd {
                 while (roomTypeAnswer.next()) {
                     // ----- GET EACH TYPE
                     roomType = roomTypeAnswer.getString("Type");     
-                    String roomPriceQuery = "Select roomPrice from RoomClassification where type = '" + roomType + "'";
+                    String roomPriceQuery = "Select Price from RoomClassification where type = '" + roomType + "'";
                     ResultSet roomPriceAnswer = stmt.executeQuery(roomPriceQuery);
                     // ----- ADD EACH (ROOM PRICE X NUM DAYS)
                     if (roomPriceAnswer != null) {
-                        while (roomPriceAnswer.next()) {
-                            sum += roomPriceAnswer.getInt("roomPrice"); // * numDays          
-                        }
+                        sum += roomPriceAnswer.getInt("Price"); // * numDays          
                     }
                 }
             }
-           
+            */
         }
         catch (SQLException e) {
             System.err.println("*** SQLException:  "
