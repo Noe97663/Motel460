@@ -254,7 +254,7 @@ public class FrontEnd {
             System.out.println("2. Given a certain date, output the customers that are currently staying at the hotel along with their room numbers. Order by room numbers and group by category of customer.");
             System.out.println("3. Print the schedule of staff given a week (input the start date of the week by the user). A schedule contains the list of staff members working that week and a staff member’s working hours (start and stop times).");
             System.out.println("4. Print the average ratings of different amenities recorded within the range of two dates(input by the user) and sort them in descending order.");
-            System.out.println("5. DESIGN");
+            System.out.println("5. Print the top x guests with the most club460 points in descending order");
             System.out.println("6. Insert Data");
             System.out.println("7. Update Data");
             System.out.println("8. Delete Data");
@@ -285,7 +285,10 @@ public class FrontEnd {
                 String dateTo = scn.nextLine().strip();
                 ans = backEnd.query4(dateFrom, dateTo);
             } else if (quesNum == 5){ // TBD
-                // ans = backEnd.query5();
+                scn.nextLine();
+                System.out.println("Enter the value for x");
+                String val = scn.nextLine();
+                ans = backEnd.query5(val);
             }  else if (quesNum == 6){ //
                 insertData(backEnd, scn);
             } else if (quesNum == 7){

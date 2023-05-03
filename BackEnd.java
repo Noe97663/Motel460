@@ -189,7 +189,43 @@ public class BackEnd {
         return null;
     }
 
-    public ResultSet query5(String TBD) {
+    public ResultSet query5(String num) {
+        int numConverted = 0;
+        int count = 0;
+        try{
+            numConverted = Integer.parseInt(num);
+        }
+        catch (Exception e){
+            System.out.println("Invalid input. Returning to main menu.\n");
+            return null;
+        }
+        try{
+            // ----- GETTING AMENITY PRICES 
+            String query = "SELECT FirstName,LastName,Points from Guest,ClubMember "+
+            "where Guest.GuestID=ClubMember.GuestID "+
+            "order by points desc";
+            
+            ResultSet answer = stmt.executeQuery(query);
+            System.out.println();
+            if (answer != null) {
+                while (answer.next() && count<numConverted) {
+                    System.out.println(answer.getString("FIRSTNAME")+
+                    answer.getString("LASTNAME")+
+                    " has "+ answer.getInt("Points")+
+                    " Club460 points.");
+                    count++;
+                }
+                
+            }
+        }
+        catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not run query 5.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+            }
+        System.out.println("\n");
         return null;
     }
 
