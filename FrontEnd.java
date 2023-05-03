@@ -244,23 +244,9 @@ public class FrontEnd {
             if (quesNum == 1){
                 System.out.println("Enter the name of the customer: ");
                 int bID = scn.nextInt();
-                ans = backEnd.query1(bID);
+                double queryOneAnswer = backEnd.query1(bID);
+                System.out.println(queryOneAnswer);
                 // print data...
-                if (ans != null) {
-                    System.out.println("\nThe results of the query are:\n");
-                            // Get the data about the query result to learn
-                            // the attribute names and use them as column header
-                    ResultSetMetaData answermetadata = ans.getMetaData();
-                    for (int i = 1; i <= answermetadata.getColumnCount(); i++) {
-                        System.out.print(answermetadata.getColumnName(i) + "\t        ");
-                    }
-                    System.out.println();
-                        // Use next() to advance cursor through the result
-                        // tuples and print their attribute values
-                    while (ans.next()) {
-                        System.out.println(ans.getDate("dates") + "\t"); // TBD
-                    }
-                } 
             } else if (quesNum == 2){
                 System.out.println("Enter the date in this format: YYYY-MM-DD");
                 String date = scn.nextLine();
