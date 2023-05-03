@@ -114,11 +114,24 @@ public class BackEnd {
     
     }
 
-    public ResultSet query2(String date) {
+    public ResultSet query2(String date){
+        try{
         String query = "select guest.firstname, guest.lastname, guest.studentstatus, booking.roomid" 
                     +  "from huyle.booking, huyle.guest " 
                     +  "where enddate > to_date('" + date + "','YYYY-MM-DD') and startdate < to_date('" + date + "','YYYY-MM-DD'') and booking.guestid = guest.guestid"
                     +  "group by firstname, lastname, studentstatus, roomid order by roomid";
+        ResultSet ans = stmt.executeQuery(query);
+        if (ans != null){
+            return ans;
+        }
+        
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not calculate sum.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
         return null;
     }
 
