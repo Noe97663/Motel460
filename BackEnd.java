@@ -163,11 +163,12 @@ public class BackEnd {
         try{
             // ----- GETTING AMENITY PRICES 
             String query = "SELECT Name,AVG(Rating.Rating) from Amenity,Rating where " +
-                                        "Amenity.AmenityID = Rating.AmenityID where "+
-                                        "RatingDate between "+dateStart+" and "+dateEnd+
-                                         " group by Rating.AmenityID order by AVG(Rating.rating) desc";
+                                        "Amenity.AmenityID = Rating.AmenityID and "+
+                                        "RatingDate between TO_DATE('"+dateStart
+                                        +"','YYYY-MM-DD') and TO_DATE('"+dateEnd+
+                                         "','YYYY-MM-DD') group by RATING.AmenityID,Name"+
+                                         " order by AVG(Rating.rating) desc";
             
-            System.out.println(query);
             ResultSet answer = stmt.executeQuery(query);
             if (answer != null) {
                 while (answer.next()) {
@@ -184,6 +185,7 @@ public class BackEnd {
             System.err.println("\tSQLState:  " + e.getSQLState());
             System.err.println("\tErrorCode: " + e.getErrorCode());
             }
+        System.out.println("\n");
         return null;
     }
 
@@ -285,7 +287,6 @@ public class BackEnd {
         String query = "INSERT INTO Rating (GuestID, AmenityID, Rating, RatingDate) VALUES (" 
             + guestID + ", " + amenityID + ", " + rating + ", " + "TO_DATE('" + date + "', 'YYYY-MM-DD'))";
         //returns true if successfully added
-        System.out.println(query);
         try {
             stmt.executeUpdate(query);
             return true;
@@ -412,7 +413,6 @@ public class BackEnd {
         bookingID+=1;
         String query = "Insert into Booking (BookingID, GuestID, StartDate, EndDate, RoomID) VALUES (" + bookingID + ", " 
             + guestID + ", TO_DATE('" + startDate + "', 'YYYY-MM-DD'), TO_DATE('" + endDate + "', 'YYYY-MM-DD'), " + roomID + ")";
-        System.out.println(query);
         //returns true if successfully added
         try {
             stmt.executeUpdate(query);
@@ -676,7 +676,7 @@ public class BackEnd {
 
     public boolean addShift(String EmployeeID, String StartTime, String EndTime, String WeekStartDate) {
         //returns true if successfully added
-        WeekStartDate += "TO_DATE(" + WeekStartDate + ", 'YYYY-MM-DD')";
+        WeekStartDate = "TO_DATE('" + WeekStartDate + "', 'YYYY-MM-DD')";
         String query = "INSERT INTO Shift (EmployeeID, StartTime, EndTime, WeekStartDate) VALUES (" + EmployeeID + ", " + StartTime + ", " + EndTime + ", " + WeekStartDate + ")";
         try {
             stmt.executeUpdate(query);

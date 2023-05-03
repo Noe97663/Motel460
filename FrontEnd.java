@@ -15,7 +15,7 @@ public class FrontEnd {
             field = Integer.parseInt(fieldString);
         }
         catch (Exception e){
-            System.out.println("Invalid input. Insert Failed.");
+            System.out.println("Invalid input. Insert Failed.\n");
         }
         if (field == 1){ // Guest
             System.out.println("Is student?: (0/ 1) ");
@@ -120,7 +120,7 @@ public class FrontEnd {
             field = Integer.parseInt(fieldString);
         }
         catch (Exception e){
-            System.out.println("Invalid input. Update Failed.");
+            System.out.println("Invalid input. Update Failed.\n");
         }
         if (field == 1){ // Guest
             System.out.println("Guest ID: ");
@@ -202,7 +202,7 @@ public class FrontEnd {
             field = Integer.parseInt(fieldString);
         }
         catch (Exception e){
-            System.out.println("Invalid input. Delete Failed.");
+            System.out.println("Invalid input. Delete Failed.\n");
         }
         if (field == 1){ // Guest
             System.out.println("Guest ID: ");
@@ -249,7 +249,7 @@ public class FrontEnd {
         while (conti == 1){
             // display menu when run 
 
-            System.out.println("Hello, what would you like to know?");
+            System.out.println("What would you like to know?");
             System.out.println("1. Print a current bill (total $) for a customer for their stay and all unpaid amenities.");
             System.out.println("2. Given a certain date, output the customers that are currently staying at the hotel along with their room numbers. Order by room numbers and group by category of customer.");
             System.out.println("3. Print the schedule of staff given a week (input the start date of the week by the user). A schedule contains the list of staff members working that week and a staff member’s working hours (start and stop times).");

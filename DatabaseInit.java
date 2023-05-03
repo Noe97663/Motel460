@@ -447,7 +447,7 @@ public class DatabaseInit {
             //creating table shift
             tableName = "HUYLE.SHIFT";
             query = "create table "+ tableName +
-            " (EMPLOYEEID INT NOT NULL,"+ " STARTIME INT NOT NULL,"+
+            " (EMPLOYEEID INT NOT NULL,"+ " STARTTIME INT NOT NULL,"+
             "ENDTIME INT NOT NULL,"+ " WEEKSTARTDATE DATE NOT NULL,"+
             " FOREIGN KEY (EMPLOYEEID) REFERENCES HUYLE.EMPLOYEE(EMPLOYEEID),"+
             " PRIMARY KEY (EMPLOYEEID,WEEKSTARTDATE))";
