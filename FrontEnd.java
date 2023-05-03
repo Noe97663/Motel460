@@ -238,7 +238,7 @@ public class FrontEnd {
                 System.out.println("--------------------------------------------------");
             }
             menuOn = 0;
-            System.out.println("Enter 1/2/3/4/5 or -1 to exit: ");
+            System.out.println("Enter 1/2/3/4/5/6/7/8 or -1 to exit: ");
             ResultSet ans;
             int quesNum = scn.nextInt();  // Read user input
             if (quesNum == 1){
