@@ -116,15 +116,16 @@ public class BackEnd {
 
     public ResultSet query2(String date){
         try{
-        String query = "select guest.firstname, guest.lastname, guest.studentstatus, booking.roomid" 
-                    +  "from huyle.booking, huyle.guest " 
-                    +  "where enddate > to_date('" + date + "','YYYY-MM-DD') and startdate < to_date('" + date + "','YYYY-MM-DD'') and booking.guestid = guest.guestid"
-                    +  "group by firstname, lastname, studentstatus, roomid order by roomid";
+        String query = "select guest.guestid , firstname, lastname, studentstatus, points, roomid " 
+                    +  "from huyle.guest join huyle.booking " 
+                    +  "on enddate > to_date('" + date + "','YYYY-MM-DD') and startdate < to_date('" + date + "','YYYY-MM-DD'') and booking.guestid = guest.guestid "
+                    +  "left join huyle.clubmember on huyle.clubmember.guestid = huyle.guest.guestid "
+                    +  "group by guest.guestid , firstname, lastname, studentstatus, points, roomid order by roomid";
         ResultSet ans = stmt.executeQuery(query);
         if (ans != null){
             return ans;
         }
-        
+
         } catch (SQLException e) {
             System.err.println("*** SQLException:  "
                     + "Could not calculate sum.");
