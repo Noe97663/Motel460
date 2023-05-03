@@ -264,7 +264,7 @@ public class FrontEnd {
             ResultSet ans;
             int quesNum = scn.nextInt();  // Read user input
             if (quesNum == 1){
-                System.out.println("Enter the name of the customer: ");
+                System.out.println("Enter the BookingID Associated with the Bill: ");
                 int bID = scn.nextInt();
                 double queryOneAnswer = backEnd.query1(bID);
                 System.out.println("SUM FROM Q1:" + queryOneAnswer);
