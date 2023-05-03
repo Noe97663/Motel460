@@ -70,7 +70,7 @@ public class BackEnd {
     public double query1(int bookingID) {
         double sum = 0.0; // --- STARTING SUM
         try{
-            // ----- GETTING AMENITY PRICES
+            // ----- GETTING AMENITY PRICES 
             String allTransactionsQuery = "SELECT TransactionNo, Price, ExtraCharge, Tips from Transaction, Amenity where " +
                                         "bookingID = " + bookingID +" and "+
                                         "Transaction.AmenityID = Amenity.AmenityID";
