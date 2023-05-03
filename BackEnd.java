@@ -150,7 +150,7 @@ public class BackEnd {
         guestID+=1;
         
         //put single quote around String
-        String query = "INSERT INTO Guest (GuestID,FirstName, LastName, StudentStatus, CreditCardCompany) VALUES ("+guestID+","
+        String query = "INSERT INTO HUYLE.Guest (GuestID,FirstName, LastName, StudentStatus, CreditCardCompany) VALUES ("+guestID+","
             + "'" + firstName + "'" + ", " + "'" + lastName + "'" + ", " + isStudent + ", " + "'" + creditCardCompany + "'" + ")";
         //returns true if successfully added
         try {
@@ -349,7 +349,7 @@ public class BackEnd {
         }
         bookingID+=1;
         String query = "Insert into Booking (BookingID, GuestID, StartDate, EndDate, RoomID) VALUES (" + bookingID + ", " 
-            + guestID + ", TO_DATE('" + startDate + "'', 'YYYY-MM-DD'), TO_DATE('" + endDate + "'', 'YYYY-MM-DD'), " + roomID + ")";
+            + guestID + ", TO_DATE('" + startDate + "', 'YYYY-MM-DD'), TO_DATE('" + endDate + "', 'YYYY-MM-DD'), " + roomID + ")";
         System.out.println(query);
         //returns true if successfully added
         try {
@@ -675,12 +675,12 @@ public class BackEnd {
     public boolean addAmenity(String name, int price) {
         
          //auto increment implementation
-         String prequery = "SELECT MAX(amenityID) FROM EMPLOYEE";
+         String prequery = "SELECT MAX(AMENITYID) FROM AMENITY";
          int amenityID = 0;
          try{
              ResultSet answer = stmt.executeQuery(prequery);
              while (answer.next()) {
-                amenityID = answer.getInt("MAX(amenityID)");
+                amenityID = answer.getInt("MAX(AMENITYID)");
              }
          }
          catch (SQLException e) {
@@ -692,7 +692,7 @@ public class BackEnd {
          }
          amenityID+=1;
         //returns true if successfully added
-        String query = "INSERT INTO Amenity (amenityID, Name, Price) VALUES ("+ amenityID + ", " + name + ", " + price + ")";
+        String query = "INSERT INTO HUYLE.AMENITY (AMENITYID, NAME, PRICE) VALUES ("+ amenityID + ", '" + name + "', " + price + ")";
         try {
             stmt.executeUpdate(query);
             return true;

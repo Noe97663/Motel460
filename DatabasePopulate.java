@@ -364,7 +364,7 @@ public class DatabasePopulate {
             String line = null;  // content of one line/record of the CSV file
             reader.readLine();
             // one line in this file will be of the form:
-            // guestID,Start,End,roomID
+            // bookingID,guestID,Start,End,roomID
             while((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
                 System.out.println("adding: "+values[1]+ values[2]+ values[3]+ values[4]);
