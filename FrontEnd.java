@@ -8,7 +8,15 @@ public class FrontEnd {
         System.out.println("Inserting data on:");
         System.out.println("1. Guest  2. Rating  3.ClubMembers 4.Booking  5. Transaction  6. Room \n" 
                             + "7. Employee  8.Shift  9. Amenity 10 Room Classification");
-        int field = scn.nextInt();
+        scn.nextLine();
+        String fieldString = scn.nextLine();
+        int field = -99;
+        try{
+            field = Integer.parseInt(fieldString);
+        }
+        catch (Exception e){
+            System.out.println("Invalid input. Insert Failed.");
+        }
         if (field == 1){ // Guest
             System.out.println("Is student?: (0/ 1) ");
             String bool = scn.nextLine();
@@ -105,7 +113,15 @@ public class FrontEnd {
         System.out.println("Updating data on:");
         System.out.println("1. Guest  2. Rating  3.ClubMember 4.Booking\n" 
                             + "5. Employee  6.Shift  7. Amenity ");
-        int field = scn.nextInt();
+        scn.nextLine();
+        String fieldString = scn.nextLine();
+        int field = -99;
+        try{
+            field = Integer.parseInt(fieldString);
+        }
+        catch (Exception e){
+            System.out.println("Invalid input. Update Failed.");
+        }
         if (field == 1){ // Guest
             System.out.println("Guest ID: ");
             int guestid = scn.nextInt();
@@ -179,7 +195,15 @@ public class FrontEnd {
         System.out.println("Deleting data on:");
         System.out.println("1. Guest  2. Rating  3.ClubMember  4.Booking \n" 
                             + "5. Employee  6.Shift  7. Amenity ");
-        int field = scn.nextInt();
+        scn.nextLine();
+        String fieldString = scn.nextLine();
+        int field = -99;
+        try{
+            field = Integer.parseInt(fieldString);
+        }
+        catch (Exception e){
+            System.out.println("Invalid input. Delete Failed.");
+        }
         if (field == 1){ // Guest
             System.out.println("Guest ID: ");
             int guestid = scn.nextInt();
@@ -221,23 +245,21 @@ public class FrontEnd {
         BackEnd backEnd = new BackEnd();
 
         int conti = 1;
-        int menuOn = 1;
         Scanner scn = new Scanner(System.in);
         while (conti == 1){
             // display menu when run 
-            if (menuOn == 1){
-                System.out.println("Hello, what would you like to know?");
-                System.out.println("1. Print a current bill (total $) for a customer for their stay and all unpaid amenities.");
-                System.out.println("2. Given a certain date, output the customers that are currently staying at the hotel along with their room numbers. Order by room numbers and group by category of customer.");
-                System.out.println("3. Print the schedule of staff given a week (input the start date of the week by the user). A schedule contains the list of staff members working that week and a staff member’s working hours (start and stop times).");
-                System.out.println("4. Print the average ratings of different amenities recorded within the range of two dates(input by the user) and sort them in descending order.");
-                System.out.println("5. DESIGN");
-                System.out.println("6. Insert Data");
-                System.out.println("7. Update Data");
-                System.out.println("8. Delete Data");
-                System.out.println("--------------------------------------------------");
-            }
-            menuOn = 0;
+
+            System.out.println("Hello, what would you like to know?");
+            System.out.println("1. Print a current bill (total $) for a customer for their stay and all unpaid amenities.");
+            System.out.println("2. Given a certain date, output the customers that are currently staying at the hotel along with their room numbers. Order by room numbers and group by category of customer.");
+            System.out.println("3. Print the schedule of staff given a week (input the start date of the week by the user). A schedule contains the list of staff members working that week and a staff member’s working hours (start and stop times).");
+            System.out.println("4. Print the average ratings of different amenities recorded within the range of two dates(input by the user) and sort them in descending order.");
+            System.out.println("5. DESIGN");
+            System.out.println("6. Insert Data");
+            System.out.println("7. Update Data");
+            System.out.println("8. Delete Data");
+            System.out.println("--------------------------------------------------");
+
             System.out.println("Enter 1/2/3/4/5/6/7/8 or -1 to exit: ");
             ResultSet ans;
             int quesNum = scn.nextInt();  // Read user input
@@ -256,10 +278,11 @@ public class FrontEnd {
                 String week = scn.nextLine();
                 ans = backEnd.query3(week);
             } else if (quesNum == 4) {
+                scn.nextLine();
                 System.out.println("Enter the date from: ");
                 String dateFrom = scn.nextLine();
                 System.out.println("Enter the date to: "); 
-                String dateTo = scn.nextLine();
+                String dateTo = scn.nextLine().strip();
                 ans = backEnd.query4(dateFrom, dateTo);
             } else if (quesNum == 5){ // TBD
                 // ans = backEnd.query5();

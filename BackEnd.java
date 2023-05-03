@@ -140,6 +140,30 @@ public class BackEnd {
     }
 
     public ResultSet query4(String dateStart, String dateEnd) {
+        try{
+            // ----- GETTING AMENITY PRICES 
+            String query = "SELECT Name,AVG(Rating.Rating) from Amenity,Rating where " +
+                                        "Amenity.AmenityID = Rating.AmenityID where "+
+                                        "RatingDate between "+dateStart+" and "+dateEnd+
+                                         " group by Rating.AmenityID order by AVG(Rating.rating) desc";
+            
+            System.out.println(query);
+            ResultSet answer = stmt.executeQuery(query);
+            if (answer != null) {
+                while (answer.next()) {
+                    System.out.println(answer.getString("Name")+
+                    " had an average rating of: "+
+                     answer.getFloat("AVG(Rating.Rating)"));              
+                }
+            }
+        }
+        catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not run query 4.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+            }
         return null;
     }
 
