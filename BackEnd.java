@@ -68,39 +68,39 @@ public class BackEnd {
     |  Returns:  int containing the total bill for a bookingID.
     *-------------------------------------------------------------------*/
     public double query1(int bookingID) {
-        double sum = 0.0;
-        String RoomTypeQuery = "SELECT Type from room where roomID = (SELECT RoomID FROM Booking where bookingID = "+ bookingID +")";
-        String roomType = "";
+        double sum = 0.0; // --- STARTING SUM
         try{
-            ResultSet answer = stmt.executeQuery(RoomTypeQuery);
-            roomType = answer.getString("Type");
-        }
-        catch (SQLException e) {
-        System.err.println("*** SQLException:  "
-                + "Could not fetch type.");
-        System.err.println("\tMessage:   " + e.getMessage());
-        System.err.println("\tSQLState:  " + e.getSQLState());
-        System.err.println("\tErrorCode: " + e.getErrorCode());
-        }
-        String roomPriceQuery = "Select roomPrice from RoomClassification where type = " + roomType;
-        String allTransactionsQuery = "SELECT TransactionNo, Price, ExtraCharge, Tips from Transaction, Amenity where " +
+            // ----- GETTING AMENITY PRICES 
+            String allTransactionsQuery = "SELECT TransactionNo, Price, ExtraCharge, Tips from Transaction, Amenity where " +
                                         "bookingID = " + bookingID +" and "+
                                         "Transaction.AmenityID = Amenity.AmenityID";
-        try {
             ResultSet TransactionAnswer = stmt.executeQuery(allTransactionsQuery);
             if (TransactionAnswer != null) {
                 while (TransactionAnswer.next()) {
+                    // ----- ADD EACH TRANSACTION TO THE SUM
                     sum += TransactionAnswer.getInt("Price");
                     sum += TransactionAnswer.getInt("ExtraCharge");
                     sum += TransactionAnswer.getInt("Tips");                
                 }
             }
-            ResultSet RoomPriceAnswer = stmt.executeQuery(allTransactionsQuery);
-            if (RoomPriceAnswer != null) {
-                while (RoomPriceAnswer.next()) {
-                    sum += RoomPriceAnswer.getInt("roomPrice");               
+            /*
+            // ----- GETTING ROOM TYPES 
+            String RoomTypeQuery = "SELECT Type from room where roomID = (SELECT RoomID FROM Booking where bookingID = "+ bookingID +")";
+            String roomType = "";
+            ResultSet roomTypeAnswer = stmt.executeQuery(RoomTypeQuery);
+            if (roomTypeAnswer != null) {
+                while (roomTypeAnswer.next()) {
+                    // ----- GET EACH TYPE
+                    roomType = roomTypeAnswer.getString("Type");     
+                    String roomPriceQuery = "Select Price from RoomClassification where type = '" + roomType + "'";
+                    ResultSet roomPriceAnswer = stmt.executeQuery(roomPriceQuery);
+                    // ----- ADD EACH (ROOM PRICE X NUM DAYS)
+                    if (roomPriceAnswer != null) {
+                        sum += roomPriceAnswer.getInt("Price"); // * numDays          
+                    }
                 }
             }
+            */
         }
         catch (SQLException e) {
             System.err.println("*** SQLException:  "
@@ -109,6 +109,7 @@ public class BackEnd {
             System.err.println("\tSQLState:  " + e.getSQLState());
             System.err.println("\tErrorCode: " + e.getErrorCode());
             }
+
         return sum;
     
     }
