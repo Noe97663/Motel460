@@ -80,9 +80,9 @@ public class BackEnd {
     |  Parameters:
     |      bookingID -- the bookingID for the bill.
     |
-    |  Returns:  int containing the total bill for a bookingID.
+    |  Returns:  No return
     *-------------------------------------------------------------------*/
-    public double query1(int bookingID) {
+    public void query1(int bookingID) {
         double sum = 0.0; // --- STARTING SUM
         try{
             // ----- GETTING AMENITY PRICES 
@@ -132,16 +132,20 @@ public class BackEnd {
             }
             String roomPriceQuery = "Select Price from RoomClassification where type = '" + roomType + "'";
             ResultSet roomPriceAnswer = stmt.executeQuery(roomPriceQuery);
-             // ----- ADD EACH (ROOM PRICE X NUM DAYS)
+
+            // ----- ADD EACH (ROOM PRICE X NUM DAYS)
             if (roomPriceAnswer != null) {
                 while (roomPriceAnswer.next()) {
                     sum += roomPriceAnswer.getInt("Price") * numDays;   
                 }  
             }
+
             // ------ ADD DISCOUNTS 
             double totalDiscount = 0.0;
             double discount1 = 0.0;
             double discount2 = 0.0;
+
+            // ----- GET STUDENT DISCOUNT
             String StudentQuery = "SELECT StudentStatus from Guest where GuestID = (SELECT GuestID FROM Booking where bookingID = "+ bookingID +")";
             ResultSet StudentAnswer = stmt.executeQuery(StudentQuery);
             if (StudentAnswer != null) {
@@ -152,6 +156,7 @@ public class BackEnd {
                     }
                 }
             }
+            // ----- GET CLUB MEMBER POINTS
             String GuestMemberQuery = "SELECT Points from ClubMember where GuestID = (SELECT GuestID FROM Booking where bookingID = "+ bookingID +")";
             ResultSet GuestMemberAnswer = stmt.executeQuery(GuestMemberQuery);
             if (GuestMemberAnswer != null) {
@@ -175,8 +180,7 @@ public class BackEnd {
             System.err.println("\tErrorCode: " + e.getErrorCode());
             }
 
-        return sum;
-    
+        System.out.println("YOUR TOTAL BILL IS: " + sum);
     }
 
     public ResultSet query2(String date){
