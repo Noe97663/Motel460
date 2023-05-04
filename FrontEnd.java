@@ -167,6 +167,7 @@ public class FrontEnd {
         } else if (field == 4){ // Booking 
             System.out.println("BookingID: ");
             int bID = scn.nextInt();
+            scn.nextLine();
             System.out.println("Date from in this form: YYYY-MM-DD (null if not updating)");
             String dateF = scn.nextLine();
             System.out.println("Date to in this form: YYYY-MM-DD (null if not updating)");
