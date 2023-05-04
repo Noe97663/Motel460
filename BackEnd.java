@@ -131,7 +131,10 @@ public class BackEnd {
                     }
                 }
             }
-            String roomPriceQuery = "Select Price from RoomClassification where type = '" + roomType + "'";
+            else{
+                System.out.println("ROOM DATES QUERY RETURNED EMPTY");
+            }
+            String roomPriceQuery = "Select Price from RoomClassification where Type = '" + roomType + "'";
             ResultSet roomPriceAnswer = stmt.executeQuery(roomPriceQuery);
 
             // ----- ADD EACH (ROOM PRICE X NUM DAYS)
@@ -162,7 +165,7 @@ public class BackEnd {
             ResultSet GuestMemberAnswer = stmt.executeQuery(GuestMemberQuery);
             if (GuestMemberAnswer != null) {
                 while (GuestMemberAnswer.next()) {
-                    discount2 +=  GuestMemberAnswer.getInt("StudentStatus") * .01;
+                    discount2 +=  GuestMemberAnswer.getInt("Points") * .01;
                 }
             }
             if(discount1 > discount2){
@@ -188,12 +191,25 @@ public class BackEnd {
         try{
         String query = "select guest.guestid , firstname, lastname, studentstatus, points, roomid " 
                     +  "from huyle.guest join huyle.booking " 
-                    +  "on enddate > to_date('" + date + "','YYYY-MM-DD') and startdate < to_date('" + date + "','YYYY-MM-DD'') and booking.guestid = guest.guestid "
+                    +  "on enddate > to_date('" + date + "','YYYY-MM-DD') and startdate < to_date('" + date + "','YYYY-MM-DD') and booking.guestid = guest.guestid "
                     +  "left join huyle.clubmember on huyle.clubmember.guestid = huyle.guest.guestid "
                     +  "group by guest.guestid , firstname, lastname, studentstatus, points, roomid order by roomid";
         ResultSet ans = stmt.executeQuery(query);
-        if (ans != null){
-            return ans;
+        
+        System.out.println("\nThe results of the query 2 are:\n");
+            // Get the data about the query result to learn
+            // the attribute names and use them as column headers
+        ResultSetMetaData answermetadata = ans.getMetaData();
+        for (int i = 1; i <= answermetadata.getColumnCount(); i++) {
+            System.out.print(answermetadata.getColumnName(i) + "   ");
+        }
+        System.out.println();
+            // Use next() to advance cursor through the result
+                    // tuples and print their attribute values
+        while (ans.next()) {
+            System.out.println(ans.getInt("guestID") + "    " + ans.getString("FirstName")
+                + "    " + ans.getString("LastName") + "    " + ans.getInt("Studentstatus") + "    " + ans.getInt("Points")
+                + "    " + ans.getInt("RoomID"));
         }
 
         } catch (SQLException e) {
