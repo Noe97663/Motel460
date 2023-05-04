@@ -262,6 +262,14 @@ public class BackEnd {
             if (ans2 != null) {
                 System.out.println("\nShift hours:\n");
                 while (ans2.next()) {
+                    String start = ans2.getString("starttime");
+                    String end = ans2.getString("endtime");
+                    //beautify the output eg. from 400 to 4:00
+                    if (start.length() == 3) {
+                        start = start.substring(0,1) + ":" + start.substring(1,3);
+                    } else if (start.length() == 4) {
+                        start = start.substring(0,2) + ":" + start.substring(2,4);
+                    }
                     System.out.println(ans2.getString("FirstName") + " " + ans2.getString("LastName") + " " + ans2.getString("starttime") + "-" 
                         + ans2.getString("endtime") + " StartDate " + ans2.getString("weekstartdate").substring(0,10));
                 }
@@ -340,7 +348,7 @@ public class BackEnd {
             System.out.println("Here are the top "+num+" guests with the most club 460 points:");
             if (answer != null) {
                 while (answer.next() && count<numConverted) {
-                    System.out.println(answer.getString("FIRSTNAME")+
+                    System.out.println(answer.getString("FIRSTNAME")+ " " +
                     answer.getString("LASTNAME")+
                     " has "+ answer.getInt("Points")+
                     " Club460 points.");

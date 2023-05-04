@@ -34,7 +34,7 @@ public class FrontEnd {
             int guestid = scn.nextInt();
             System.out.println("AmenityID: ");
             int aID = scn.nextInt();
-            System.out.println("Date in this form: DD-MON-YY ");
+            System.out.println("Date in this form: YYYY-MM-DD");
             String date = scn.nextLine();
             System.out.println("Rating (1-5)");
             int rating = scn.nextInt(); // error check 
