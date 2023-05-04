@@ -52,6 +52,20 @@ public class BackEnd {
         System.out.println("Connected to Oracle database!");
     }
 
+    public void close() {
+        try {
+            stmt.close();
+            dbconn.close();
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                + "Could not close JDBC connection.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+            System.exit(-1);
+        }
+    }
+
     /*---------------------------------------------------------------------
     |  Method query1
     |
