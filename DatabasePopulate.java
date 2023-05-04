@@ -1,9 +1,70 @@
 import java.io.*;
-// To compile and execute this program on lectura:
-// -Add the Oracle JDBC driver to your CLASSPATH environment variable:
-//     export CLASSPATH=/usr/lib/oracle/19.8/client64/lib/ojdbc8.jar:${CLASSPATH}
-//  -Compile java files
-//  -Run file
+
+/*+----------------------------------------------------------------------
+ ||
+ ||  Class:   DatabasePopulate.java
+ ||
+ ||         Author:  Noel Martin Poothokaran
+ ||
+ ||        Purpose:  The class populates the tables created with data from 
+ ||                  csv files in the data folder in the same directory
+ ||                  as this file.
+ ||
+ ||  Inherits From:  None
+ ||
+ ||     Interfaces:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||      Constants:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||   Constructors:  None
+ ||
+ ||  Class Methods: method - populateAmenity
+ ||                 arguments - String CSVFile, BackEnd be
+ ||                 returns - void, populates tables
+ || 
+ ||                 method - populateAmenity
+ ||                 arguments - String CSVFile, BackEnd be
+ ||                 returns - void, populates tables
+ || 
+ ||                 method - populateAmenity
+ ||                 arguments - String CSVFile, BackEnd be
+ ||                 returns - void, populates tables
+ || 
+ ||                 method - populateAmenity
+ ||                 arguments - String CSVFile, BackEnd be
+ ||                 returns - void, populates tables
+ || 
+ ||                 method - populateAmenity
+ ||                 arguments - String CSVFile, BackEnd be
+ ||                 returns - void, populates tables
+ || 
+ ||                 method - populateAmenity
+ ||                 arguments - String CSVFile, BackEnd be
+ ||                 returns - void, populates tables
+ || 
+ ||                 method - populateAmenity
+ ||                 arguments - String CSVFile, BackEnd be
+ ||                 returns - void, populates tables
+ ||
+ ||                 method - populateAmenity
+ ||                 arguments - String CSVFile, BackEnd be
+ ||                 returns - void, populates tables
+ || 
+ ||                 method - populateAmenity
+ ||                 arguments - String CSVFile, BackEnd be
+ ||                 returns - void, populates tables
+ || 
+ ||                 method - populateAmenity
+ ||                 arguments - String CSVFile, BackEnd be
+ ||                 returns - void, populates tables
+ ||
+ ||  Inst. Methods:  None.
+ ||
+ ++-----------------------------------------------------------------------*/
 public class DatabasePopulate {
     public static void main(String[] args) {
         BackEnd be = new BackEnd();
