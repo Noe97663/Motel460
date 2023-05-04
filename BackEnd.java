@@ -129,14 +129,16 @@ public class BackEnd {
             else{
                 System.out.println("ROOM DATES QUERY RETURNED EMPTY");
             }
-            String roomPriceQuery = "Select Price from RoomClassification where Type = '" + roomType + "'";
-            ResultSet roomPriceAnswer = stmt.executeQuery(roomPriceQuery);
+            for (String i : roomType){
+                String roomPriceQuery = "Select Price from RoomClassification where Type = '" + i + "'";
+                ResultSet roomPriceAnswer = stmt.executeQuery(roomPriceQuery);
 
-            // ----- ADD EACH (ROOM PRICE X NUM DAYS)
-            if (roomPriceAnswer != null) {
-                while (roomPriceAnswer.next()) {
-                    sum += roomPriceAnswer.getInt("Price") * numDays;   
-                }  
+                // ----- ADD EACH (ROOM PRICE X NUM DAYS)
+                if (roomPriceAnswer != null) {
+                    while (roomPriceAnswer.next()) {
+                        sum += roomPriceAnswer.getInt("Price") * numDays;   
+                    }  
+                }
             }
 
             // ------ ADD DISCOUNTS 
@@ -179,7 +181,7 @@ public class BackEnd {
             System.err.println("\tErrorCode: " + e.getErrorCode());
             }
 
-        System.out.println("YOUR TOTAL BILL IS: " + sum);
+        System.out.println("YOUR TOTAL BILL IS: $" + sum);
     }
 
     public void query2(String date){
@@ -832,9 +834,10 @@ public class BackEnd {
                 if (endDate == null) {
                     endDate = answer.getString("EndDate");
                 }
+                System.out.println("RoomID: " + roomID + " StartDate: " + startDate + " EndDate: " + endDate);
             }
             //check if the room is already booked for that time period, ignore the current booking
-            String queryCheck2 = "SELECT * FROM booking WHERE roomID =" + roomID + "and startdate between to_date('" + startDate + "','YYYY-MM-DD')"
+            String queryCheck2 = "SELECT * FROM booking WHERE roomID = " + roomID + " and startdate between to_date('" + startDate + "','YYYY-MM-DD')"
                 + " and to_date('" + endDate + "','YYYY-MM-DD') and enddate between to_date('" + startDate + "','YYYY-MM-DD') and to_date('" + endDate + "','YYYY-MM-DD')"
                 + " MINUS SELECT * FROM booking WHERE BookingID = " + bookingID;
             System.out.println(queryCheck2);

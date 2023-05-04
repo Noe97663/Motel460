@@ -179,12 +179,7 @@ public class FrontEnd {
             backEnd.updateClubMember(guestid, points);
         } else if (field == 4){ // Booking 
             System.out.println("BookingID: ");
-<<<<<<< HEAD
             int bID = Integer.parseInt(scn.nextLine());
-=======
-            int bID = scn.nextInt();
-            scn.nextLine();
->>>>>>> 75d5dd6246fe0cd1204dc1c4865c6ddb8f32b929
             System.out.println("Date from in this form: YYYY-MM-DD (null if not updating)");
             String dateF = scn.nextLine();
             System.out.println("Date to in this form: YYYY-MM-DD (null if not updating)");
