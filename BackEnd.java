@@ -201,6 +201,22 @@ public class BackEnd {
         return null;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method query3
+    |
+    |  Purpose:  Print the schedule of staff given a week (input the start date of the week by the user). A schedule
+    |            contains the list of staff members working that week and a staff member’s working hours (start and stop
+    |            times).
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: Schedule is printed.
+    |
+    |  Parameters:
+    |      weekDate -- String containing the start date of the week in the format YYYY-MM-DD.
+    |
+    |  Returns:  None.
+    *-------------------------------------------------------------------*/
     public ResultSet query3(String weekDate) {
         // Print the schedule of staff given a week (input the start date of the week by the user). A schedule
         //contains the list of staff members working that week and a staff member’s working hours (start and stop
@@ -400,6 +416,23 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method addRating
+    |
+    |  Purpose: Adds a rating for a guest for a particular amenity on a particular date.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: The rating has been added to the database.
+    |
+    |  Parameters:
+    |      guestID -- the guestID of the guest 
+    |      amenityID -- the amenityID of the amenity
+    |      rating -- the rating given by the guest
+    |      date -- the date the rating was given
+    |
+    |  Returns:  true if the rating was successfully added, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean addRating(int guestID, int amenityID, int rating, String date) {
         //date is in YYYY-MM-DD format
         //convert to oracle date format
@@ -420,6 +453,22 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method updateRating
+    |
+    |  Purpose: Updates the rating of a guest for a particular amenity on a particular date.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: Ratings of a guest for a particular amenity on a particular date are updated.
+    |
+    |  Parameters:
+    |      guestID -- the guestID of the guest whose rating is being updated
+    |      amenityID -- the amenityID of the amenity whose rating is being updated
+    |      rating -- the new rating
+    |
+    |  Returns:  true if the rating was successfully updated, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean updateRating(int guestID, int amenityID, int rating, String date) {
         //date is in YYYY-MM-DD format
         //convert to oracle date format
@@ -442,6 +491,22 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method deleteRating
+    |
+    |  Purpose: Deletes a rating from the database.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: The rating has been deleted from the database.
+    |
+    |  Parameters:
+    |      guestID -- the guestID of the rating to be deleted
+    |      amenityID -- the amenityID of the rating to be deleted
+    |      date -- the date of the rating to be deleted (in YYYY-MM-DD format)
+    |
+    |  Returns:  true if the rating was successfully deleted, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean deleteRating(int guestID, int amenityID, String date) {
         String query = "DELETE FROM Rating WHERE GuestID = " + guestID + " AND AmenityID = " 
             + amenityID + " AND RatingDate = TO_DATE(" + date + ", 'YYYY-MM-DD')";
@@ -460,6 +525,21 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method addClubMember
+    |
+    |  Purpose: Adds a club member to the database.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: The club member has been added to the database.
+    |
+    |  Parameters:
+    |      guestID -- the guestID of the club member
+    |      points -- intial points of the club member
+    |
+    |  Returns:  true if the club member was successfully added, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean addClubMember(int guestID, int points) {
         //insert into ClubMember table, guestID, and point = 0
         String query = "INSERT INTO ClubMember (GuestID, Points) VALUES (" + guestID + ", " + points + ")";
@@ -478,8 +558,23 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method updateClubMember
+    |
+    |  Purpose: Updates the points of a club member
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: The club member's points have been updated.
+    |
+    |  Parameters:
+    |      guestID -- the guestID of the club member
+    |      points -- Points added to the club member's account (can be negative)
+    |
+    |  Returns:  true if the club member was successfully updated, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean updateClubMember(int guestID, int points) {
-        String query = "UPDATE ClubMember SET Points = " + points + " WHERE GuestID = " + guestID;
+        String query = "UPDATE ClubMember SET Points = Points " + points + " WHERE GuestID = " + guestID;
         //returns true if successfully updated
         try {
             stmt.executeUpdate(query);
@@ -495,6 +590,20 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method removeClubMember
+    |
+    |  Purpose: removes a club member from the database
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: club member is removed from the database
+    |
+    |  Parameters:
+    |      guestID -- the guestID of the club member to be removed
+    |
+    |  Returns:  true if the club member was successfully removed, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean removeClubMember(int guestID) {
         String query = "DELETE FROM ClubMember WHERE GuestID = " + guestID;
         //returns true if successfully removed
@@ -512,6 +621,23 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method addbooking
+    |
+    |  Purpose: Adds a booking to the database.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: Booking is added to the database.
+    |
+    |  Parameters:
+    |      guestID -- the guestID of the person booking
+    |      startDate -- the start date of the booking
+    |      endDate -- the end date of the booking
+    |      roomID -- the roomID of the booking
+    |
+    |  Returns:  true if the booking was successfully added, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean addBooking(int guestID, String startDate, String endDate, int roomID) {
         //auto increment implementation
         String prequery = "SELECT MAX(bookingID) FROM BOOKING";
@@ -533,8 +659,10 @@ public class BackEnd {
         String query = "Insert into Booking (BookingID, GuestID, StartDate, EndDate, RoomID) VALUES (" + bookingID + ", " 
             + guestID + ", TO_DATE('" + startDate + "', 'YYYY-MM-DD'), TO_DATE('" + endDate + "', 'YYYY-MM-DD'), " + roomID + ")";
         //returns true if successfully added
+        String queryAddPoints = "UPDATE ClubMember SET Points = Points + 10 WHERE GuestID = " + guestID;
         try {
             stmt.executeUpdate(query);
+            stmt.executeUpdate(queryAddPoints);
             return true;
             
         } catch (SQLException e) {
@@ -547,6 +675,23 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method UpdateBooking
+    |
+    |  Purpose: Updates a booking information in the database.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: Booking information has been updated in the database.
+    |
+    |  Parameters:
+    |      bookingID -- the bookingID of the booking to be updated
+    |      startDate -- the new start date of the booking
+    |      endDate -- the new end date of the booking
+    |      roomID -- the new roomID of the booking
+    |
+    |  Returns:  true if the booking was successfully updated, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean updateBooking(int bookingID, String startDate, String endDate, int roomID) {
         //if roomID is -1, then don't update roomID
         String setStatement = "SET ";
@@ -575,6 +720,20 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method removeBooking
+    |
+    |  Purpose: Removes a booking from the database.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: The booking has been removed from the database.
+    |
+    |  Parameters:
+    |      bookingID -- the bookingID of the booking to be removed.
+    |
+    |  Returns:  true if the booking was successfully removed, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean removeBooking(int bookingID) {
         String query = "DELETE FROM Booking WHERE BookingID = " + bookingID;
         //returns true if successfully removed
@@ -592,6 +751,23 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method addTransaction
+    |
+    |  Purpose: Adds a transaction to the database.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: Transaction is added to the database.
+    |
+    |  Parameters:
+    |      bookingID -- the bookingID of the transaction.
+    |      amenityID -- the amenityID of the transaction.
+    |      extraCharge -- the extraCharge of the transaction.
+    |      tip -- the tip of the transaction.
+    |
+    |  Returns:  true if the transaction was successfully added, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean addTransaction(int bookingID, int amenityID, int extraCharge, int tip) {
 
         //auto increment implementation
@@ -629,6 +805,24 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method updateTransaction
+    |
+    |  Purpose: Updates a transaction in the database. Arguments that are null are not updated.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: Transaction is updated in the database.
+    |
+    |  Parameters:
+    |      bookingID -- the bookingID of the transaction to be updated.
+    |      transactionID -- the transactionID of the transaction to be updated.
+    |      amenityID -- the new amenityID of the transaction.
+    |      extraCharge -- the new extraCharge of the transaction.
+    |      tip -- the new tip of the transaction.
+    |
+    |  Returns:  true if the transaction was successfully updated, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean updateTransaction(int bookingID, int transactionID, int amenityID, int extraCharge, int tip) {
         //primary key is bookingID and transactionID
         String setStatement = "SET ";
@@ -657,6 +851,21 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method AddRoom
+    |
+    |  Purpose: Adds a room to the database.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: Room has been added to the database.
+    |
+    |  Parameters:
+    |      roomID -- the roomID of the room to be added.
+    |      type -- the type of the room to be added.
+    |
+    |  Returns:  true if the room was successfully added, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean addRoom(int roomID, String type) {
         String query = "INSERT INTO Room (RoomID, Type) VALUES (" + roomID + ", '" + type + "')";
         //returns true if successfully added
@@ -674,6 +883,21 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method updateRoom
+    |
+    |  Purpose: Updates a room in the database. 
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: Room is updated in the database.
+    |
+    |  Parameters:
+    |      roomID -- the roomID of the room to be updated.
+    |      type -- the type of the room to be updated.
+    |
+    |  Returns:  true if the room was successfully updated, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean updateRoom(int roomID, String type) {
         //primary key is roomID
         String setStatement = "SET ";
@@ -696,6 +920,20 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method deleteRoom
+    |
+    |  Purpose: Deletes a room from the database.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: Room is deleted from the database.
+    |
+    |  Parameters:
+    |      roomID -- the roomID of the room to be deleted.
+    |
+    |  Returns:  true if the room was successfully deleted, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean deleteRoom(int roomID) {
         String query = "DELETE FROM Room WHERE RoomID = " + roomID;
         //returns true if successfully deleted
@@ -713,6 +951,22 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method addEmployee
+    |
+    |  Purpose: Adds an employee to the database.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: Employee has been added to the database.
+    |
+    |  Parameters:
+    |      firstName -- the first name of the employee
+    |      lastName -- the last name of the employee
+    |      position -- the position of the employee
+    |
+    |  Returns:  true if the employee was successfully added, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean addEmployee(String firstName, String lastName, String position) {
 
         //auto increment implementation
@@ -749,6 +1003,23 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method UpdateEmployee
+    |
+    |  Purpose: Updates an employee's information in the database.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: Employee's information has been updated in the database.
+    |
+    |  Parameters:
+    |      employeeID -- the employee's ID (primary key)
+    |      position -- the employee's position
+    |      FirstName -- the employee's first name
+    |      LastName -- the employee's last name
+    |
+    |  Returns:  true if the employee was successfully updated, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean updateEmployee(int employeeID, String position, String FirstName, String LastName) {
         String setStatement = "SET ";
         if (position != null) {
@@ -776,6 +1047,20 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method deleteEmployee
+    |
+    |  Purpose: Deletes an employee from the database.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: Employee is deleted from the database.
+    |
+    |  Parameters:
+    |      employeeID -- the employeeID of the employee to be deleted.
+    |
+    |  Returns:  true if the employee was successfully deleted, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean deleteEmployee(int employeeID) {
         String query = "DELETE FROM Employee WHERE EmployeeID = " + employeeID;
         //returns true if successfully deleted
@@ -792,7 +1077,23 @@ public class BackEnd {
         }
         return false;
     }
-
+    /*---------------------------------------------------------------------
+    |  Method addShift
+    |
+    |  Purpose: Add a shift into the database.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: The shift has been added in the database.
+    |
+    |  Parameters:
+    |      EmployeeID -- the employeeID of the shift to be updated. (primary key)
+    |      StartTime -- the new start time of the shift.
+    |      EndTime -- the new end time of the shift.
+    |      WeekStartDate -- the week start date of the shift (primary key)
+    |
+    |  Returns:  true if the shift was successfully added, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean addShift(String EmployeeID, String StartTime, String EndTime, String WeekStartDate) {
         //returns true if successfully added
         WeekStartDate = "TO_DATE('" + WeekStartDate + "', 'YYYY-MM-DD')";
@@ -811,6 +1112,23 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method updateShift
+    |
+    |  Purpose: Updates a shift in the database. If a parameter is null, it will not be updated.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: The shift has been updated in the database.
+    |
+    |  Parameters:
+    |      EmployeeID -- the employeeID of the shift to be updated. (primary key)
+    |      StartTime -- the new start time of the shift.
+    |      EndTime -- the new end time of the shift.
+    |      WeekStartDate -- the week start date of the shift (primary key)
+    |
+    |  Returns:  true if the shift was successfully updated, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean updateShift(String EmployeeID, String StartTime, String EndTime, String WeekStartDate) {
         //returns true if successfully updated
         String setStatement = "SET ";
@@ -835,6 +1153,21 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method deleteShift
+    |
+    |  Purpose: Deletes a shift from the database.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: The shift has been deleted from the database.
+    |
+    |  Parameters:
+    |      EmployeeID -- the employeeID of the employee whose shift is being deleted
+    |      WeekStartDate -- the week start date of the shift being deleted
+    |
+    |  Returns:  true if the shift was successfully deleted, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean deleteShift(String EmployeeID, String WeekStartDate) {
         //returns true if successfully deleted
         String query = "DELETE FROM Shift WHERE EmployeeID = " + EmployeeID + "AND WeekStartDate = " + WeekStartDate;
@@ -853,6 +1186,22 @@ public class BackEnd {
         return false;
     }
 
+
+    /*---------------------------------------------------------------------
+    |  Method addAmnity
+    |
+    |  Purpose: add an amenity in the database
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: Amenity has been added to the database.
+    |
+    |  Parameters:
+    |      name-- the name of the amenity to be added
+    |      price-- the price of the amenity to be added
+    |
+    |  Returns:  true if the amenity was successfully added, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean addAmenity(String name, int price) {
         
          //auto increment implementation
@@ -887,7 +1236,23 @@ public class BackEnd {
         }
         return false;
     }
-    
+
+    /*---------------------------------------------------------------------
+    |  Method updateAmnity
+    |
+    |  Purpose: Updates an amenity in the database. If a parameter is null, it will not be updated.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: Amenity has been updated in the database.
+    |
+    |  Parameters:
+    |      amenityID -- the amenityID of the amenity to be updated
+    |      name -- the new name of the amenity to be updated
+    |      price -- the new price of the amenity to be updated
+    |
+    |  Returns:  true if the amenity was successfully updated, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean updateAmnity(int amenityID, String name, int price) {
         String setStatement = "SET ";
         if (name != null) {
@@ -911,7 +1276,20 @@ public class BackEnd {
         }
         return false;
     }
-
+    /*---------------------------------------------------------------------
+    |  Method deleteAmenity
+    |
+    |  Purpose:  Delete the amenity with the given primary key from the database.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: The amenity with the given primary key has been deleted
+    |
+    |  Parameters:
+    |      amenityID -- the primary key of the amenity to be deleted
+    |
+    |  Returns:  true if the amenity was successfully deleted, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean deleteAmenity(int amenityID) {
         String query = "DELETE FROM Amenity WHERE AmenityID = " + amenityID;
         //returns true if successfully deleted
@@ -929,6 +1307,23 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method addRoomClassification
+    |
+    |  Purpose:  Add the room classification with the given arguments.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: The room classification with the given primary key has been added.
+    |
+    |  Parameters:
+    |      Type -- the primary key of the new room classification.
+    |      Price -- the price of the room classification.
+    |      Beds -- the number of beds of the room classification.
+    |      Baths -- the number of baths of the room classification.
+    |
+    |  Returns:  true if the room was successfully added, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean addRoomClassification(String Type, String Price, String Beds, String Baths) {
         //returns true if successfully added
         
@@ -947,6 +1342,24 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method updateRoomClassification
+    |
+    |  Purpose:  Update the room classification with the given primary key from the database.
+    |            If a parameter is null, it will not be updated. Type cannot be null.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: The room classification with the given primary key has been updated.
+    |
+    |  Parameters:
+    |      Type -- the primary key of the room classification to be updated.
+    |      Price -- the new price of the room classification.
+    |      Beds -- the new number of beds of the room classification.
+    |      Baths -- the new number of baths of the room classification.
+    |
+    |  Returns:  true if the room was successfully updated, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean updateRoomClassification(String Type, String Price, String Beds, String Baths) {
         //returns true if successfully updated
         String setStatement = "SET ";
@@ -967,24 +1380,6 @@ public class BackEnd {
         } catch (SQLException e) {
             System.err.println("*** SQLException:  "
                     + "Could not update RoomClassification.");
-            System.err.println("\tMessage:   " + e.getMessage());
-            System.err.println("\tSQLState:  " + e.getSQLState());
-            System.err.println("\tErrorCode: " + e.getErrorCode());
-        }
-        return false;
-    }
-
-    public boolean deleteRoomClassification(String Type, String Price, String Beds, String Baths) {
-        //returns true if successfully deleted
-        String query = "DELETE FROM RoomClassification WHERE Type = '" + Type+"'";
-        //returns true if successfully deleted
-        try {
-            stmt.executeUpdate(query);
-            return true;
-            
-        } catch (SQLException e) {
-            System.err.println("*** SQLException:  "
-                    + "Could not delete RoomClassification.");
             System.err.println("\tMessage:   " + e.getMessage());
             System.err.println("\tSQLState:  " + e.getSQLState());
             System.err.println("\tErrorCode: " + e.getErrorCode());
