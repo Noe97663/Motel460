@@ -52,6 +52,20 @@ public class BackEnd {
         System.out.println("Connected to Oracle database!");
     }
 
+    public void close() {
+        try {
+            stmt.close();
+            dbconn.close();
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                + "Could not close JDBC connection.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+            System.exit(-1);
+        }
+    }
+
     /*---------------------------------------------------------------------
     |  Method query1
     |
@@ -188,14 +202,113 @@ public class BackEnd {
     }
 
     public ResultSet query3(String weekDate) {
+        // Print the schedule of staff given a week (input the start date of the week by the user). A schedule
+        //contains the list of staff members working that week and a staff member’s working hours (start and stop
+        //times).
+
+        String query = "SELECT FirstName, LastName, starttime, endtime, weekstartdate FROM Shift JOIN "
+            + "Employee ON Shift.EmployeeID = Employee.EmployeeID WHERE weekstartdate between to_date('" + weekDate + "','YYYY-MM-DD') - 6"
+            + " and to_date('" + weekDate + "','YYYY-MM-DD') + 7";
+
+        String query2 = "SELECT DISTINCT FirstName, LastName FROM Shift JOIN "
+        + "Employee ON Shift.EmployeeID = Employee.EmployeeID WHERE weekstartdate between to_date('" + weekDate + "','YYYY-MM-DD') - 6"
+        + " and to_date('" + weekDate + "','YYYY-MM-DD') + 7";
+
+        try {
+            ResultSet ans = stmt.executeQuery(query2);
+            if (ans != null) {
+                System.out.println("\nEmployees working on the week starting on " + weekDate + " :\n");
+                while(ans.next()) {;
+                    System.out.println(ans.getString("FirstName") + " " + ans.getString("LastName"));
+                }
+            }
+            ResultSet ans2 = stmt.executeQuery(query);
+            if (ans2 != null) {
+                System.out.println("\nShift hours:\n");
+                while (ans2.next()) {
+                    System.out.println(ans2.getString("FirstName") + " " + ans2.getString("LastName") + " " + ans2.getString("starttime") + "-" 
+                        + ans2.getString("endtime") + " StartDate" + ans2.getString("weekstartdate"));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not calculate schedule.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
+
         return null;
     }
 
     public ResultSet query4(String dateStart, String dateEnd) {
+        try{
+            // ----- GETTING AMENITY PRICES 
+            String query = "SELECT Name,AVG(Rating.Rating) from Amenity,Rating where " +
+                                        "Amenity.AmenityID = Rating.AmenityID and "+
+                                        "RatingDate between TO_DATE('"+dateStart
+                                        +"','YYYY-MM-DD') and TO_DATE('"+dateEnd+
+                                         "','YYYY-MM-DD') group by RATING.AmenityID,Name"+
+                                         " order by AVG(Rating.rating) desc";
+            
+            ResultSet answer = stmt.executeQuery(query);
+            if (answer != null) {
+                while (answer.next()) {
+                    System.out.println(answer.getString("Name")+
+                    " had an average rating of: "+
+                     answer.getFloat("AVG(Rating.Rating)"));              
+                }
+            }
+        }
+        catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not run query 4.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+            }
+        System.out.println("\n");
         return null;
     }
 
-    public ResultSet query5(String TBD) {
+    public ResultSet query5(String num) {
+        int numConverted = 0;
+        int count = 0;
+        try{
+            numConverted = Integer.parseInt(num);
+        }
+        catch (Exception e){
+            System.out.println("Invalid input. Returning to main menu.\n");
+            return null;
+        }
+        try{
+            // ----- GETTING AMENITY PRICES 
+            String query = "SELECT FirstName,LastName,Points from Guest,ClubMember "+
+            "where Guest.GuestID=ClubMember.GuestID "+
+            "order by points desc";
+            
+            ResultSet answer = stmt.executeQuery(query);
+            System.out.println("\n");
+            System.out.println("Here are the top "+num+"guests with the most club 460 points");
+            if (answer != null) {
+                while (answer.next() && count<numConverted) {
+                    System.out.println(answer.getString("FIRSTNAME")+
+                    answer.getString("LASTNAME")+
+                    " has "+ answer.getInt("Points")+
+                    " Club460 points.");
+                    count++;
+                }
+                
+            }
+        }
+        catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not run query 5.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+            }
+        System.out.println("\n");
         return null;
     }
 
@@ -293,7 +406,6 @@ public class BackEnd {
         String query = "INSERT INTO Rating (GuestID, AmenityID, Rating, RatingDate) VALUES (" 
             + guestID + ", " + amenityID + ", " + rating + ", " + "TO_DATE('" + date + "', 'YYYY-MM-DD'))";
         //returns true if successfully added
-        System.out.println(query);
         try {
             stmt.executeUpdate(query);
             return true;
@@ -420,7 +532,6 @@ public class BackEnd {
         bookingID+=1;
         String query = "Insert into Booking (BookingID, GuestID, StartDate, EndDate, RoomID) VALUES (" + bookingID + ", " 
             + guestID + ", TO_DATE('" + startDate + "', 'YYYY-MM-DD'), TO_DATE('" + endDate + "', 'YYYY-MM-DD'), " + roomID + ")";
-        System.out.println(query);
         //returns true if successfully added
         try {
             stmt.executeUpdate(query);
@@ -684,7 +795,7 @@ public class BackEnd {
 
     public boolean addShift(String EmployeeID, String StartTime, String EndTime, String WeekStartDate) {
         //returns true if successfully added
-        WeekStartDate += "TO_DATE(" + WeekStartDate + ", 'YYYY-MM-DD')";
+        WeekStartDate = "TO_DATE('" + WeekStartDate + "', 'YYYY-MM-DD')";
         String query = "INSERT INTO Shift (EmployeeID, StartTime, EndTime, WeekStartDate) VALUES (" + EmployeeID + ", " + StartTime + ", " + EndTime + ", " + WeekStartDate + ")";
         try {
             stmt.executeUpdate(query);
