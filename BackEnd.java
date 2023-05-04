@@ -832,6 +832,7 @@ public class BackEnd {
                 if (endDate == null) {
                     endDate = answer.getString("EndDate");
                 }
+                System.out.println("RoomID: " + roomID + " StartDate: " + startDate + " EndDate: " + endDate);
             }
             //check if the room is already booked for that time period, ignore the current booking
             String queryCheck2 = "SELECT * FROM booking WHERE roomID =" + roomID + "and startdate between to_date('" + startDate + "','YYYY-MM-DD')"
