@@ -16,7 +16,7 @@ Noel - DatabaseInit , DatabasePopulate, query 4 and query 5
        testing some insert, update, delete functions, going to OH for 
        design questions,
 
-Mike - ER diagrams, query 2, FrontEnd, Datas creation
+Mike - ER diagrams, query 2, FrontEnd, CSV Data creation
 
 Gavin - preparing final submission and submitting, query 1, Backend bug Fixing, 
         Making Adds, deletes, and Updates

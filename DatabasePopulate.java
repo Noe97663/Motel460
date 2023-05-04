@@ -4,7 +4,7 @@ import java.io.*;
  ||
  ||  Class:   DatabasePopulate.java
  ||
- ||         Author:  Noel Martin Poothokaran
+ ||         Author:  Noel Martin Poothokaran, Mike Yu, Gavin Pogson, Huy Le
  ||
  ||        Purpose:  The class populates the tables created with data from 
  ||                  csv files in the data folder in the same directory

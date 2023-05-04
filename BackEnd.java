@@ -1,10 +1,77 @@
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
+/*+----------------------------------------------------------------------
+ ||
+ ||  Class:   BackEnd.java
+ ||
+ ||         Author:  Noel Martin Poothokaran, Mike Yu, Gavin Pogson, Huy Le
+ ||
+ ||        Purpose:  The class holds all methods that handle the connection to
+ ||                  the oracle database. It has methods to perform backend ops
+ ||                  like queries, inserts, deletes and updates.
+ ||
+ ||  Inherits From:  None
+ ||
+ ||     Interfaces:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||      Constants:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||   Constructors:  None
+ ||
+ ||  Class Methods: method - close
+ ||                 arguments - None
+ ||                 returns - None, closes connection to database
+ ||
+ ||
+ ||                 method - query1
+ ||                 arguments - int bookingID
+ ||                 returns - void, prints output to user
+ ||
+ ||
+ ||                 method - query2
+ ||                 arguments - String date
+ ||                 returns - void, prints output to user
+ ||
+ ||                 method - query3
+ ||                 arguments - String weekDate
+ ||                 returns - void, prints output to user
+ ||
+ ||                 method - query4
+ ||                 arguments - String dateStart, String dateEnd
+ ||                 returns - void, prints output to user
+ ||
+ ||                 method - query5
+ ||                 arguments - String num
+ ||                 returns - void, prints output to user
+ ||
+ ||                 for all tables in the schema:
+ ||                 method - delete<tableName>
+ ||                 arguments - Primary Key of <tableName>
+ ||                 returns - void, deletes record from <tableName>
+ || 
+ ||                 for all tables in the schema:
+ ||                 method - add<tableName>
+ ||                 arguments - All columns of the table
+ ||                 returns - void, inserts record into <tableName>
+ ||
+ ||                 for all tables in the schema:
+ ||                 method - update<tableName>
+ ||                 arguments - Primary Key of <tableName>
+ ||                 returns - void, updates record in <tableName>
+ ||
+ ||
+ ||  Inst. Methods:  None.
+ ||
+ ++-----------------------------------------------------------------------*/
 public class BackEnd {
     Connection dbconn = null;
     Statement stmt = null;
+
     public BackEnd() {
         final String oracleURL =   // Magic lectura -> aloe access spell
                     "jdbc:oracle:thin:@aloe.cs.arizona.edu:1521:oracle";
@@ -199,6 +266,21 @@ public class BackEnd {
         System.out.println("YOUR TOTAL BILL IS: $" + sum);
     }
 
+    /*---------------------------------------------------------------------
+    |  Method query2
+    |
+    |  Purpose:  This query returns the workers and their shifts
+    |            within 7 days of a given date.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: Employees and their shifts are shown 
+    |
+    |  Parameters:
+    |      date - String representing the date to check around
+    |
+    |  Returns:  No return
+    *-------------------------------------------------------------------*/
     public void query2(String date){
         try{
         String query = "select guest.guestid , firstname, lastname, studentstatus, points, roomid " 
@@ -240,9 +322,9 @@ public class BackEnd {
     /*---------------------------------------------------------------------
     |  Method query3
     |
-    |  Purpose:  Print the schedule of staff given a week (input the start date of the week by the user). A schedule
-    |            contains the list of staff members working that week and a staff member’s working hours (start and stop
-    |            times).
+    |  Purpose:  Print the schedule of staff given a week (input the start date of the week 
+    |            by the user). A schedule contains the list of staff members working that 
+    |            week and a staff member’s working hours (start and stop times).
     |
     |  Pre-condition:  Connection to the database has been established.
     |
@@ -307,6 +389,25 @@ public class BackEnd {
         System.out.println();
     }
 
+    /*---------------------------------------------------------------------
+    | Method query4
+    |
+    | Purpose: Retrieve and display the average ratings of all amenities based on the
+    | ratings given between the two specified dates.
+    |
+    | Pre-condition: Connection to the database has been established.
+    |
+    | Post-condition: Average ratings of all amenities within the specified date range
+    | are displayed.
+    |
+    | Parameters:
+    | dateStart -- String containing the start date of the date range in the format
+    | YYYY-MM-DD.
+    | dateEnd -- String containing the end date of the date range in the format
+    | YYYY-MM-DD.
+    |
+    | Returns: None.
+    |-------------------------------------------------------------------*/
     public void query4(String dateStart, String dateEnd) {
         try{
             // ----- GETTING AMENITY PRICES 
