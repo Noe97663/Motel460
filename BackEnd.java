@@ -1337,7 +1337,7 @@ public class BackEnd {
                     + WeekStartDate + "','YYYY-MM-DD') - 6"
                     + " and to_date('" + WeekStartDate + "','YYYY-MM-DD') + 7 and ((starttime > " + StartTime + " and starttime <" + EndTime + ") or (endtime > " 
                     + StartTime + " and endtime <" + EndTime + ")) MINUS SELECT * FROM Shift WHERE employeeID =" + EmployeeID + " and weekstartdate = to_date('"
-                    + WeekStartDate + "','YYYY-MM-DD') and starttime = " + StartTime + " and endtime = " + EndTime;
+                    + WeekStartDate + "','YYYY-MM-DD')";
                 System.out.println(queryCheck2);
                 stmt.executeQuery(queryCheck2);
                 System.out.println("after query");
