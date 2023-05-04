@@ -80,9 +80,9 @@ public class BackEnd {
     |  Parameters:
     |      bookingID -- the bookingID for the bill.
     |
-    |  Returns:  int containing the total bill for a bookingID.
+    |  Returns:  No return
     *-------------------------------------------------------------------*/
-    public double query1(int bookingID) {
+    public void query1(int bookingID) {
         double sum = 0.0; // --- STARTING SUM
         try{
             // ----- GETTING AMENITY PRICES 
@@ -121,27 +121,35 @@ public class BackEnd {
                     // ---- GET NUM DAYS FOR THE STAY FROM THE DATES
                     if(Integer.parseInt(StartDate[1]) == Integer.parseInt(EndDate[1])){
                         // --- DATES IN THE SAME MONTH
-                        numDays = Integer.parseInt(EndDate[2]) - Integer.parseInt(StartDate[2]);
+                        numDays = Integer.parseInt(EndDate[2].split(" ")[0]) - Integer.parseInt(StartDate[2].split(" ")[0]);
                     }
                     else{
                         // --- DATES NOT IN SAME MONTH
                         int[] months = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-                        numDays += (Integer.parseInt(EndDate[2])+ months[Integer.parseInt(EndDate[1])+1]) - Integer.parseInt(StartDate[2]);
+                        numDays += (Integer.parseInt(EndDate[2].split(" ")[0]) + 
+                             months[Integer.parseInt(EndDate[1]) + 1]) - Integer.parseInt(StartDate[2].split(" ")[0]);
                     }
                 }
             }
-            String roomPriceQuery = "Select Price from RoomClassification where type = '" + roomType + "'";
+            else{
+                System.out.println("ROOM DATES QUERY RETURNED EMPTY");
+            }
+            String roomPriceQuery = "Select Price from RoomClassification where Type = '" + roomType + "'";
             ResultSet roomPriceAnswer = stmt.executeQuery(roomPriceQuery);
-             // ----- ADD EACH (ROOM PRICE X NUM DAYS)
+
+            // ----- ADD EACH (ROOM PRICE X NUM DAYS)
             if (roomPriceAnswer != null) {
                 while (roomPriceAnswer.next()) {
                     sum += roomPriceAnswer.getInt("Price") * numDays;   
                 }  
             }
+
             // ------ ADD DISCOUNTS 
             double totalDiscount = 0.0;
             double discount1 = 0.0;
             double discount2 = 0.0;
+
+            // ----- GET STUDENT DISCOUNT
             String StudentQuery = "SELECT StudentStatus from Guest where GuestID = (SELECT GuestID FROM Booking where bookingID = "+ bookingID +")";
             ResultSet StudentAnswer = stmt.executeQuery(StudentQuery);
             if (StudentAnswer != null) {
@@ -152,11 +160,12 @@ public class BackEnd {
                     }
                 }
             }
+            // ----- GET CLUB MEMBER POINTS
             String GuestMemberQuery = "SELECT Points from ClubMember where GuestID = (SELECT GuestID FROM Booking where bookingID = "+ bookingID +")";
             ResultSet GuestMemberAnswer = stmt.executeQuery(GuestMemberQuery);
             if (GuestMemberAnswer != null) {
                 while (GuestMemberAnswer.next()) {
-                    discount2 +=  GuestMemberAnswer.getInt("StudentStatus") * .01;
+                    discount2 +=  GuestMemberAnswer.getInt("Points") * .01;
                 }
             }
             if(discount1 > discount2){
@@ -175,20 +184,32 @@ public class BackEnd {
             System.err.println("\tErrorCode: " + e.getErrorCode());
             }
 
-        return sum;
-    
+        System.out.println("YOUR TOTAL BILL IS: " + sum);
     }
 
     public ResultSet query2(String date){
         try{
         String query = "select guest.guestid , firstname, lastname, studentstatus, points, roomid " 
                     +  "from huyle.guest join huyle.booking " 
-                    +  "on enddate > to_date('" + date + "','YYYY-MM-DD') and startdate < to_date('" + date + "','YYYY-MM-DD'') and booking.guestid = guest.guestid "
+                    +  "on enddate > to_date('" + date + "','YYYY-MM-DD') and startdate < to_date('" + date + "','YYYY-MM-DD') and booking.guestid = guest.guestid "
                     +  "left join huyle.clubmember on huyle.clubmember.guestid = huyle.guest.guestid "
                     +  "group by guest.guestid , firstname, lastname, studentstatus, points, roomid order by roomid";
         ResultSet ans = stmt.executeQuery(query);
-        if (ans != null){
-            return ans;
+        
+        System.out.println("\nThe results of the query 2 are:\n");
+            // Get the data about the query result to learn
+            // the attribute names and use them as column headers
+        ResultSetMetaData answermetadata = ans.getMetaData();
+        for (int i = 1; i <= answermetadata.getColumnCount(); i++) {
+            System.out.print(answermetadata.getColumnName(i) + "   ");
+        }
+        System.out.println();
+            // Use next() to advance cursor through the result
+                    // tuples and print their attribute values
+        while (ans.next()) {
+            System.out.println(ans.getInt("guestID") + "    " + ans.getString("FirstName")
+                + "    " + ans.getString("LastName") + "    " + ans.getInt("Studentstatus") + "    " + ans.getInt("Points")
+                + "    " + ans.getInt("RoomID"));
         }
 
         } catch (SQLException e) {
@@ -243,7 +264,7 @@ public class BackEnd {
                 System.out.println("\nShift hours:\n");
                 while (ans2.next()) {
                     System.out.println(ans2.getString("FirstName") + " " + ans2.getString("LastName") + " " + ans2.getString("starttime") + "-" 
-                        + ans2.getString("endtime") + " StartDate" + ans2.getString("weekstartdate"));
+                        + ans2.getString("endtime") + " StartDate " + ans2.getString("weekstartdate").substring(0,10));
                 }
             }
         } catch (SQLException e) {
@@ -253,11 +274,11 @@ public class BackEnd {
             System.err.println("\tSQLState:  " + e.getSQLState());
             System.err.println("\tErrorCode: " + e.getErrorCode());
         }
-
+        System.out.println();
         return null;
     }
 
-    public ResultSet query4(String dateStart, String dateEnd) {
+    public void query4(String dateStart, String dateEnd) {
         try{
             // ----- GETTING AMENITY PRICES 
             String query = "SELECT Name,AVG(Rating.Rating) from Amenity,Rating where " +
@@ -268,12 +289,19 @@ public class BackEnd {
                                          " order by AVG(Rating.rating) desc";
             
             ResultSet answer = stmt.executeQuery(query);
+            System.out.println("\nAverage ratings of amenities from ratings between the"+
+            "given dates\n");
+            int count = 0;
             if (answer != null) {
                 while (answer.next()) {
+                    count++;
                     System.out.println(answer.getString("Name")+
                     " had an average rating of: "+
                      answer.getFloat("AVG(Rating.Rating)"));              
                 }
+            }
+            if(count==0){
+                System.out.println("No amenities were rated in the given time period.");
             }
         }
         catch (SQLException e) {
@@ -284,10 +312,9 @@ public class BackEnd {
             System.err.println("\tErrorCode: " + e.getErrorCode());
             }
         System.out.println("\n");
-        return null;
     }
 
-    public ResultSet query5(String num) {
+    public void query5(String num) {
         int numConverted = 0;
         int count = 0;
         try{
@@ -295,17 +322,23 @@ public class BackEnd {
         }
         catch (Exception e){
             System.out.println("Invalid input. Returning to main menu.\n");
-            return null;
         }
         try{
             // ----- GETTING AMENITY PRICES 
+            String numQuery = "Select COUNT(*) from ClubMember";
             String query = "SELECT FirstName,LastName,Points from Guest,ClubMember "+
             "where Guest.GuestID=ClubMember.GuestID "+
             "order by points desc";
             
+            ResultSet numAnswer= stmt.executeQuery(numQuery);
+            numAnswer.next();
+            int numRows = numAnswer.getInt("COUNT(*)");
+            if(numRows<numConverted){
+                num = Integer.toString(numRows);
+            }
             ResultSet answer = stmt.executeQuery(query);
             System.out.println("\n");
-            System.out.println("Here are the top "+num+"guests with the most club 460 points");
+            System.out.println("Here are the top "+num+" guests with the most club 460 points:");
             if (answer != null) {
                 while (answer.next() && count<numConverted) {
                     System.out.println(answer.getString("FIRSTNAME")+
@@ -325,7 +358,6 @@ public class BackEnd {
             System.err.println("\tErrorCode: " + e.getErrorCode());
             }
         System.out.println("\n");
-        return null;
     }
 
     public boolean addGuest(String firstName, String lastName, String isStudent, String creditCardCompany) {

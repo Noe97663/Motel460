@@ -266,14 +266,15 @@ public class FrontEnd {
             if (quesNum == 1){
                 System.out.println("Enter the BookingID Associated with the Bill: ");
                 int bID = scn.nextInt();
-                double queryOneAnswer = backEnd.query1(bID);
-                System.out.println("SUM FROM Q1: " + queryOneAnswer);
+                backEnd.query1(bID);
                 // print data...
             } else if (quesNum == 2){
+                scn.nextLine();
                 System.out.println("Enter the date in this format: YYYY-MM-DD");
                 String date = scn.nextLine();
                 ans = backEnd.query2(date);
             } else if (quesNum == 3) {
+                scn.nextLine();
                 System.out.println("Enter the week: "); // from?
                 String week = scn.nextLine();
                 ans = backEnd.query3(week);
@@ -283,12 +284,12 @@ public class FrontEnd {
                 String dateFrom = scn.nextLine();
                 System.out.println("Enter the date to: "); 
                 String dateTo = scn.nextLine().strip();
-                ans = backEnd.query4(dateFrom, dateTo);
+                backEnd.query4(dateFrom, dateTo);
             } else if (quesNum == 5){ // TBD
                 scn.nextLine();
                 System.out.println("Enter the value for x");
                 String val = scn.nextLine();
-                ans = backEnd.query5(val);
+                backEnd.query5(val);
             }  else if (quesNum == 6){ //
                 insertData(backEnd, scn);
             } else if (quesNum == 7){
