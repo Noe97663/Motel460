@@ -359,6 +359,23 @@ public class BackEnd {
         System.out.println("\n");
     }
 
+    /*---------------------------------------------------------------------
+    |  Method addGuest
+    |
+    |  Purpose: Adds a guest to the database
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: Guest is added to the database.
+    |
+    |  Parameters:
+    |      firstName -- the first name of the guest.
+    |      lastName -- the last name of the guest.
+    |      isStudent-- the student status of the guest.
+    |      creditCardCompany -- the credit card company of the guest.
+    |
+    |  Returns:  true if the guest was successfully added, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean addGuest(String firstName, String lastName, String isStudent, String creditCardCompany) {
         assert isStudent == "0" || isStudent == "1" || isStudent == null;
         //auto increment implementation
@@ -397,6 +414,24 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method updateGuest
+    |
+    |  Purpose: Update a guest's information in the database. Null parameters are not updated.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: The guest's information has been updated in the database.
+    |
+    |  Parameters:
+    |      guestID -- the guestID of the guest to be updated.
+    |      firstName -- the new first name of the guest.
+    |      lastName -- the new last name of the guest.
+    |      isStudent-- the new student status of the guest.
+    |      creditCardCompany -- the new credit card company of the guest.
+    |
+    |  Returns:  true if the guest was successfully updated, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean updateGuest(int guestID, String firstName, String lastName, String isStudent, String creditCardCompany) {
         assert isStudent == "0" || isStudent == "1" || isStudent == null;
         String setStatement = "SET ";
@@ -428,6 +463,21 @@ public class BackEnd {
         return false;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method deleteGuest
+    |
+    |  Purpose: Deletes a guest from the database.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: The guest is deleted from the database. Any tuple referencing
+    |                  the guest is also deleted.
+    |
+    |  Parameters:
+    |      guestID -- the ID of the guest to be deleted
+    |
+    |  Returns:  true if the guest was successfully deleted, false otherwise.
+    *-------------------------------------------------------------------*/
     public boolean deleteGuest(int guestID) {
         String query = "DELETE FROM Guest WHERE GuestID = " + guestID;
         //returns true if successfully deleted
