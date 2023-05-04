@@ -358,7 +358,7 @@ public class FrontEnd {
                 scn.nextLine();
                 System.out.println("Enter the date in this format: YYYY-MM-DD");
                 String date = scn.nextLine();
-                ans = backEnd.query2(date);
+                backEnd.query2(date);
             } else if (quesNum == 3) {
                 scn.nextLine();
                 System.out.println("Enter the week (YYYY-MM-DD): "); // from?
