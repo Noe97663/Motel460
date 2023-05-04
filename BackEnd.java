@@ -836,7 +836,7 @@ public class BackEnd {
                 System.out.println("RoomID: " + roomID + " StartDate: " + startDate + " EndDate: " + endDate);
             }
             //check if the room is already booked for that time period, ignore the current booking
-            String queryCheck2 = "SELECT * FROM booking WHERE roomID =" + roomID + "and startdate between to_date('" + startDate + "','YYYY-MM-DD')"
+            String queryCheck2 = "SELECT * FROM booking WHERE roomID = " + roomID + " and startdate between to_date('" + startDate + "','YYYY-MM-DD')"
                 + " and to_date('" + endDate + "','YYYY-MM-DD') and enddate between to_date('" + startDate + "','YYYY-MM-DD') and to_date('" + endDate + "','YYYY-MM-DD')"
                 + " MINUS SELECT * FROM booking WHERE BookingID = " + bookingID;
             System.out.println(queryCheck2);
