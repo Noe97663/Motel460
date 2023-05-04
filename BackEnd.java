@@ -171,14 +171,14 @@ public class BackEnd {
         try {
             ResultSet ans = stmt.executeQuery(query2);
             if (ans != null) {
-                System.out.println("Employees working on the week starting on " + weekDate + " :\n");
+                System.out.println("\nEmployees working on the week starting on " + weekDate + " :\n");
                 while(ans.next()) {;
                     System.out.println(ans.getString("FirstName") + " " + ans.getString("LastName"));
                 }
             }
             ResultSet ans2 = stmt.executeQuery(query);
             if (ans2 != null) {
-                System.out.println("\nShift hours:");
+                System.out.println("\nShift hours:\n");
                 while (ans2.next()) {
                     System.out.println(ans2.getString("FirstName") + " " + ans2.getString("LastName") + " " + ans2.getString("starttime") + "-" 
                         + ans2.getString("endtime") + " StartDate" + ans2.getString("weekstartdate"));
