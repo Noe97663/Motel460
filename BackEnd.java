@@ -242,7 +242,8 @@ public class BackEnd {
             "order by points desc";
             
             ResultSet answer = stmt.executeQuery(query);
-            System.out.println();
+            System.out.println("\n");
+            System.out.println("Here are the top "+num+"guests with the most club 460 points");
             if (answer != null) {
                 while (answer.next() && count<numConverted) {
                     System.out.println(answer.getString("FIRSTNAME")+
