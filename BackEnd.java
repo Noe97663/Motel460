@@ -1237,8 +1237,8 @@ public class BackEnd {
         String query = "INSERT INTO Shift (EmployeeID, StartTime, EndTime, WeekStartDate) VALUES (" + EmployeeID + ", " + StartTime + ", " 
             + EndTime + ", " + WeekStartDate + ")";
 
-        String prequery = "SELECT * FROM Shift WHERE employeeID =" + EmployeeID + "and weekstartdate between to_date('" + WeekStartDate + "','YYYY-MM-DD') - 6"
-        + " and to_date('" + WeekStartDate + "','YYYY-MM-DD') + 7 and ((starttime between " + StartTime + " and " + EndTime + ") or (endtime between "
+        String prequery = "SELECT * FROM Shift WHERE employeeID =" + EmployeeID + "and weekstartdate between " + WeekStartDate + " - 6"
+        + " and " + WeekStartDate + " + 7 and ((starttime between " + StartTime + " and " + EndTime + ") or (endtime between "
              + StartTime + " and " + EndTime + "))";
         try {
             stmt.executeQuery(prequery);

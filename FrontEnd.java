@@ -84,9 +84,9 @@ public class FrontEnd {
             String eID = scn.nextLine();
             System.out.println("Startdate: in this form: YYYY-MM-DD ");
             String date = scn.nextLine();
-            System.out.println("From time: (XX:XX) ");
+            System.out.println("From time: (XXXX) ");
             String fromTime = scn.nextLine();
-            System.out.println("To time: (XX:XX) ");
+            System.out.println("To time: (XXXX) ");
             String toTime  = scn.nextLine(); 
             backEnd.addShift(eID,fromTime, toTime, date);
         } else if (field == 9){ // Amenity
