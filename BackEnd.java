@@ -182,7 +182,7 @@ public class BackEnd {
         System.out.println("YOUR TOTAL BILL IS: " + sum);
     }
 
-    public ResultSet query2(String date){
+    public void query2(String date){
         try{
         String query = "select guest.guestid , firstname, lastname, studentstatus, points, roomid " 
                     +  "from huyle.guest join huyle.booking " 
@@ -218,7 +218,6 @@ public class BackEnd {
             System.err.println("\tSQLState:  " + e.getSQLState());
             System.err.println("\tErrorCode: " + e.getErrorCode());
         }
-        return null;
     }
 
     /*---------------------------------------------------------------------
