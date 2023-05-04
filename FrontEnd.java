@@ -284,12 +284,12 @@ public class FrontEnd {
                 String dateFrom = scn.nextLine();
                 System.out.println("Enter the date to: "); 
                 String dateTo = scn.nextLine().strip();
-                ans = backEnd.query4(dateFrom, dateTo);
+                backEnd.query4(dateFrom, dateTo);
             } else if (quesNum == 5){ // TBD
                 scn.nextLine();
                 System.out.println("Enter the value for x");
                 String val = scn.nextLine();
-                ans = backEnd.query5(val);
+                backEnd.query5(val);
             }  else if (quesNum == 6){ //
                 insertData(backEnd, scn);
             } else if (quesNum == 7){
