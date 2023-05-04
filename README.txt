@@ -21,5 +21,5 @@ Mike - ER diagrams, query 2, FrontEnd, Datas creation
 Gavin - preparing final submission and submitting, query 1, Backend bug Fixing, 
         Making Adds, deletes, and Updates
 
-Huy - query 3, 
+Huy - query 3, most back end operations (add/update/delete)
 
