@@ -583,7 +583,7 @@ public class BackEnd {
         //update only rating
         String query = "UPDATE Rating SET Rating = " + rating 
             + " WHERE GuestID = " + guestID + " AND AmenityID = " 
-            + amenityID + " AND RatingDate = TO_DATE(" + date + ", 'YYYY-MM-DD')";
+            + amenityID + " AND RatingDate = TO_DATE('" + date + "', 'YYYY-MM-DD')";
         //returns true if successfully updated
         try {
             stmt.executeUpdate(query);
@@ -617,7 +617,7 @@ public class BackEnd {
     *-------------------------------------------------------------------*/
     public boolean deleteRating(int guestID, int amenityID, String date) {
         String query = "DELETE FROM Rating WHERE GuestID = " + guestID + " AND AmenityID = " 
-            + amenityID + " AND RatingDate = TO_DATE(" + date + ", 'YYYY-MM-DD')";
+            + amenityID + " AND RatingDate = TO_DATE('" + date + "', 'YYYY-MM-DD')";
         //returns true if successfully deleted
         try {
             stmt.executeUpdate(query);
@@ -682,7 +682,7 @@ public class BackEnd {
     |  Returns:  true if the club member was successfully updated, false otherwise.
     *-------------------------------------------------------------------*/
     public boolean updateClubMember(int guestID, int points) {
-        String query = "UPDATE ClubMember SET Points = Points " + points + " WHERE GuestID = " + guestID;
+        String query = "UPDATE ClubMember SET Points = " + points + " WHERE GuestID = " + guestID;
         //returns true if successfully updated
         try {
             stmt.executeUpdate(query);
