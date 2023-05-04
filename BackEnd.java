@@ -510,6 +510,16 @@ public class BackEnd {
             int bookingId = ans.getInt("BookingID");
             String query7 = "DELETE FROM Transaction WHERE bookingID = " + bookingId;
             stmt.executeUpdate(query7);        
+            ArrayList<Integer> res = new ArrayList<>();
+            while (ans.next()){ // can't execute another query before a resultset is closed, so store it into arraylist
+                int bookingId = ans.getInt("BookingID");
+                res.add(bookingId);
+            } 
+            for (int i = 0; i < res.size(); i++){
+                int b = res.get(i);
+                String query7 = "DELETE FROM Transaction WHERE bookingID = " + b;
+                stmt.executeUpdate(query7);  
+            }
             stmt.executeUpdate(query3);
             stmt.executeUpdate(query4);
             stmt.executeUpdate(query);
