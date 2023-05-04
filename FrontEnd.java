@@ -10,7 +10,6 @@ public class FrontEnd {
         System.out.println("Inserting data on:");
         System.out.println("1. Guest  2. Rating  3.ClubMembers 4.Booking  5. Transaction  6. Room \n" 
                             + "7. Employee  8.Shift  9. Amenity 10. Room Classification");
-        scn.nextLine();
         String fieldString = scn.nextLine();
         int field = -99;
         try{
