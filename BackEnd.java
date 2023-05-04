@@ -242,10 +242,12 @@ public class BackEnd {
         //contains the list of staff members working that week and a staff member’s working hours (start and stop
         //times).
 
+        //find all the employees working on the week starting on weekDate (full schedule)
         String query = "SELECT FirstName, LastName, starttime, endtime, weekstartdate FROM Shift JOIN "
             + "Employee ON Shift.EmployeeID = Employee.EmployeeID WHERE weekstartdate between to_date('" + weekDate + "','YYYY-MM-DD') - 6"
             + " and to_date('" + weekDate + "','YYYY-MM-DD') + 7";
 
+        //find all the employees working on the week starting on weekDate, but only print their names once
         String query2 = "SELECT DISTINCT FirstName, LastName FROM Shift JOIN "
         + "Employee ON Shift.EmployeeID = Employee.EmployeeID WHERE weekstartdate between to_date('" + weekDate + "','YYYY-MM-DD') - 6"
         + " and to_date('" + weekDate + "','YYYY-MM-DD') + 7";
