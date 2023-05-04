@@ -1,9 +1,44 @@
 import java.sql.*;
-// To compile and execute this program on lectura:
-// -Add the Oracle JDBC driver to your CLASSPATH environment variable:
-//     export CLASSPATH=/usr/lib/oracle/19.8/client64/lib/ojdbc8.jar:${CLASSPATH}
-//  -Compile java files
-//  -Run file
+
+/*+----------------------------------------------------------------------
+ ||
+ ||  Class:   DBConn.java
+ ||
+ ||         Author:  Noel Martin Poothokaran
+ ||
+ ||        Purpose:  The class holds all methods that handle the connection to
+ ||                  the oracle database. It has methods to drop tables, create
+ ||                  tables.
+ ||
+ ||  Inherits From:  None
+ ||
+ ||     Interfaces:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||      Constants:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||   Constructors:  None
+ ||
+ ||  Class Methods: method - establishConnection
+ ||                 arguments - String[] cmdLineArgs
+ ||                 returns - dbConn, a Connection object to the database
+ ||
+ ||                 method - dropTables
+ ||                 arguments - Connection dbConn
+ ||                 returns - void, drops tables in the database
+ || 
+ ||                 method - createTables
+ ||                 arguments - Connection dbConn
+ ||                             String fileName
+ ||                 returns - void, creates table in the database
+ ||
+ ||
+ ||  Inst. Methods:  None.
+ ||
+ ++-----------------------------------------------------------------------*/
 public class DatabaseInit {
     /*---------------------------------------------------------------------
     |  Method: establishConnection(String cmdLineArgs[])
