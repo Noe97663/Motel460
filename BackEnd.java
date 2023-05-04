@@ -894,8 +894,10 @@ public class BackEnd {
     *-------------------------------------------------------------------*/
     public boolean removeBooking(int bookingID) {
         String query = "DELETE FROM Booking WHERE BookingID = " + bookingID;
+        String query2 = "DELETE FROM Transaction WHERE bookingID = " + bookingID;
         //returns true if successfully removed
         try {
+            stmt.executeUpdate(query2); 
             stmt.executeUpdate(query);
             return true;
             
