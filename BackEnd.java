@@ -111,8 +111,8 @@ public class BackEnd {
             int numDays = 0;
             if (roomDatesAnswer != null) {
                 while (roomDatesAnswer.next()) {
-                    StartDate = roomDatesAnswer.getString("TO_CHAR(StartDate, 'YYYY-MM-DD')").split("-");         
-                    EndDate = roomDatesAnswer.getString("TO_CHAR(EndDate, 'YYYY-MM-DD')").split("-");         
+                    StartDate = roomDatesAnswer.getString("TO_CHAR(St").split("-");         
+                    EndDate = roomDatesAnswer.getString("TO_CHAR(En").split("-");         
                     // ---- GET NUM DAYS FOR THE STAY FROM THE DATES
                     if(Integer.parseInt(StartDate[1]) == Integer.parseInt(EndDate[1])){
                         // --- DATES IN THE SAME MONTH
