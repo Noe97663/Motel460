@@ -724,8 +724,8 @@ public class BackEnd {
         String prequery = "SELECT MAX(bookingID) FROM BOOKING";
         int bookingID = 0;
 
-        String queryCheck1 = "SELECT * FROM booking WHERE roomID =" + roomID + "and weekstartdate between to_date('" + startDate + "','YYYY-MM-DD')"
-        + " and to_date('" + endDate + "','YYYY-MM-DD')";
+        String queryCheck1 = "SELECT * FROM booking WHERE roomID =" + roomID + "and startdate between to_date('" + startDate + "','YYYY-MM-DD')"
+        + " and to_date('" + endDate + "','YYYY-MM-DD') and enddate between to_date('" + startDate + "','YYYY-MM-DD') and to_date('" + endDate + "','YYYY-MM-DD')";
 
         try{
             ResultSet answer = stmt.executeQuery(prequery);
@@ -820,8 +820,9 @@ public class BackEnd {
                 }
             }
             //check if the room is already booked for that time period, ignore the current booking
-            String queryCheck2 = "SELECT * FROM booking WHERE roomID =" + roomID + "and weekstartdate between to_date('" + startDate + "','YYYY-MM-DD')"
-                + " and to_date('" + endDate + "','YYYY-MM-DD') MINUS SELECT * FROM booking WHERE BookingID = " + bookingID;
+            String queryCheck2 = "SELECT * FROM booking WHERE roomID =" + roomID + "and startdate between to_date('" + startDate + "','YYYY-MM-DD')"
+                + " and to_date('" + endDate + "','YYYY-MM-DD') and enddate between to_date('" + startDate + "','YYYY-MM-DD') and to_date('" + endDate + "','YYYY-MM-DD')"
+                + " MINUS SELECT * FROM booking WHERE BookingID = " + bookingID;
             answer = stmt.executeQuery(queryCheck2);
             if (answer.next()) {
                 System.out.println("Room is already booked for that time period");
