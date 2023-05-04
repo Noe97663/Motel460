@@ -1294,7 +1294,7 @@ public class BackEnd {
         String queryCheck = "SELECT * FROM Shift WHERE employeeID =" + EmployeeID + " and weekstartdate = to_date('" + WeekStartDate + "','YYYY-MM-DD')";
 
         String query = "UPDATE Shift " + setStatement.substring(0, setStatement.length() - 2) 
-            + " WHERE EmployeeID = " + EmployeeID + "AND WeekStartDate = " + WeekStartDate;
+            + " WHERE EmployeeID = " + EmployeeID + "AND WeekStartDate = to_date('" + WeekStartDate + "','YYYY-MM-DD')";
         try {
             System.out.println(queryCheck);
             stmt.executeQuery(queryCheck);
