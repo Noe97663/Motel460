@@ -121,12 +121,13 @@ public class BackEnd {
                     // ---- GET NUM DAYS FOR THE STAY FROM THE DATES
                     if(Integer.parseInt(StartDate[1]) == Integer.parseInt(EndDate[1])){
                         // --- DATES IN THE SAME MONTH
-                        numDays = Integer.parseInt(EndDate[2]) - Integer.parseInt(StartDate[2]);
+                        numDays = Integer.parseInt(EndDate[2].split(" ")[0]) - Integer.parseInt(StartDate[2].split(" ")[0]);
                     }
                     else{
                         // --- DATES NOT IN SAME MONTH
                         int[] months = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-                        numDays += (Integer.parseInt(EndDate[2])+ months[Integer.parseInt(EndDate[1])+1]) - Integer.parseInt(StartDate[2]);
+                        numDays += (Integer.parseInt(EndDate[2].split(" ")[0]) + 
+                             months[Integer.parseInt(EndDate[1]) + 1]) - Integer.parseInt(StartDate[2].split(" ")[0]);
                     }
                 }
             }
