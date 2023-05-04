@@ -329,6 +329,26 @@ public class BackEnd {
         System.out.println("\n");
     }
 
+    /*---------------------------------------------------------------------
+    | Method query5
+    |
+    | Purpose: Queries the database for the top guests with the most 
+    |club 460 points and displays the results.
+    | The number of guests to display is specified by the parameter 'num'.
+    | The query retrieves the first name, last name, and points of guests who
+    | are also club members, sorted by points in descending order.
+    |
+    | Pre-condition: Connection to the database has been established
+    | and a statement object has been created.
+    |
+    | Post-condition: The top guests with the most club 460 points
+    | are displayed.
+    |
+    | Parameters:
+    | num -- the number of guests to display.
+    |
+    | Returns: void.
+    /-------------------------------------------------------------------*/
     public void query5(String num) {
         int numConverted = 0;
         int count = 0;
@@ -339,7 +359,7 @@ public class BackEnd {
             System.out.println("Invalid input. Returning to main menu.\n");
         }
         try{
-            // ----- GETTING AMENITY PRICES 
+            // ----- GETTING GUESTS
             String numQuery = "Select COUNT(*) from ClubMember";
             String query = "SELECT FirstName,LastName,Points from Guest,ClubMember "+
             "where Guest.GuestID=ClubMember.GuestID "+
