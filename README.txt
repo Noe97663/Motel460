@@ -18,7 +18,8 @@ Noel - DatabaseInit (fully), DatabasePopulate, query 4 and query 5
 
 Mike - ER diagrams, query 2, FrontEnd, Datas creation
 
-Gavin - preparing final submission and submitting, query 1
+Gavin - preparing final submission and submitting, query 1, Backend bug Fixing, 
+        Making Adds, deletes, and Updates
 
 Huy - query 3, 
 
