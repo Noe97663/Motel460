@@ -4,11 +4,6 @@ import java.util.ArrayList;
 public class BackEnd {
     Connection dbconn = null;
     Statement stmt = null;
-    public static void main(String args[]){
-        BackEnd be = new BackEnd();
-        be.addGuest("Gavin", "Pogson", "1", null);
-        be.addGuest("Noel", "Pogson", "1", null);
-    }
     public BackEnd() {
         final String oracleURL =   // Magic lectura -> aloe access spell
                     "jdbc:oracle:thin:@aloe.cs.arizona.edu:1521:oracle";
@@ -109,25 +104,25 @@ public class BackEnd {
                 }
             }
             // ---- GET DATES FOR THE STAY
-            String roomDates = "Select StartDate, EndDate from Booking where BookingID = " + bookingID;
+            String roomDates = "Select TO_CHAR(StartDate, 'YYYY-MM-DD'), TO_CHAR(EndDate, 'YYYY-MM-DD') from Booking where BookingID = " + bookingID;
             ResultSet roomDatesAnswer = stmt.executeQuery(roomDates);
             String[] StartDate;
             String[] EndDate;
             int numDays = 0;
             if (roomDatesAnswer != null) {
                 while (roomDatesAnswer.next()) {
-                    StartDate = roomDatesAnswer.getString("StartDate").split("-");         
-                    EndDate = roomDatesAnswer.getString("EndDate").split("-");         
+                    StartDate = roomDatesAnswer.getString("TO_CHAR(StartDate, 'YYYY-MM-DD')").split("-");         
+                    EndDate = roomDatesAnswer.getString("TO_CHAR(EndDate, 'YYYY-MM-DD')").split("-");         
                     // ---- GET NUM DAYS FOR THE STAY FROM THE DATES
                     if(Integer.parseInt(StartDate[1]) == Integer.parseInt(EndDate[1])){
                         // --- DATES IN THE SAME MONTH
-                        numDays = Integer.parseInt(EndDate[2].split(" ")[0]) - Integer.parseInt(StartDate[2].split(" ")[0]);
+                        numDays = Integer.parseInt(EndDate[2]) - Integer.parseInt(StartDate[2]);
                     }
                     else{
                         // --- DATES NOT IN SAME MONTH
                         int[] months = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-                        numDays += (Integer.parseInt(EndDate[2].split(" ")[0]) + 
-                             months[Integer.parseInt(EndDate[1]) + 1]) - Integer.parseInt(StartDate[2].split(" ")[0]);
+                        numDays += (Integer.parseInt(EndDate[2]) + 
+                             months[Integer.parseInt(EndDate[1]) + 1]) - Integer.parseInt(StartDate[2]);
                     }
                 }
             }
