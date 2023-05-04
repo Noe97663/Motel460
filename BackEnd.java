@@ -830,10 +830,10 @@ public class BackEnd {
                     roomID = answer.getInt("RoomID");
                 }
                 if (startDate == null) {
-                    startDate = answer.getString("StartDate");
+                    startDate = answer.getString("Start");;
                 }
                 if (endDate == null) {
-                    endDate = answer.getString("EndDate");
+                    endDate = answer.getString("End");
                 }
             }
             //check if the room is already booked for that time period, ignore the current booking
