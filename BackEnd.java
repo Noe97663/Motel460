@@ -494,11 +494,17 @@ public class BackEnd {
     |  Returns:  true if the guest was successfully deleted, false otherwise.
     *-------------------------------------------------------------------*/
     public boolean deleteGuest(int guestID) {
+        String query2 = "DELETE FROM Clubmember WHERE GuestID = " + guestID;
+        String query3 = "DELETE FROM Booking WHERE GuestID = " + guestID;
+        String query4 = "DELETE FROM Rating WHERE GuestID = " + guestID;
         String query = "DELETE FROM Guest WHERE GuestID = " + guestID;
         //returns true if successfully deleted
 
         // need to remove the guest info from all related tables
         try {
+            stmt.executeUpdate(query2);
+            stmt.executeUpdate(query3);
+            stmt.executeUpdate(query4);
             stmt.executeUpdate(query);
             return true;
             
