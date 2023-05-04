@@ -129,15 +129,16 @@ public class BackEnd {
             else{
                 System.out.println("ROOM DATES QUERY RETURNED EMPTY");
             }
-            System.out.println("NUM OF DAYS PER BOOKING = "+numDays);
-            String roomPriceQuery = "Select Price from RoomClassification where Type = '" + roomType + "'";
-            ResultSet roomPriceAnswer = stmt.executeQuery(roomPriceQuery);
+            for (String i : roomType){
+                String roomPriceQuery = "Select Price from RoomClassification where Type = '" + i + "'";
+                ResultSet roomPriceAnswer = stmt.executeQuery(roomPriceQuery);
 
-            // ----- ADD EACH (ROOM PRICE X NUM DAYS)
-            if (roomPriceAnswer != null) {
-                while (roomPriceAnswer.next()) {
-                    sum += roomPriceAnswer.getInt("Price") * numDays;   
-                }  
+                // ----- ADD EACH (ROOM PRICE X NUM DAYS)
+                if (roomPriceAnswer != null) {
+                    while (roomPriceAnswer.next()) {
+                        sum += roomPriceAnswer.getInt("Price") * numDays;   
+                    }  
+                }
             }
 
             // ------ ADD DISCOUNTS 
