@@ -278,7 +278,7 @@ public class BackEnd {
                         end = end.substring(0,2) + ":" + end.substring(2,4);
                     }
                     System.out.println(ans2.getString("FirstName") + " " + ans2.getString("LastName") + " " + start + "-" 
-                        + end + " StartDate " + ans2.getString("weekstartdate").substring(0,10));
+                        + end + " Week Shift Started On: " + ans2.getString("weekstartdate").substring(0,10));
                 }
             }
         } catch (SQLException e) {
