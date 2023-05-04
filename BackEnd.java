@@ -48,6 +48,20 @@ public class BackEnd {
         System.out.println("Connected to Oracle database!");
     }
 
+    /*---------------------------------------------------------------------
+    |  Method close
+    |
+    |  Purpose:  This function close the database connection once the user input -1
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: N/A
+    |
+    |  Parameters:
+    |      N/A
+    |
+    |  Returns:  No return
+    *-------------------------------------------------------------------*/
     public void close() {
         try {
             stmt.close();
