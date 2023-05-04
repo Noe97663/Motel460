@@ -104,7 +104,7 @@ public class BackEnd {
                 }
             }
             // ---- GET DATES FOR THE STAY
-            String roomDates = "Select TO_CHAR(StartDate, 'YYYY-MM-DD'), TO_CHAR(EndDate, 'YYYY-MM-DD') from Booking where BookingID = " + bookingID;
+            String roomDates = "Select TO_CHAR(StartDate, 'YYYY-MM-DD') as StartDate, TO_CHAR(EndDate, 'YYYY-MM-DD') as EndDate from Booking where BookingID = " + bookingID;
             ResultSet roomDatesAnswer = stmt.executeQuery(roomDates);
             String[] StartDate;
             String[] EndDate;
