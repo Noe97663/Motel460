@@ -829,7 +829,7 @@ public class BackEnd {
                     roomID = answer.getInt("RoomID");
                 }
                 if (startDate == null) {
-                    startDate = answer.getDate("StartDate").toString();;
+                    startDate = answer.getDate("StartDate").toString();
                 }
                 if (endDate == null) {
                     endDate = answer.getDate("EndDate").toString();
@@ -1313,8 +1313,8 @@ public class BackEnd {
                 //we need to check to see if there is any overlap with another shift (minus the shift we are updating)
                 String queryCheck2 = "SELECT * FROM Shift WHERE employeeID =" + EmployeeID + "and weekstartdate between to_date('" 
                     + WeekStartDate + "','YYYY-MM-DD') - 6"
-                    + " and to_date('" + WeekStartDate + "','YYYY-MM-DD') + 7 and ((starttime between " + StartTime + " and " + EndTime + ") or (endtime between " 
-                    + StartTime + " and " + EndTime + ")) MINUS SELECT * FROM Shift WHERE employeeID =" + EmployeeID + " and weekstartdate = to_date('"
+                    + " and to_date('" + WeekStartDate + "','YYYY-MM-DD') + 7 and ((starttime > " + StartTime + " and starttime <" + EndTime + ") or (endtime > " 
+                    + StartTime + " and endtime <" + EndTime + ")) MINUS SELECT * FROM Shift WHERE employeeID =" + EmployeeID + " and weekstartdate = to_date('"
                     + WeekStartDate + "','YYYY-MM-DD') and starttime = " + StartTime + " and endtime = " + EndTime;
                 stmt.executeQuery(queryCheck2);
                 ResultSet rs2 = stmt.getResultSet();
