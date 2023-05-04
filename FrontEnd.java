@@ -263,6 +263,7 @@ public class FrontEnd {
             System.out.println("Enter 1/2/3/4/5/6/7/8 or -1 to exit: ");
             ResultSet ans;
             int quesNum = scn.nextInt();  // Read user input
+            scn.nextLine();
             if (quesNum == 1){
                 System.out.println("Enter the BookingID Associated with the Bill: ");
                 int bID = scn.nextInt();
@@ -296,6 +297,7 @@ public class FrontEnd {
                 deleteData(backEnd, scn);
             } else if (quesNum == -1){ // if user input -1, exit.
                 conti = 0;
+                backEnd.close();
             } else{
                 System.out.println("---------- Please enter only 1/2/3/4/5/6/7/8 or -1 to exit ----------");
             }

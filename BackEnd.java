@@ -293,7 +293,7 @@ public class BackEnd {
             
             ResultSet answer = stmt.executeQuery(query);
             System.out.println("\n");
-            System.out.println("Here are the top "+num+"guests with the most club 460 points");
+            System.out.println("Here are the top "+num+" guests with the most club 460 points");
             if (answer != null) {
                 while (answer.next() && count<numConverted) {
                     System.out.println(answer.getString("FIRSTNAME")+
