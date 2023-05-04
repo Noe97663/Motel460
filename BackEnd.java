@@ -506,10 +506,6 @@ public class BackEnd {
         try {
             stmt.executeUpdate(query2);
             ResultSet ans = stmt.executeQuery(query5);
-            ans.next();
-            int bookingId = ans.getInt("BookingID");
-            String query7 = "DELETE FROM Transaction WHERE bookingID = " + bookingId;
-            stmt.executeUpdate(query7);        
             ArrayList<Integer> res = new ArrayList<>();
             while (ans.next()){ // can't execute another query before a resultset is closed, so store it into arraylist
                 int bookingId = ans.getInt("BookingID");
