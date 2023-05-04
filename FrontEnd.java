@@ -263,6 +263,7 @@ public class FrontEnd {
             System.out.println("Enter 1/2/3/4/5/6/7/8 or -1 to exit: ");
             ResultSet ans;
             int quesNum = scn.nextInt();  // Read user input
+            scn.nextLine();
             if (quesNum == 1){
                 System.out.println("Enter the BookingID Associated with the Bill: ");
                 int bID = scn.nextInt();
@@ -270,7 +271,6 @@ public class FrontEnd {
                 System.out.println("SUM FROM Q1: " + queryOneAnswer);
                 // print data...
             } else if (quesNum == 2){
-                scn.nextLine();
                 System.out.println("Enter the date in this format: YYYY-MM-DD");
                 String date = scn.nextLine();
                 ans = backEnd.query2(date);
