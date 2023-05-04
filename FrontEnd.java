@@ -147,16 +147,16 @@ public class FrontEnd {
             String fName = scn.nextLine();
             System.out.println("Last Name: (null for not updating)");
             String lName = scn.nextLine();
-            if (bool == "null"){
+            if (bool.equals("null")){
                 bool = null;
             }
-            if (ccc == "null"){
+            if (ccc.equals("null")){
                 ccc = null;
             }
-            if (lName == "null"){
+            if (lName.equals("null")){
                 lName = null;
             }
-            if (fName == "null"){
+            if (fName.equals("null")){
                 fName = null;
             }
 
@@ -186,10 +186,10 @@ public class FrontEnd {
             String dateT = scn.nextLine();
             System.out.println("RoomID: (-1 if not updating) ");
             int rID = Integer.parseInt(scn.nextLine());
-            if (dateF == "null"){
+            if (dateF.equals("null")){
                 dateF = null;
             }
-            if (dateT == "null"){
+            if (dateT.equals("null")){
                 dateT = null;
             }
             backEnd.updateBooking(bID, dateF, dateT, rID);
@@ -202,13 +202,13 @@ public class FrontEnd {
             String fName = scn.nextLine();
             System.out.println("Last Name: (null if not updating)");
             String lName = scn.nextLine(); 
-            if (fName == "null"){
+            if (fName.equals("null")){
                 fName = null;
             }
-            if (lName == "null"){
+            if (lName.equals("null")){
                 lName = null;
             }
-            if (pos == "null"){
+            if (pos.equals("null")){
                 pos = null;
             } 
             backEnd.updateEmployee(eID, pos, fName, lName);
@@ -221,10 +221,10 @@ public class FrontEnd {
             String fromTime = scn.nextLine();
             System.out.println("To time: (if 18:00 input 1800) (null if not updating)");
             String toTime  = scn.nextLine(); 
-            if (fromTime == "null"){
+            if (fromTime.equals("null")){
                 fromTime = null;
             } 
-            if (toTime == "null"){
+            if (toTime.equals("null")){
                 toTime = null;
             } 
             backEnd.updateShift(eID, fromTime, toTime, date);
@@ -235,7 +235,7 @@ public class FrontEnd {
             String name = scn.nextLine();
             System.out.println("Price:   (-1 if not updating)");
             int price  = Integer.parseInt(scn.nextLine());
-            if (name == "null"){
+            if (name.equals("null")){
                 name = null;
             } 
 
@@ -257,29 +257,29 @@ public class FrontEnd {
             int rID = Integer.parseInt(scn.nextLine());
             System.out.println("Type: (null if not updating)");
             String type = scn.nextLine();
-            if (type == "null"){
+            if (type.equals("null")){
                 type = null;
             }
             backEnd.updateRoom(rID, type);
         } else if (field == 10){ // RoomClassification
             System.out.println("Type:  (null if not updating)");
             String type = scn.nextLine();
-            if (type == "null"){
+            if (type.equals("null")){
                 type = null;
             }
             System.out.println("Price:  (null if not updating)");
             String price = scn.nextLine();
-            if (price == "null"){
+            if (price.equals("null")){
                 price = null;
             }
             System.out.println("beds:  (null if not updating)");
             String beds = scn.nextLine();
-            if (beds == "null"){
+            if (beds.equals("null")){
                 beds = null;
             }
             System.out.println("baths:  (null if not updating)");
             String baths = scn.nextLine();
-            if (baths == "null"){
+            if (baths.equals("null")){
                 baths = null;
             }
             backEnd.updateRoomClassification(type, price, beds, baths);
