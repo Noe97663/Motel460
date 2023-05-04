@@ -129,6 +129,7 @@ public class BackEnd {
             else{
                 System.out.println("ROOM DATES QUERY RETURNED EMPTY");
             }
+            System.out.println("NUM OF DAYS PER BOOKING = "+numDays);
             String roomPriceQuery = "Select Price from RoomClassification where Type = '" + roomType + "'";
             ResultSet roomPriceAnswer = stmt.executeQuery(roomPriceQuery);
 
@@ -179,7 +180,7 @@ public class BackEnd {
             System.err.println("\tErrorCode: " + e.getErrorCode());
             }
 
-        System.out.println("YOUR TOTAL BILL IS: " + sum);
+        System.out.println("YOUR TOTAL BILL IS: $" + sum);
     }
 
     public void query2(String date){
