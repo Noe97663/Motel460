@@ -1,3 +1,20 @@
+/*
+ * FrontEnd.java -- This program present the connection between the customers and JDBC, this program will prompt the 
+ *                  users for input and send the input to BackEnd to perform the database works.
+
+ *            
+ * Before you run this program, please add the Oracle JDBC driver to your CLASSPATH environment variable:
+ * 
+ *         export CLASSPATH=/usr/lib/oracle/19.8/client64/lib/ojdbc8.jar:${CLASSPATH}
+ *       
+ * Assignment: Program #4: Database Design and Implementation
+ * Author:  Mike Yu, Gavin Pogson, Huy Le, Noel Poothokaran
+
+ * Class: CSC460
+ * Professor: L. McCann
+ * Due: 2023-05-02
+ */
+
 import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
@@ -6,6 +23,21 @@ import java.util.Scanner;
 
 public class FrontEnd {
 
+    /*---------------------------------------------------------------------
+    |  Method insertData
+    |
+    |  Purpose: Insert the data into the specific table.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: N/A
+    |
+    |  Parameters:
+    |      insertData -- The connection to the database.
+    |      scn -- Scanner to scan user's input.
+    |
+    |  Returns:  N/A
+    *-------------------------------------------------------------------*/
     public static void insertData(BackEnd backEnd, Scanner scn){
         System.out.println("Inserting data on:");
         System.out.println("1. Guest  2. Rating  3.ClubMembers 4.Booking  5. Transaction  6. Room \n" 
@@ -122,6 +154,21 @@ public class FrontEnd {
        
     }
 
+    /*---------------------------------------------------------------------
+    |  Method updateData
+    |
+    |  Purpose: Update the data in the specific table.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: N/A
+    |
+    |  Parameters:
+    |      insertData -- The connection to the database.
+    |      scn -- Scanner to scan user's input.
+    |
+    |  Returns:  N/A
+    *-------------------------------------------------------------------*/
     public static void updatData(BackEnd backEnd, Scanner scn){
         System.out.println("Updating data on:");
         System.out.println("1. Guest  2. Rating  3.ClubMember 4.Booking\n" 
@@ -284,6 +331,21 @@ public class FrontEnd {
         }
     }
 
+    /*---------------------------------------------------------------------
+    |  Method deleteData
+    |
+    |  Purpose: Delete the data in the specific table.
+    |
+    |  Pre-condition:  Connection to the database has been established.
+    |
+    |  Post-condition: N/A
+    |
+    |  Parameters:
+    |      insertData -- The connection to the database.
+    |      scn -- Scanner to scan user's input.
+    |
+    |  Returns:  N/A
+    *-------------------------------------------------------------------*/
     public static void deleteData(BackEnd backEnd, Scanner scn){
         System.out.println("Deleting data on:");
         System.out.println("1. Guest  2. Rating  3.ClubMember  4.Booking \n" 
