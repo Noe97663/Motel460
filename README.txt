@@ -12,7 +12,7 @@ Workload Distribution
 
 All - Schema design, bug fixes, documentation
 
-Noel - DatabaseInit (fully), DatabasePopulate, query 4 and query 5
+Noel - DatabaseInit , DatabasePopulate, query 4 and query 5
        testing some insert, update, delete functions, going to OH for 
        design questions, 
 

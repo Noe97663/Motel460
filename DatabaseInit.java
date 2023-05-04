@@ -2,7 +2,7 @@ import java.sql.*;
 
 /*+----------------------------------------------------------------------
  ||
- ||  Class:   DBConn.java
+ ||  Class:   DatabaseInit.java
  ||
  ||         Author:  Noel Martin Poothokaran
  ||
