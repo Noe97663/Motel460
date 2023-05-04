@@ -360,7 +360,15 @@ public class FrontEnd {
             System.out.println("--------------------------------------------------");
 
             System.out.println("Enter 1/2/3/4/5/6/7/8 or -1 to exit: ");
-            int quesNum = scn.nextInt();  // Read user input
+            String ques = scn.nextLine();
+            int quesNum = -99;
+            try{
+                quesNum = Integer.parseInt(ques);
+            }
+            catch (Exception e){
+                System.out.println("Invalid input. Try again.\n");
+                continue;
+            }
             if (quesNum == 1){
                 System.out.println("Enter the BookingID Associated with the Bill: ");
                 int bID = scn.nextInt();
