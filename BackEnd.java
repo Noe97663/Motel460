@@ -820,7 +820,7 @@ public class BackEnd {
             System.out.println(queryCheck1);
             ResultSet answer = stmt.executeQuery(queryCheck1);
             //look for the tuple to be updated, and update the fields
-            if (!answer.isBeforeFirst()) {
+            if (!answer.next()) {
                 System.out.println("Booking does not exist");
                 return false;
             }
@@ -830,10 +830,11 @@ public class BackEnd {
                     roomID = answer.getInt("RoomID");
                 }
                 if (startDate == null) {
-                    startDate = answer.getString("Start");;
+                    System.out.println("Start date is null");
+                    startDate = answer.getString("StartDate");;
                 }
                 if (endDate == null) {
-                    endDate = answer.getString("End");
+                    endDate = answer.getString("EndDate");
                 }
             }
             //check if the room is already booked for that time period, ignore the current booking
