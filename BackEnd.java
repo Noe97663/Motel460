@@ -272,8 +272,13 @@ public class BackEnd {
                     } else if (start.length() == 4) {
                         start = start.substring(0,2) + ":" + start.substring(2,4);
                     }
-                    System.out.println(ans2.getString("FirstName") + " " + ans2.getString("LastName") + " " + ans2.getString("starttime") + "-" 
-                        + ans2.getString("endtime") + " StartDate " + ans2.getString("weekstartdate").substring(0,10));
+                    if (end.length() == 3) {
+                        end = end.substring(0,1) + ":" + end.substring(1,3);
+                    } else if (end.length() == 4) {
+                        end = end.substring(0,2) + ":" + end.substring(2,4);
+                    }
+                    System.out.println(ans2.getString("FirstName") + " " + ans2.getString("LastName") + " " + start + "-" 
+                        + end + " StartDate " + ans2.getString("weekstartdate").substring(0,10));
                 }
             }
         } catch (SQLException e) {
