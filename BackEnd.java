@@ -156,6 +156,42 @@ public class BackEnd {
     }
 
     public ResultSet query3(String weekDate) {
+        // Print the schedule of staff given a week (input the start date of the week by the user). A schedule
+        //contains the list of staff members working that week and a staff member’s working hours (start and stop
+        //times).
+
+        String query = "SELECT FirstName, LastName, starttime, endtime, weekstartdate FROM Shift JOIN "
+            + "Employee ON Shift.EmployeeID = Employee.EmployeeID WHERE weekstartdate between to_date('" + weekDate + "','YYYY-MM-DD') - 6"
+            + " and to_date('" + weekDate + "','YYYY-MM-DD') + 7";
+
+        String query2 = "SELECT DISTINCT FirstName, LastName FROM Shift JOIN "
+        + "Employee ON Shift.EmployeeID = Employee.EmployeeID WHERE weekstartdate between to_date('" + weekDate + "','YYYY-MM-DD') - 6"
+        + " and to_date('" + weekDate + "','YYYY-MM-DD') + 7";
+
+        try {
+            ResultSet ans = stmt.executeQuery(query2);
+            if (ans != null) {
+                System.out.println("Employees working on the week starting on " + weekDate + " :\n");
+                while(ans.next()) {;
+                    System.out.println(ans.getString("FirstName") + " " + ans.getString("LastName"));
+                }
+            }
+            ResultSet ans2 = stmt.executeQuery(query);
+            if (ans2 != null) {
+                System.out.println("\nShift hours:");
+                while (ans2.next()) {
+                    System.out.println(ans2.getString("FirstName") + " " + ans2.getString("LastName") + " " + ans2.getString("starttime") + "-" 
+                        + ans2.getString("endtime") + " StartDate" + ans2.getString("weekstartdate"));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("*** SQLException:  "
+                    + "Could not calculate schedule.");
+            System.err.println("\tMessage:   " + e.getMessage());
+            System.err.println("\tSQLState:  " + e.getSQLState());
+            System.err.println("\tErrorCode: " + e.getErrorCode());
+        }
+
         return null;
     }
 
