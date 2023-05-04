@@ -495,6 +495,7 @@ public class BackEnd {
     *-------------------------------------------------------------------*/
     public boolean deleteGuest(int guestID) {
         String query2 = "DELETE FROM Clubmember WHERE GuestID = " + guestID;
+        String query5 = "select bookingId from booking where GuestID = " + guestID;
         String query3 = "DELETE FROM Booking WHERE GuestID = " + guestID;
         String query4 = "DELETE FROM Rating WHERE GuestID = " + guestID;
         String query = "DELETE FROM Guest WHERE GuestID = " + guestID;
@@ -503,6 +504,11 @@ public class BackEnd {
         // need to remove the guest info from all related tables
         try {
             stmt.executeUpdate(query2);
+            ResultSet ans = stmt.executeQuery(query5);
+            ans.next();
+            int bookingId = ans.getInt("BookingID");
+            String query7 = "DELETE FROM Transaction WHERE bookingID = " + bookingId;
+            stmt.executeUpdate(query7);        
             stmt.executeUpdate(query3);
             stmt.executeUpdate(query4);
             stmt.executeUpdate(query);
