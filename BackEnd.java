@@ -232,7 +232,7 @@ public class BackEnd {
                 System.out.println("\nShift hours:\n");
                 while (ans2.next()) {
                     System.out.println(ans2.getString("FirstName") + " " + ans2.getString("LastName") + " " + ans2.getString("starttime") + "-" 
-                        + ans2.getString("endtime") + " StartDate" + ans2.getString("weekstartdate"));
+                        + ans2.getString("endtime") + " StartDate " + ans2.getString("weekstartdate").substring(0,10));
                 }
             }
         } catch (SQLException e) {
@@ -242,11 +242,11 @@ public class BackEnd {
             System.err.println("\tSQLState:  " + e.getSQLState());
             System.err.println("\tErrorCode: " + e.getErrorCode());
         }
-
+        System.out.println();
         return null;
     }
 
-    public ResultSet query4(String dateStart, String dateEnd) {
+    public void query4(String dateStart, String dateEnd) {
         try{
             // ----- GETTING AMENITY PRICES 
             String query = "SELECT Name,AVG(Rating.Rating) from Amenity,Rating where " +
@@ -257,12 +257,19 @@ public class BackEnd {
                                          " order by AVG(Rating.rating) desc";
             
             ResultSet answer = stmt.executeQuery(query);
+            System.out.println("\nAverage ratings of amenities from ratings between the"+
+            "given dates\n");
+            int count = 0;
             if (answer != null) {
                 while (answer.next()) {
+                    count++;
                     System.out.println(answer.getString("Name")+
                     " had an average rating of: "+
                      answer.getFloat("AVG(Rating.Rating)"));              
                 }
+            }
+            if(count==0){
+                System.out.println("No amenities were rated in the given time period.");
             }
         }
         catch (SQLException e) {
@@ -273,10 +280,9 @@ public class BackEnd {
             System.err.println("\tErrorCode: " + e.getErrorCode());
             }
         System.out.println("\n");
-        return null;
     }
 
-    public ResultSet query5(String num) {
+    public void query5(String num) {
         int numConverted = 0;
         int count = 0;
         try{
@@ -284,17 +290,23 @@ public class BackEnd {
         }
         catch (Exception e){
             System.out.println("Invalid input. Returning to main menu.\n");
-            return null;
         }
         try{
             // ----- GETTING AMENITY PRICES 
+            String numQuery = "Select COUNT(*) from ClubMember";
             String query = "SELECT FirstName,LastName,Points from Guest,ClubMember "+
             "where Guest.GuestID=ClubMember.GuestID "+
             "order by points desc";
             
+            ResultSet numAnswer= stmt.executeQuery(numQuery);
+            numAnswer.next();
+            int numRows = numAnswer.getInt("COUNT(*)");
+            if(numRows<numConverted){
+                num = Integer.toString(numRows);
+            }
             ResultSet answer = stmt.executeQuery(query);
             System.out.println("\n");
-            System.out.println("Here are the top "+num+" guests with the most club 460 points");
+            System.out.println("Here are the top "+num+" guests with the most club 460 points:");
             if (answer != null) {
                 while (answer.next() && count<numConverted) {
                     System.out.println(answer.getString("FIRSTNAME")+
@@ -314,7 +326,6 @@ public class BackEnd {
             System.err.println("\tErrorCode: " + e.getErrorCode());
             }
         System.out.println("\n");
-        return null;
     }
 
     public boolean addGuest(String firstName, String lastName, String isStudent, String creditCardCompany) {
