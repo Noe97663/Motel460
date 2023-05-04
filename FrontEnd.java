@@ -361,9 +361,9 @@ public class FrontEnd {
                 ans = backEnd.query2(date);
             } else if (quesNum == 3) {
                 scn.nextLine();
-                System.out.println("Enter the week: "); // from?
+                System.out.println("Enter the week (YYYY-MM-DD): "); // from?
                 String week = scn.nextLine();
-                ans = backEnd.query3(week);
+                backEnd.query3(week);
             } else if (quesNum == 4) {
                 scn.nextLine();
                 System.out.println("Enter the date from: ");

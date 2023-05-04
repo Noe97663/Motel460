@@ -237,7 +237,7 @@ public class BackEnd {
     |
     |  Returns:  None.
     *-------------------------------------------------------------------*/
-    public ResultSet query3(String weekDate) {
+    public void query3(String weekDate) {
         // Print the schedule of staff given a week (input the start date of the week by the user). A schedule
         //contains the list of staff members working that week and a staff member’s working hours (start and stop
         //times).
@@ -284,7 +284,6 @@ public class BackEnd {
             System.err.println("\tErrorCode: " + e.getErrorCode());
         }
         System.out.println();
-        return null;
     }
 
     public void query4(String dateStart, String dateEnd) {
