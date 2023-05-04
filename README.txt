@@ -14,7 +14,7 @@ All - Schema design, bug fixes, documentation
 
 Noel - DatabaseInit , DatabasePopulate, query 4 and query 5
        testing some insert, update, delete functions, going to OH for 
-       design questions, 
+       design questions,
 
 Mike - ER diagrams, query 2, FrontEnd, Datas creation
 
