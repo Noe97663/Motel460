@@ -182,7 +182,7 @@ public class BackEnd {
         System.out.println("YOUR TOTAL BILL IS: " + sum);
     }
 
-    public ResultSet query2(String date){
+    public void query2(String date){
         try{
         String query = "select guest.guestid , firstname, lastname, studentstatus, points, roomid " 
                     +  "from huyle.guest join huyle.booking " 
@@ -218,7 +218,6 @@ public class BackEnd {
             System.err.println("\tSQLState:  " + e.getSQLState());
             System.err.println("\tErrorCode: " + e.getErrorCode());
         }
-        return null;
     }
 
     /*---------------------------------------------------------------------
@@ -237,15 +236,17 @@ public class BackEnd {
     |
     |  Returns:  None.
     *-------------------------------------------------------------------*/
-    public ResultSet query3(String weekDate) {
+    public void query3(String weekDate) {
         // Print the schedule of staff given a week (input the start date of the week by the user). A schedule
         //contains the list of staff members working that week and a staff member’s working hours (start and stop
         //times).
 
+        //find all the employees working on the week starting on weekDate (full schedule)
         String query = "SELECT FirstName, LastName, starttime, endtime, weekstartdate FROM Shift JOIN "
             + "Employee ON Shift.EmployeeID = Employee.EmployeeID WHERE weekstartdate between to_date('" + weekDate + "','YYYY-MM-DD') - 6"
             + " and to_date('" + weekDate + "','YYYY-MM-DD') + 7";
 
+        //find all the employees working on the week starting on weekDate, but only print their names once
         String query2 = "SELECT DISTINCT FirstName, LastName FROM Shift JOIN "
         + "Employee ON Shift.EmployeeID = Employee.EmployeeID WHERE weekstartdate between to_date('" + weekDate + "','YYYY-MM-DD') - 6"
         + " and to_date('" + weekDate + "','YYYY-MM-DD') + 7";
@@ -262,8 +263,21 @@ public class BackEnd {
             if (ans2 != null) {
                 System.out.println("\nShift hours:\n");
                 while (ans2.next()) {
-                    System.out.println(ans2.getString("FirstName") + " " + ans2.getString("LastName") + " " + ans2.getString("starttime") + "-" 
-                        + ans2.getString("endtime") + " StartDate " + ans2.getString("weekstartdate").substring(0,10));
+                    String start = ans2.getString("starttime");
+                    String end = ans2.getString("endtime");
+                    //beautify the output eg. from 400 to 4:00
+                    if (start.length() == 3) {
+                        start = start.substring(0,1) + ":" + start.substring(1,3);
+                    } else if (start.length() == 4) {
+                        start = start.substring(0,2) + ":" + start.substring(2,4);
+                    }
+                    if (end.length() == 3) {
+                        end = end.substring(0,1) + ":" + end.substring(1,3);
+                    } else if (end.length() == 4) {
+                        end = end.substring(0,2) + ":" + end.substring(2,4);
+                    }
+                    System.out.println(ans2.getString("FirstName") + " " + ans2.getString("LastName") + " " + start + "-" 
+                        + end + " Week Shift Started On: " + ans2.getString("weekstartdate").substring(0,10));
                 }
             }
         } catch (SQLException e) {
@@ -274,7 +288,6 @@ public class BackEnd {
             System.err.println("\tErrorCode: " + e.getErrorCode());
         }
         System.out.println();
-        return null;
     }
 
     public void query4(String dateStart, String dateEnd) {
@@ -340,7 +353,7 @@ public class BackEnd {
             System.out.println("Here are the top "+num+" guests with the most club 460 points:");
             if (answer != null) {
                 while (answer.next() && count<numConverted) {
-                    System.out.println(answer.getString("FIRSTNAME")+
+                    System.out.println(answer.getString("FIRSTNAME")+ " " +
                     answer.getString("LASTNAME")+
                     " has "+ answer.getInt("Points")+
                     " Club460 points.");
@@ -723,6 +736,10 @@ public class BackEnd {
         //auto increment implementation
         String prequery = "SELECT MAX(bookingID) FROM BOOKING";
         int bookingID = 0;
+
+        String queryCheck1 = "SELECT * FROM booking WHERE roomID =" + roomID + "and startdate between to_date('" + startDate + "','YYYY-MM-DD')"
+        + " and to_date('" + endDate + "','YYYY-MM-DD') and enddate between to_date('" + startDate + "','YYYY-MM-DD') and to_date('" + endDate + "','YYYY-MM-DD')";
+
         try{
             ResultSet answer = stmt.executeQuery(prequery);
             while (answer.next()) {
@@ -742,6 +759,12 @@ public class BackEnd {
         //returns true if successfully added
         String queryAddPoints = "UPDATE ClubMember SET Points = Points + 10 WHERE GuestID = " + guestID;
         try {
+            stmt.executeQuery(queryCheck1);
+            ResultSet answer = stmt.executeQuery(queryCheck1);
+            if (answer.next()) {
+                System.out.println("Room is already booked for that time period");
+                return false;
+            }
             stmt.executeUpdate(query);
             stmt.executeUpdate(queryAddPoints);
             return true;
@@ -787,7 +810,38 @@ public class BackEnd {
         }
         String query = "UPDATE Booking " + setStatement.substring(0, setStatement.length() - 2) + " WHERE BookingID = " + bookingID;
         //returns true if successfully updated
+
+        //locate the tuple to be updated
+        String queryCheck1 = "SELECT * From Booking WHERE BookingID = " + bookingID;
+
         try {
+            ResultSet answer = stmt.executeQuery(queryCheck1);
+            //look for the tuple to be updated, and update the fields
+            if (!answer.next()) {
+                System.out.println("Booking does not exist");
+                return false;
+            }
+            else {
+                if (roomID == -1) {
+                    roomID = answer.getInt("RoomID");
+                }
+                if (startDate == null) {
+                    startDate = answer.getString("StartDate");
+                }
+                if (endDate == null) {
+                    endDate = answer.getString("EndDate");
+                }
+            }
+            //check if the room is already booked for that time period, ignore the current booking
+            String queryCheck2 = "SELECT * FROM booking WHERE roomID =" + roomID + "and startdate between to_date('" + startDate + "','YYYY-MM-DD')"
+                + " and to_date('" + endDate + "','YYYY-MM-DD') and enddate between to_date('" + startDate + "','YYYY-MM-DD') and to_date('" + endDate + "','YYYY-MM-DD')"
+                + " MINUS SELECT * FROM booking WHERE BookingID = " + bookingID;
+            answer = stmt.executeQuery(queryCheck2);
+            if (answer.next()) {
+                System.out.println("Room is already booked for that time period");
+                return false;
+            }
+
             stmt.executeUpdate(query);
             return true;
             
@@ -1068,7 +1122,8 @@ public class BackEnd {
         }
         employeeID+=1;
 
-        String query = "INSERT INTO Employee (EmployeeID, FirstName, LastName, Position) VALUES (" + employeeID + ",'" + firstName + "', '" + lastName + "', '" + position + "')";
+        String query = "INSERT INTO Employee (EmployeeID, FirstName, LastName, Position) VALUES (" + employeeID + ",'" 
+            + firstName + "', '" + lastName + "', '" + position + "')";
         //returns true if successfully added
         try {
             stmt.executeUpdate(query);
@@ -1178,8 +1233,19 @@ public class BackEnd {
     public boolean addShift(String EmployeeID, String StartTime, String EndTime, String WeekStartDate) {
         //returns true if successfully added
         WeekStartDate = "TO_DATE('" + WeekStartDate + "', 'YYYY-MM-DD')";
-        String query = "INSERT INTO Shift (EmployeeID, StartTime, EndTime, WeekStartDate) VALUES (" + EmployeeID + ", " + StartTime + ", " + EndTime + ", " + WeekStartDate + ")";
+        String query = "INSERT INTO Shift (EmployeeID, StartTime, EndTime, WeekStartDate) VALUES (" + EmployeeID + ", " + StartTime + ", " 
+            + EndTime + ", " + WeekStartDate + ")";
+
+        String prequery = "SELECT * FROM Shift WHERE employeeID =" + EmployeeID + "and weekstartdate between " + WeekStartDate + " - 6"
+        + " and " + WeekStartDate + " + 7 and ((starttime between " + StartTime + " and " + EndTime + ") or (endtime between "
+             + StartTime + " and " + EndTime + "))";
         try {
+            stmt.executeQuery(prequery);
+            ResultSet rs = stmt.getResultSet();
+            if (rs.next()) {
+                System.out.println("Shift overlaps with another shift for this employee.");
+                return false;
+            }
             stmt.executeUpdate(query);
             return true;
             
@@ -1197,6 +1263,7 @@ public class BackEnd {
     |  Method updateShift
     |
     |  Purpose: Updates a shift in the database. If a parameter is null, it will not be updated.
+    |           Cannot update the employeeID or weekStartDate of a shift.
     |
     |  Pre-condition:  Connection to the database has been established.
     |
@@ -1219,8 +1286,38 @@ public class BackEnd {
         if (EndTime != null) {
             setStatement += "EndTime = " + EndTime + ", ";
         }
-        String query = "UPDATE Shift " + setStatement.substring(0, setStatement.length() - 2) + " WHERE EmployeeID = " + EmployeeID + "AND WeekStartDate = " + WeekStartDate;
+        //look for shift with same employeeID and weekstartdate
+        String queryCheck = "SELECT * FROM Shift WHERE employeeID =" + EmployeeID + " and weekstartdate = to_date('" + WeekStartDate + "','YYYY-MM-DD')";
+
+        String query = "UPDATE Shift " + setStatement.substring(0, setStatement.length() - 2) 
+            + " WHERE EmployeeID = " + EmployeeID + "AND WeekStartDate = " + WeekStartDate;
         try {
+            stmt.executeQuery(queryCheck);
+            ResultSet rs = stmt.getResultSet();
+            if (!rs.next()) {
+                System.out.println("Shift does not exist.");
+                return false;
+            }
+            else {
+                if (StartTime == null) {
+                    StartTime = rs.getString("StartTime");
+                }
+                if (EndTime == null) {
+                    EndTime = rs.getString("EndTime");
+                }
+                //we need to check to see if there is any overlap with another shift (minus the shift we are updating)
+                String queryCheck2 = "SELECT * FROM Shift WHERE employeeID =" + EmployeeID + "and weekstartdate between to_date('" 
+                    + WeekStartDate + "','YYYY-MM-DD') - 6"
+                    + " and to_date('" + WeekStartDate + "','YYYY-MM-DD') + 7 and ((starttime between " + StartTime + " and " + EndTime + ") or (endtime between " 
+                    + StartTime + " and " + EndTime + ")) MINUS SELECT * FROM Shift WHERE employeeID =" + EmployeeID + " and weekstartdate = to_date('"
+                    + WeekStartDate + "','YYYY-MM-DD') and starttime = " + StartTime + " and endtime = " + EndTime;
+                stmt.executeQuery(queryCheck2);
+                ResultSet rs2 = stmt.getResultSet();
+                if (rs2.next()) {
+                    System.out.println("Shift overlaps with another shift for this employee. Update failed");
+                    return false;
+                }
+            }
             stmt.executeUpdate(query);
             return true;
             

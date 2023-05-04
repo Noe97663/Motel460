@@ -7,7 +7,7 @@ public class FrontEnd {
     public static void insertData(BackEnd backEnd, Scanner scn){
         System.out.println("Inserting data on:");
         System.out.println("1. Guest  2. Rating  3.ClubMembers 4.Booking  5. Transaction  6. Room \n" 
-                            + "7. Employee  8.Shift  9. Amenity 10 Room Classification");
+                            + "7. Employee  8.Shift  9. Amenity 10. Room Classification");
         scn.nextLine();
         String fieldString = scn.nextLine();
         int field = -99;
@@ -34,7 +34,7 @@ public class FrontEnd {
             int guestid = scn.nextInt();
             System.out.println("AmenityID: ");
             int aID = scn.nextInt();
-            System.out.println("Date in this form: DD-MON-YY ");
+            System.out.println("Date in this form: YYYY-MM-DD");
             String date = scn.nextLine();
             System.out.println("Rating (1-5)");
             int rating = scn.nextInt(); // error check 
@@ -46,9 +46,9 @@ public class FrontEnd {
             int point = scn.nextInt();
             backEnd.addClubMember(guestid, point);
         } else if (field == 4){ // Booking 
-            System.out.println("Date from in this form: DD-MON-YY ");
+            System.out.println("Date from in this form: YYYY-MM-DD ");
             String dateF = scn.nextLine();
-            System.out.println("Date to in this form: DD-MON-YY ");
+            System.out.println("Date to in this form: YYYY-MM-DD ");
             String dateT = scn.nextLine();
             System.out.println("RoomID: ");
             int rID = scn.nextInt();
@@ -82,11 +82,11 @@ public class FrontEnd {
         } else if (field == 8){ // Shift
             System.out.println("Employee ID: ");
             String eID = scn.nextLine();
-            System.out.println("Startdate: in this form: DD-MON-YY ");
+            System.out.println("Startdate: in this form: YYYY-MM-DD ");
             String date = scn.nextLine();
-            System.out.println("From time: (XX:XX) ");
+            System.out.println("From time: (XXXX) ");
             String fromTime = scn.nextLine();
-            System.out.println("To time: (XX:XX) ");
+            System.out.println("To time: (XXXX) ");
             String toTime  = scn.nextLine(); 
             backEnd.addShift(eID,fromTime, toTime, date);
         } else if (field == 9){ // Amenity
@@ -95,7 +95,8 @@ public class FrontEnd {
             System.out.println("Price:  ");
             int price  = scn.nextInt();
             backEnd.addAmenity(name, price);
-        } else if (field == 10){
+        } 
+        else if (field == 10){ // RoomClassification
             System.out.println("Type: (Single, Suite, DeluxeSuite) ");
             String type = scn.nextLine();
             System.out.println("Price: ");
@@ -104,7 +105,7 @@ public class FrontEnd {
             String Beds = scn.nextLine();
             System.out.println("Baths");
             String baths = scn.nextLine();
-            // backEnd.add
+            backEnd.addRoomClassification(type, price, Beds, baths);
         }
        
     }
@@ -112,7 +113,7 @@ public class FrontEnd {
     public static void updatData(BackEnd backEnd, Scanner scn){
         System.out.println("Updating data on:");
         System.out.println("1. Guest  2. Rating  3.ClubMember 4.Booking\n" 
-                            + "5. Employee  6.Shift  7. Amenity ");
+                            + "5. Employee  6.Shift  7. Amenity 8. Transaction 9.Room 10. RoomClassification");
         scn.nextLine();
         String fieldString = scn.nextLine();
         int field = -99;
@@ -125,14 +126,27 @@ public class FrontEnd {
         if (field == 1){ // Guest
             System.out.println("Guest ID: ");
             int guestid = scn.nextInt();
-            System.out.println("Is student?: (0/ 1) ");
+            System.out.println("Is student?: (0/ 1/ null) ");
             String bool = scn.nextLine();
             System.out.println("CreditCard Company (Visa/ Master/ null)");
             String ccc = scn.nextLine();
-            System.out.println("First Name: ");
+            System.out.println("First Name: (null for not updating)");
             String fName = scn.nextLine();
-            System.out.println("Last Name: ");
+            System.out.println("Last Name: (null for not updating)");
             String lName = scn.nextLine();
+            if (bool == "null"){
+                bool = null;
+            }
+            if (ccc == "null"){
+                ccc = null;
+            }
+            if (lName == "null"){
+                lName = null;
+            }
+            if (fName == "null"){
+                fName = null;
+            }
+
             backEnd.updateGuest(guestid, fName, lName, bool, ccc);
         } else if (field == 2){ // Rating 
             System.out.println("Guest ID: ");
@@ -151,50 +165,118 @@ public class FrontEnd {
             int points = scn.nextInt();
             backEnd.updateClubMember(guestid, points);
         } else if (field == 4){ // Booking 
-            System.out.println("Date from in this form: YYYY-MM-DD ");
+            System.out.println("Date from in this form: YYYY-MM-DD (null if not updating)");
             String dateF = scn.nextLine();
-            System.out.println("Date to in this form: YYYY-MM-DD ");
+            System.out.println("Date to in this form: YYYY-MM-DD (null if not updating)");
             String dateT = scn.nextLine();
-            System.out.println("RoomID: ");
+            System.out.println("RoomID: (-1 if not updating) ");
             int rID = scn.nextInt();
             System.out.println("BookingID: ");
             int bID = scn.nextInt();
+            if (dateF == "null"){
+                dateF = null;
+            }
+            if (dateT == "null"){
+                dateT = null;
+            }
             backEnd.updateBooking(bID, dateF, dateT, rID);
         }  else if (field == 5){ // Employee
             System.out.println("EmployeeID: ");
             int eID = scn.nextInt();
-            System.out.println("Position: ");
+            System.out.println("Position: (null if not updating)");
             String pos = scn.nextLine();
-            System.out.println("First Name: ");
+            System.out.println("First Name: (null if not updating)");
             String fName = scn.nextLine();
-            System.out.println("Last Name: ");
+            System.out.println("Last Name: (null if not updating)");
             String lName = scn.nextLine(); 
+            if (fName == "null"){
+                fName = null;
+            }
+            if (lName == "null"){
+                lName = null;
+            }
+            if (pos == "null"){
+                pos = null;
+            } 
             backEnd.updateEmployee(eID, pos, fName, lName);
         } else if (field == 6){ // Shift
             System.out.println("Employee ID: ");
             String eID = scn.nextLine();
             System.out.println("Startdate: in this form: YYYY-MM-DD ");
             String date = scn.nextLine();
-            System.out.println("From time: (XX:XX) ");
+            System.out.println("From time: (if 18:00 input 1800) (null if not updating)");
             String fromTime = scn.nextLine();
-            System.out.println("To time: (XX:XX) ");
+            System.out.println("To time: (if 18:00 input 1800) (null if not updating)");
             String toTime  = scn.nextLine(); 
+            if (fromTime == "null"){
+                fromTime = null;
+            } 
+            if (toTime == "null"){
+                toTime = null;
+            } 
             backEnd.updateShift(eID, fromTime, toTime, date);
         } else if (field == 7){ // Amenity
             System.out.println("AmenityID: ");
             int aID = scn.nextInt(); 
             System.out.println("Name:  ");
             String name = scn.nextLine();
-            System.out.println("Price:  ");
+            System.out.println("Price:   (-1 if not updating)");
             int price  = scn.nextInt();
+            if (name == "null"){
+                name = null;
+            } 
+
             backEnd.updateAmnity(aID, name, price);
+        } else if (field == 8){ // Transaction
+            System.out.println("BookingID: ");
+            int bID = scn.nextInt(); 
+            System.out.println("TransactionID: ");
+            int tID = scn.nextInt(); 
+            System.out.println("AmenityID: (-1 if not updating)");
+            int aID = scn.nextInt();
+            System.out.println("Extra charges:  (-1 if not updating)");
+            int echarge = scn.nextInt();
+            System.out.println("AmenityID: (-1 if not updating)");
+            int tips = scn.nextInt();
+            backEnd.updateTransaction(bID, tID, aID, echarge, tips);
+        } else if (field == 9){ // Room
+            System.out.println("RoomID: ");
+            int rID = scn.nextInt(); 
+            System.out.println("Type: (null if not updating)");
+            String type = scn.nextLine();
+            if (type == "null"){
+                type = null;
+            }
+            backEnd.updateRoom(rID, type);
+        } else if (field == 10){ // RoomClassification
+            System.out.println("Type:  (null if not updating)");
+            String type = scn.nextLine();
+            if (type == "null"){
+                type = null;
+            }
+            System.out.println("Price:  (null if not updating)");
+            String price = scn.nextLine();
+            if (price == "null"){
+                price = null;
+            }
+            System.out.println("beds:  (null if not updating)");
+            String beds = scn.nextLine();
+            if (beds == "null"){
+                beds = null;
+            }
+            System.out.println("baths:  (null if not updating)");
+            String baths = scn.nextLine();
+            if (baths == "null"){
+                baths = null;
+            }
+            backEnd.updateRoomClassification(type, price, beds, baths);
         }
     }
 
     public static void deleteData(BackEnd backEnd, Scanner scn){
         System.out.println("Deleting data on:");
         System.out.println("1. Guest  2. Rating  3.ClubMember  4.Booking \n" 
-                            + "5. Employee  6.Shift  7. Amenity ");
+                            + "5. Employee  6.Shift  7. Amenity 8. Room");
         scn.nextLine();
         String fieldString = scn.nextLine();
         int field = -99;
@@ -238,7 +320,11 @@ public class FrontEnd {
             System.out.println("AmenityID: ");
             int aID = scn.nextInt(); 
             backEnd.deleteAmenity(aID);
-        }
+        } else if (field == 8){ // Room
+            System.out.println("RoomID: ");
+            int rID = scn.nextInt();
+            backEnd.deleteRoom(rID);
+        } 
     }
     public static void main(String[] args) throws IOException, SQLException{       
             //create a menu, and get user input.
@@ -272,12 +358,12 @@ public class FrontEnd {
                 scn.nextLine();
                 System.out.println("Enter the date in this format: YYYY-MM-DD");
                 String date = scn.nextLine();
-                ans = backEnd.query2(date);
+                backEnd.query2(date);
             } else if (quesNum == 3) {
                 scn.nextLine();
-                System.out.println("Enter the week: "); // from?
+                System.out.println("Enter the week (YYYY-MM-DD): "); // from?
                 String week = scn.nextLine();
-                ans = backEnd.query3(week);
+                backEnd.query3(week);
             } else if (quesNum == 4) {
                 scn.nextLine();
                 System.out.println("Enter the date from: ");
