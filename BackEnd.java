@@ -196,20 +196,24 @@ public class BackEnd {
                     +  "group by guest.guestid , firstname, lastname, studentstatus, points, roomid order by roomid";
         ResultSet ans = stmt.executeQuery(query);
         
-        System.out.println("\nThe results of the query 2 are:\n");
-            // Get the data about the query result to learn
-            // the attribute names and use them as column headers
-        ResultSetMetaData answermetadata = ans.getMetaData();
-        for (int i = 1; i <= answermetadata.getColumnCount(); i++) {
-            System.out.print(answermetadata.getColumnName(i) + "   ");
-        }
-        System.out.println();
-            // Use next() to advance cursor through the result
-                    // tuples and print their attribute values
-        while (ans.next()) {
-            System.out.println(ans.getInt("guestID") + "    " + ans.getString("FirstName")
-                + "    " + ans.getString("LastName") + "    " + ans.getInt("Studentstatus") + "    " + ans.getInt("Points")
-                + "    " + ans.getInt("RoomID"));
+        if (!ans.next()){
+            System.out.println("No one is staying on the date: " + date);
+        } else {
+            System.out.println("\nThe results of the query 2 are:\n");
+                // Get the data about the query result to learn
+                // the attribute names and use them as column headers
+            ResultSetMetaData answermetadata = ans.getMetaData();
+            for (int i = 1; i <= answermetadata.getColumnCount(); i++) {
+                System.out.print(answermetadata.getColumnName(i) + "   ");
+            }
+            System.out.println();
+                // Use next() to advance cursor through the result
+                        // tuples and print their attribute values
+            while (ans.next()) {
+                System.out.println(ans.getInt("guestID") + "    " + ans.getString("FirstName")
+                    + "    " + ans.getString("LastName") + "    " + ans.getInt("Studentstatus") + "    " + ans.getInt("Points")
+                    + "    " + ans.getInt("RoomID"));
+            }
         }
 
         } catch (SQLException e) {
