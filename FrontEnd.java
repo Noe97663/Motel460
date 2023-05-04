@@ -46,9 +46,9 @@ public class FrontEnd {
             int point = scn.nextInt();
             backEnd.addClubMember(guestid, point);
         } else if (field == 4){ // Booking 
-            System.out.println("Date from in this form: DD-MON-YY ");
+            System.out.println("Date from in this form: YYYY-MM-DD ");
             String dateF = scn.nextLine();
-            System.out.println("Date to in this form: DD-MON-YY ");
+            System.out.println("Date to in this form: YYYY-MM-DD ");
             String dateT = scn.nextLine();
             System.out.println("RoomID: ");
             int rID = scn.nextInt();
@@ -82,7 +82,7 @@ public class FrontEnd {
         } else if (field == 8){ // Shift
             System.out.println("Employee ID: ");
             String eID = scn.nextLine();
-            System.out.println("Startdate: in this form: DD-MON-YY ");
+            System.out.println("Startdate: in this form: YYYY-MM-DD ");
             String date = scn.nextLine();
             System.out.println("From time: (XX:XX) ");
             String fromTime = scn.nextLine();
