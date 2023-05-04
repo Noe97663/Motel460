@@ -825,7 +825,6 @@ public class BackEnd {
                 return false;
             }
             else {
-                answer.next();
                 if (roomID == -1) {
                     roomID = answer.getInt("RoomID");
                 }
