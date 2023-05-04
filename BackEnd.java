@@ -815,6 +815,7 @@ public class BackEnd {
         String queryCheck1 = "SELECT * From Booking WHERE BookingID = " + bookingID;
 
         try {
+            System.out.println(queryCheck1);
             ResultSet answer = stmt.executeQuery(queryCheck1);
             //look for the tuple to be updated, and update the fields
             if (!answer.next()) {
@@ -836,6 +837,7 @@ public class BackEnd {
             String queryCheck2 = "SELECT * FROM booking WHERE roomID =" + roomID + "and startdate between to_date('" + startDate + "','YYYY-MM-DD')"
                 + " and to_date('" + endDate + "','YYYY-MM-DD') and enddate between to_date('" + startDate + "','YYYY-MM-DD') and to_date('" + endDate + "','YYYY-MM-DD')"
                 + " MINUS SELECT * FROM booking WHERE BookingID = " + bookingID;
+            System.out.println(queryCheck2);
             answer = stmt.executeQuery(queryCheck2);
             if (answer.next()) {
                 System.out.println("Room is already booked for that time period");
@@ -1292,6 +1294,7 @@ public class BackEnd {
         String query = "UPDATE Shift " + setStatement.substring(0, setStatement.length() - 2) 
             + " WHERE EmployeeID = " + EmployeeID + "AND WeekStartDate = " + WeekStartDate;
         try {
+            System.out.println(queryCheck);
             stmt.executeQuery(queryCheck);
             ResultSet rs = stmt.getResultSet();
             if (!rs.next()) {

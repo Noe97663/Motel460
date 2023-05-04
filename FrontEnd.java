@@ -165,14 +165,14 @@ public class FrontEnd {
             int points = scn.nextInt();
             backEnd.updateClubMember(guestid, points);
         } else if (field == 4){ // Booking 
+            System.out.println("BookingID: ");
+            int bID = scn.nextInt();
             System.out.println("Date from in this form: YYYY-MM-DD (null if not updating)");
             String dateF = scn.nextLine();
             System.out.println("Date to in this form: YYYY-MM-DD (null if not updating)");
             String dateT = scn.nextLine();
             System.out.println("RoomID: (-1 if not updating) ");
             int rID = scn.nextInt();
-            System.out.println("BookingID: ");
-            int bID = scn.nextInt();
             if (dateF == "null"){
                 dateF = null;
             }
@@ -202,7 +202,7 @@ public class FrontEnd {
         } else if (field == 6){ // Shift
             System.out.println("Employee ID: ");
             String eID = scn.nextLine();
-            System.out.println("Startdate: in this form: YYYY-MM-DD ");
+            System.out.println("WeekStartDate: in this form: YYYY-MM-DD ");
             String date = scn.nextLine();
             System.out.println("From time: (if 18:00 input 1800) (null if not updating)");
             String fromTime = scn.nextLine();
