@@ -26,39 +26,39 @@ import java.io.*;
  ||                 arguments - String CSVFile, BackEnd be
  ||                 returns - void, populates tables
  || 
- ||                 method - populateAmenity
+ ||                 method - populateGuest
  ||                 arguments - String CSVFile, BackEnd be
  ||                 returns - void, populates tables
  || 
- ||                 method - populateAmenity
+ ||                 method - populateClubMember
  ||                 arguments - String CSVFile, BackEnd be
  ||                 returns - void, populates tables
  || 
- ||                 method - populateAmenity
+ ||                 method - populateTransaction
  ||                 arguments - String CSVFile, BackEnd be
  ||                 returns - void, populates tables
  || 
- ||                 method - populateAmenity
+ ||                 method - populateBooking
  ||                 arguments - String CSVFile, BackEnd be
  ||                 returns - void, populates tables
  || 
- ||                 method - populateAmenity
+ ||                 method - populateShift
  ||                 arguments - String CSVFile, BackEnd be
  ||                 returns - void, populates tables
  || 
- ||                 method - populateAmenity
+ ||                 method - populateRating
  ||                 arguments - String CSVFile, BackEnd be
  ||                 returns - void, populates tables
  ||
- ||                 method - populateAmenity
+ ||                 method - populateRoom
  ||                 arguments - String CSVFile, BackEnd be
  ||                 returns - void, populates tables
  || 
- ||                 method - populateAmenity
+ ||                 method - populateRoomClassification
  ||                 arguments - String CSVFile, BackEnd be
  ||                 returns - void, populates tables
  || 
- ||                 method - populateAmenity
+ ||                 method - populateEmployee
  ||                 arguments - String CSVFile, BackEnd be
  ||                 returns - void, populates tables
  ||
@@ -82,6 +82,26 @@ public class DatabasePopulate {
 
     }
 
+    /*---------------------------------------------------------------------
+    | Method populateAmenity
+    |
+    | Purpose: Populates the Amenity table in the database by reading data
+    | from a CSV file. The CSV file should have the following format:
+    | AmenityID,Name,Price
+    |
+    | Pre-condition: The CSV file with the specified file name exists in the
+    | current directory and is readable. An instance of the BackEnd class has
+    | been initialized and connected to the database.
+    |
+    | Post-condition: The Amenity table in the database is populated with data
+    | from the CSV file.
+    |
+    | Parameters:
+    | CSVFile - the name of the CSV file to read data from.
+    | be - an instance of the BackEnd class.
+    |
+    | Returns: void.
+    /-------------------------------------------------------------------*/
     private static void populateAmenity(String CSVFile, BackEnd be) {
         System.out.println("populating Amenity table");
         // Read CSV file
@@ -135,6 +155,26 @@ public class DatabasePopulate {
         }
     }
 
+    /*---------------------------------------------------------------------
+    | Method populateShift
+    |
+    | Purpose: Populates the Shift table in the database by reading data
+    | from a CSV file. The CSV file should have the following format:
+    | EmployeeID,start,end,weekstartdate
+    |
+    | Pre-condition: The CSV file with the specified file name exists in the
+    | current directory and is readable. An instance of the BackEnd class has
+    | been initialized and connected to the database.
+    |
+    | Post-condition: The Shift table in the database is populated with data
+    | from the CSV file.
+    |
+    | Parameters:
+    | CSVFile - the name of the CSV file to read data from.
+    | be - an instance of the BackEnd class.
+    |
+    | Returns: void.
+    /-------------------------------------------------------------------*/
     private static void populateShift(String CSVFile, BackEnd be) {
         // Read CSV file
         File fileRef = null;                     // provides exists() method
@@ -187,6 +227,26 @@ public class DatabasePopulate {
         }
     }
 
+    /*---------------------------------------------------------------------
+    | Method populateEmployee
+    |
+    | Purpose: Populates the Employee table in the database by reading data
+    | from a CSV file. The CSV file should have the following format:
+    | FirstName,LastName,Position
+    |
+    | Pre-condition: The CSV file with the specified file name exists in the
+    | current directory and is readable. An instance of the BackEnd class has
+    | been initialized and connected to the database.
+    |
+    | Post-condition: The Employee table in the database is populated with data
+    | from the CSV file.
+    |
+    | Parameters:
+    | CSVFile - the name of the CSV file to read data from.
+    | be - an instance of the BackEnd class.
+    |
+    | Returns: void.
+    /-------------------------------------------------------------------*/
     private static void populateEmployee(String CSVFile, BackEnd be) {
         System.out.println("populating Employee table");
         // Read CSV file
@@ -240,6 +300,26 @@ public class DatabasePopulate {
         }
     }
 
+    /*---------------------------------------------------------------------
+    | Method populateRoomClassifciation
+    |
+    | Purpose: Populates the RoomClassifciation table in the database by reading data
+    | from a CSV file. The CSV file should have the following format:
+    | type,price,beds,baths
+    |
+    | Pre-condition: The CSV file with the specified file name exists in the
+    | current directory and is readable. An instance of the BackEnd class has
+    | been initialized and connected to the database.
+    |
+    | Post-condition: The RoomClassifciation table in the database is populated with data
+    | from the CSV file.
+    |
+    | Parameters:
+    | CSVFile - the name of the CSV file to read data from.
+    | be - an instance of the BackEnd class.
+    |
+    | Returns: void.
+    /-------------------------------------------------------------------*/
     private static void populateRoomClassification(String CSVFile, BackEnd be) {
         System.out.println("populating RoomClassification table");
         // Read CSV file
@@ -293,6 +373,26 @@ public class DatabasePopulate {
         }
     }
 
+    /*---------------------------------------------------------------------
+    | Method populateRoom
+    |
+    | Purpose: Populates the Room table in the database by reading data
+    | from a CSV file. The CSV file should have the following format:
+    | RoomID,type
+    |
+    | Pre-condition: The CSV file with the specified file name exists in the
+    | current directory and is readable. An instance of the BackEnd class has
+    | been initialized and connected to the database.
+    |
+    | Post-condition: The Room table in the database is populated with data
+    | from the CSV file.
+    |
+    | Parameters:
+    | CSVFile - the name of the CSV file to read data from.
+    | be - an instance of the BackEnd class.
+    |
+    | Returns: void.
+    /-------------------------------------------------------------------*/
     private static void populateRoom(String CSVFile, BackEnd be) {
         System.out.println("populating Room table");
         // Read CSV file
@@ -346,6 +446,26 @@ public class DatabasePopulate {
         }
     }
 
+    /*---------------------------------------------------------------------
+    | Method populateTransaction
+    |
+    | Purpose: Populates the Transaction table in the database by reading data
+    | from a CSV file. The CSV file should have the following format:
+    | BookingID,AmenityID,ExtraCharge,Tips
+    |
+    | Pre-condition: The CSV file with the specified file name exists in the
+    | current directory and is readable. An instance of the BackEnd class has
+    | been initialized and connected to the database.
+    |
+    | Post-condition: The Transaction table in the database is populated with data
+    | from the CSV file.
+    |
+    | Parameters:
+    | CSVFile - the name of the CSV file to read data from.
+    | be - an instance of the BackEnd class.
+    |
+    | Returns: void.
+    /-------------------------------------------------------------------*/
     private static void populateTransaction(String CSVFile, BackEnd be) {
         System.out.println("populating Transaction table");
         // Read CSV file
@@ -400,6 +520,26 @@ public class DatabasePopulate {
         }
     }
 
+    /*---------------------------------------------------------------------
+    | Method populateBooking
+    |
+    | Purpose: Populates the Booking table in the database by reading data
+    | from a CSV file. The CSV file should have the following format:
+    | bookingID,guestID,Start,End,roomID
+    |
+    | Pre-condition: The CSV file with the specified file name exists in the
+    | current directory and is readable. An instance of the BackEnd class has
+    | been initialized and connected to the database.
+    |
+    | Post-condition: The Booking table in the database is populated with data
+    | from the CSV file.
+    |
+    | Parameters:
+    | CSVFile - the name of the CSV file to read data from.
+    | be - an instance of the BackEnd class.
+    |
+    | Returns: void.
+    /-------------------------------------------------------------------*/
     private static void populateBooking(String CSVFile, BackEnd be) {
         System.out.println("populating Booking table");
         // Read CSV file
@@ -454,6 +594,26 @@ public class DatabasePopulate {
         }
     }
 
+    /*---------------------------------------------------------------------
+    | Method populateClubMember
+    |
+    | Purpose: Populates the ClubMember table in the database by reading data
+    | from a CSV file. The CSV file should have the following format:
+    | GuestID,Points
+    |
+    | Pre-condition: The CSV file with the specified file name exists in the
+    | current directory and is readable. An instance of the BackEnd class has
+    | been initialized and connected to the database.
+    |
+    | Post-condition: The ClubMember table in the database is populated with data
+    | from the CSV file.
+    |
+    | Parameters:
+    | CSVFile - the name of the CSV file to read data from.
+    | be - an instance of the BackEnd class.
+    |
+    | Returns: void.
+    /-------------------------------------------------------------------*/
     private static void populateClubMember(String CSVFile, BackEnd be) {
         System.out.println("populating ClubMember table");
         // Read CSV file
@@ -508,6 +668,26 @@ public class DatabasePopulate {
         }
     }
 
+    /*---------------------------------------------------------------------
+    | Method populateRating
+    |
+    | Purpose: Populates the Rating table in the database by reading data
+    | from a CSV file. The CSV file should have the following format:
+    | GuestID,AmenityID,RatingDate,Rating
+    |
+    | Pre-condition: The CSV file with the specified file name exists in the
+    | current directory and is readable. An instance of the BackEnd class has
+    | been initialized and connected to the database.
+    |
+    | Post-condition: The Rating table in the database is populated with data
+    | from the CSV file.
+    |
+    | Parameters:
+    | CSVFile - the name of the CSV file to read data from.
+    | be - an instance of the BackEnd class.
+    |
+    | Returns: void.
+    /-------------------------------------------------------------------*/
     private static void populateRating(String CSVFile, BackEnd be) {
         System.out.println("populating Rating table");
         // Read CSV file
@@ -562,6 +742,26 @@ public class DatabasePopulate {
         }
     }
 
+    /*---------------------------------------------------------------------
+    | Method populateGuest
+    |
+    | Purpose: Populates the Guest table in the database by reading data
+    | from a CSV file. The CSV file should have the following format:
+    | GuestID,FirstName,LastName,StudentStatus,CreditCardCompany
+    |
+    | Pre-condition: The CSV file with the specified file name exists in the
+    | current directory and is readable. An instance of the BackEnd class has
+    | been initialized and connected to the database.
+    |
+    | Post-condition: The Guest table in the database is populated with data
+    | from the CSV file.
+    |
+    | Parameters:
+    | CSVFile - the name of the CSV file to read data from.
+    | be - an instance of the BackEnd class.
+    |
+    | Returns: void.
+    /-------------------------------------------------------------------*/
     public static void populateGuest(String CSVFile, BackEnd be) {
         System.out.println("populating Guest table");
         // Read CSV file
