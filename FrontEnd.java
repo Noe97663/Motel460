@@ -127,7 +127,6 @@ public class FrontEnd {
         System.out.println("Updating data on:");
         System.out.println("1. Guest  2. Rating  3.ClubMember 4.Booking\n" 
                             + "5. Employee  6.Shift  7. Amenity 8. Transaction 9.Room 10. RoomClassification");
-        scn.nextLine();
         String fieldString = scn.nextLine();
         int field = -99;
         try{
@@ -290,7 +289,6 @@ public class FrontEnd {
         System.out.println("Deleting data on:");
         System.out.println("1. Guest  2. Rating  3.ClubMember  4.Booking \n" 
                             + "5. Employee  6.Shift  7. Amenity 8. Room");
-        scn.nextLine();
         String fieldString = scn.nextLine();
         int field = -99;
         try{
