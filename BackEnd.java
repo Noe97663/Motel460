@@ -101,25 +101,57 @@ public class BackEnd {
             String[] EndDate;
             int numDays = 0;
             if (roomDatesAnswer != null) {
-                StartDate = roomDatesAnswer.getString("StartDate").split("-");         
-                EndDate = roomDatesAnswer.getString("EndDate").split("-");         
-                // ---- GET NUM DAYS FOR THE STAY FROM THE DATES
-                if(Integer.parseInt(StartDate[1]) == Integer.parseInt(EndDate[1])){
-                    // --- DATES IN THE SAME MONTH
-                    numDays = Integer.parseInt(EndDate[2]) - Integer.parseInt(StartDate[2]);
-                }
-                else{
-                    // --- DATES NOT IN SAME MONTH
-                    int[] months = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-                    numDays = (Integer.parseInt(EndDate[2])+ months[Integer.parseInt(EndDate[1])+1]) - Integer.parseInt(StartDate[2]);
+                while (roomDatesAnswer.next()) {
+                    StartDate = roomDatesAnswer.getString("StartDate").split("-");         
+                    EndDate = roomDatesAnswer.getString("EndDate").split("-");         
+                    // ---- GET NUM DAYS FOR THE STAY FROM THE DATES
+                    if(Integer.parseInt(StartDate[1]) == Integer.parseInt(EndDate[1])){
+                        // --- DATES IN THE SAME MONTH
+                        numDays = Integer.parseInt(EndDate[2]) - Integer.parseInt(StartDate[2]);
+                    }
+                    else{
+                        // --- DATES NOT IN SAME MONTH
+                        int[] months = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+                        numDays += (Integer.parseInt(EndDate[2])+ months[Integer.parseInt(EndDate[1])+1]) - Integer.parseInt(StartDate[2]);
+                    }
                 }
             }
             String roomPriceQuery = "Select Price from RoomClassification where type = '" + roomType + "'";
             ResultSet roomPriceAnswer = stmt.executeQuery(roomPriceQuery);
              // ----- ADD EACH (ROOM PRICE X NUM DAYS)
             if (roomPriceAnswer != null) {
-                sum += roomPriceAnswer.getInt("Price") * numDays;     
+                while (roomPriceAnswer.next()) {
+                    sum += roomPriceAnswer.getInt("Price") * numDays;   
+                }  
             }
+            // ------ ADD DISCOUNTS 
+            double totalDiscount = 0.0;
+            double discount1 = 0.0;
+            double discount2 = 0.0;
+            String StudentQuery = "SELECT StudentStatus from Guest where GuestID = (SELECT GuestID FROM Booking where bookingID = "+ bookingID +")";
+            ResultSet StudentAnswer = stmt.executeQuery(StudentQuery);
+            if (StudentAnswer != null) {
+                while (StudentAnswer.next()) {
+                    int StudentStatus = StudentAnswer.getInt("StudentStatus");
+                    if (StudentStatus == 1){
+                        discount1 = 10.0;
+                    }
+                }
+            }
+            String GuestMemberQuery = "SELECT Points from ClubMember where GuestID = (SELECT GuestID FROM Booking where bookingID = "+ bookingID +")";
+            ResultSet GuestMemberAnswer = stmt.executeQuery(GuestMemberQuery);
+            if (GuestMemberAnswer != null) {
+                while (GuestMemberAnswer.next()) {
+                    discount2 +=  GuestMemberAnswer.getInt("StudentStatus") * .01;
+                }
+            }
+            if(discount1 > discount2){
+                totalDiscount = discount1;
+            }
+            else{
+                totalDiscount = discount2;
+            }
+            sum *= (100 - totalDiscount) * .01;
         }
         catch (SQLException e) {
             System.err.println("*** SQLException:  "
