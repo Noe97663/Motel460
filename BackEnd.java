@@ -131,7 +131,10 @@ public class BackEnd {
                     }
                 }
             }
-            String roomPriceQuery = "Select Price from RoomClassification where type = '" + roomType + "'";
+            else{
+                System.out.println("ROOM DATES QUERY RETURNED EMPTY");
+            }
+            String roomPriceQuery = "Select Price from RoomClassification where Type = '" + roomType + "'";
             ResultSet roomPriceAnswer = stmt.executeQuery(roomPriceQuery);
 
             // ----- ADD EACH (ROOM PRICE X NUM DAYS)
@@ -162,7 +165,7 @@ public class BackEnd {
             ResultSet GuestMemberAnswer = stmt.executeQuery(GuestMemberQuery);
             if (GuestMemberAnswer != null) {
                 while (GuestMemberAnswer.next()) {
-                    discount2 +=  GuestMemberAnswer.getInt("StudentStatus") * .01;
+                    discount2 +=  GuestMemberAnswer.getInt("Points") * .01;
                 }
             }
             if(discount1 > discount2){
