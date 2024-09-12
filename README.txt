@@ -1,4 +1,4 @@
-Compilate and Execution Instructions
+Compile and Execution Instructions
 
 -Add the Oracle JDBC driver to your CLASSPATH environment variable:
      export CLASSPATH=/usr/lib/oracle/19.8/client64/lib/ojdbc8.jar:${CLASSPATH}
